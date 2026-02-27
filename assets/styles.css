@@ -1,3 +1,199 @@
-body {
-  background: red !important;
+/* BRSA Registry — Institutional Stylesheet
+   File: /assets/styles.css
+   Purpose: Sovereign, minimal, mobile-safe, no framework dependency
+*/
+
+:root{
+  --sovereign-blue:#0A1628;
+  --sovereign-blue-mid:#0F1E38;
+  --sovereign-blue-lit:#1E2D45;
+  --federal-white:#F5F5F0;
+  --federal-white-dim:rgba(245,245,240,.65);
+  --federal-white-faint:rgba(245,245,240,.18);
+  --institutional-gray:#6B7280;
+  --rule-line:#1E2D45;
+
+  --readiness-green:#1A6B3A;
+  --readiness-yellow:#B58A00;
+  --readiness-red:#8B1A1A;
+
+  --max-width:1120px;
+  --space-xs:8px;
+  --space-sm:16px;
+  --space-md:32px;
+  --space-lg:64px;
+  --space-xl:120px;
+
+  --font-serif:'Playfair Display', Georgia, serif;
+  --font-sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--sovereign-blue);
+  color:var(--federal-white);
+  font-family:var(--font-sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+a{color:inherit}
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:0 var(--space-md);
+}
+
+/* NAV */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:var(--sovereign-blue);
+  border-bottom:1px solid var(--rule-line);
+}
+.nav-inner{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.wordmark{
+  font-family:var(--font-serif);
+  font-weight:700;
+  letter-spacing:.02em;
+}
+.wordmark span{color:var(--federal-white-dim); font-weight:400}
+
+.main{padding-bottom:var(--space-xl)}
+
+/* HERO */
+.hero{
+  padding:var(--space-xl) 0 var(--space-lg);
+  border-bottom:1px solid var(--rule-line);
+}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--federal-white-dim);
+  margin:0 0 var(--space-md);
+}
+.h1{
+  font-family:var(--font-serif);
+  font-size:clamp(34px, 5vw, 64px);
+  line-height:1.08;
+  margin:0 0 var(--space-md);
+}
+.subhead{
+  margin:0 0 var(--space-lg);
+  font-size:18px;
+  font-weight:300;
+  color:var(--federal-white-dim);
+  max-width:720px;
+}
+
+/* LOOKUP */
+.card{
+  border:1px solid var(--rule-line);
+  background:rgba(15,30,56,.25);
+  padding:var(--space-md);
+}
+.lookup-row{
+  display:flex;
+  gap:0;
+  border:1px solid var(--rule-line);
+}
+.lookup-input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:16px var(--space-sm);
+  background:var(--sovereign-blue-mid);
+  color:var(--federal-white);
+  font-family:var(--font-mono);
+  font-size:15px;
+}
+.lookup-input::placeholder{color:var(--institutional-gray)}
+.lookup-btn{
+  border:0;
+  cursor:pointer;
+  padding:16px var(--space-md);
+  background:var(--federal-white);
+  color:var(--sovereign-blue);
+  font-family:var(--font-sans);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.lookup-btn:disabled{opacity:.6; cursor:not-allowed}
+
+.result{
+  margin-top:var(--space-md);
+  border-top:1px solid var(--rule-line);
+  padding-top:var(--space-md);
+  display:none;
+}
+.result.visible{display:block}
+
+.state{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+}
+.dot.green{background:var(--readiness-green)}
+.dot.yellow{background:var(--readiness-yellow)}
+.dot.red{background:var(--readiness-red)}
+.state-label{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.state-label.green{color:var(--readiness-green)}
+.state-label.yellow{color:var(--readiness-yellow)}
+.state-label.red{color:var(--readiness-red)}
+
+.meta{
+  color:var(--federal-white-dim);
+  font-size:14px;
+}
+.kv{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:10px 16px;
+  margin-top:12px;
+}
+.kv div{
+  padding:8px 0;
+  border-bottom:1px solid rgba(30,45,69,.6);
+}
+.k{font-family:var(--font-mono); color:var(--institutional-gray); font-size:12px; letter-spacing:.06em}
+.v{color:var(--federal-white); font-size:14px}
+
+.disclaimer{
+  margin-top:var(--space-md);
+  padding-top:var(--space-sm);
+  border-top:1px solid var(--rule-line);
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--institutional-gray);
+  letter-spacing:.06em;
+}
+
+/* MOBILE */
+@media (max-width:720px){
+  .kv{grid-template-columns:1fr}
+  .lookup-btn{padding:16px 18px}
+  }
