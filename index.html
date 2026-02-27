@@ -1,52 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BRSA Registry — Public Verification</title>
-<meta name="description" content="Official Public Registry of the Behavioral Readiness Standards Authority." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA Registry — Public Verification</title>
+  <meta name="description" content="Verify BRSA readiness standing by Registry ID. Public-safe fields only." />
 
-<link rel="stylesheet" href="assets/styles.css" />
+  <!-- Put your API base here (NO trailing slash). Example:
+       https://legacyline-core-production.up.railway.app
+  -->
+  <meta name="brsa-api-base" content="https://legacyline-core-production.up.railway.app" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="wordmark">BRSA Registry</div>
-  </div>
-</nav>
-
-<main class="main">
-  <section class="hero">
-    <h1>Public Readiness Registry</h1>
-    <p class="subtext">
-      Verify readiness standing using an official BRSA Registry ID.
-    </p>
-  </section>
-
-  <section class="lookup-section">
-    <input
-      class="lookup-input"
-      placeholder="BRSA-YY-XXXXXXXX"
-      autocomplete="off"
-    />
-    <button class="lookup-btn">Verify Readiness</button>
-
-    <div class="lookup-result hidden">
-      <div class="state-line">
-        <span class="state-dot"></span>
-        <span class="state-text"></span>
-      </div>
-      <div class="meta"></div>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="wordmark">BRSA <span>Registry</span></div>
+      <div class="tag">Public Verification</div>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer class="footer">
-  Behavioral Readiness Standards Authority — Official Public Registry
-</footer>
+  <main class="main">
+    <section class="hero">
+      <div class="kicker">Established · National Standard · Public Registry</div>
+      <h1>The Sovereign Registry of Behavioral and Organizational Readiness</h1>
+      <p class="sub">
+        Enter a BRSA Registry ID to verify readiness status. This lookup returns public-safe fields only.
+        No PII. No internal IDs. No audit payload.
+      </p>
+    </section>
 
-<script src="assets/app.js"></script>
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Verify Readiness</div>
+          <div class="panel-hint">Format: <span class="mono">BRSA-26-3MU364EP</span></div>
+        </div>
+        <div class="status-pill" id="statusPill">Idle</div>
+      </div>
+
+      <form class="lookup" id="lookupForm" autocomplete="off">
+        <input
+          id="ridInput"
+          class="lookup-input mono"
+          placeholder="BRSA-YY-XXXXXXXX"
+          inputmode="text"
+          autocapitalize="characters"
+          spellcheck="false"
+        />
+        <button class="lookup-btn" type="submit">Lookup</button>
+      </form>
+
+      <div class="result" id="result" aria-live="polite">
+        <div class="result-top">
+          <div class="state">
+            <span class="dot" id="stateDot"></span>
+            <span class="state-label mono" id="stateLabel">—</span>
+          </div>
+          <div class="headline" id="headline">Enter a Registry ID to verify.</div>
+        </div>
+
+        <div class="kv">
+          <div class="kv-row">
+            <div class="kv-k mono">registry_id</div>
+            <div class="kv-v mono" id="kv_registry_id">—</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-k mono">readiness_state</div>
+            <div class="kv-v mono" id="kv_readiness_state">—</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-k mono">status</div>
+            <div class="kv-v mono" id="kv_status">—</div>
+          </div>
+          <div class="kv-row">
+            <div class="kv-k mono">last_updated_at</div>
+            <div class="kv-v mono" id="kv_last_updated_at">—</div>
+          </div>
+        </div>
+
+        <div class="disclaimer mono">
+          This registry endpoint is public-safe by design. If a record exists, only readiness fields are returned.
+        </div>
+      </div>
+
+      <div class="config mono" id="configNote"></div>
+    </section>
+
+    <footer class="footer mono">
+      BRSA Registry · Public Verification Service
+    </footer>
+  </main>
+
+  <script defer src="assets/app.js"></script>
 </body>
 </html>
