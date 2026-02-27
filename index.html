@@ -132,33 +132,71 @@
     .nav-toggle {
       display: none;
       background: none;
-      border: none;
+      border: 1px solid var(--rule-line);
       cursor: pointer;
-      padding: 8px;
+      padding: 12px 16px;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
+      min-width: 48px;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
     }
 
     .nav-toggle span {
       display: block;
-      width: 22px;
-      height: 1px;
+      width: 24px;
+      height: 2px;
       background: var(--federal-white);
+      transition: background 0.2s;
+    }
+
+    /* Mobile nav overlay */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0; bottom: 0;
+      background: rgba(10,22,40,0.95);
+      z-index: 99;
+      flex-direction: column;
+      padding: var(--space-lg) var(--space-md);
+      gap: 0;
+    }
+
+    .nav-overlay.open { display: flex; }
+
+    .nav-overlay a {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--federal-white-dim);
+      text-decoration: none;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule-line);
+      display: block;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-overlay a:hover,
+    .nav-overlay a:active { color: var(--federal-white); }
+
+    .nav-overlay .nav-cta-mobile {
+      margin-top: var(--space-lg);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sovereign-blue) !important;
+      background: var(--federal-white);
+      padding: 16px var(--space-md);
+      text-align: center;
+      border-bottom: none !important;
     }
 
     @media (max-width: 768px) {
-      .nav-links { display: none; }
+      .nav-links { display: none !important; }
       .nav-toggle { display: flex; }
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 64px; left: 0; right: 0;
-        background: var(--sovereign-blue);
-        border-bottom: 1px solid var(--rule-line);
-        padding: var(--space-md);
-        gap: var(--space-sm);
-      }
     }
 
     /* ── PAGES ── */
@@ -708,6 +746,20 @@
   </div>
 </nav>
 
+<!-- Mobile nav overlay -->
+<div class="nav-overlay" id="navOverlay">
+  <a href="#" onclick="showPage('home')">Home</a>
+  <a href="#" onclick="showPage('mandate')">Mandate</a>
+  <a href="#" onclick="showPage('doctrine')">Doctrine</a>
+  <a href="#" onclick="showPage('registry')">Registry</a>
+  <a href="#" onclick="showPage('evaluators')">Evaluators</a>
+  <a href="#" onclick="showPage('contact')">Contact</a>
+  <a href="#" class="nav-cta-mobile" onclick="showPage('registry')">Verify Readiness</a>
+</div>
+
+
+  
+
 <!-- ══════════════════════════════════════════
      PAGE: HOME
 ══════════════════════════════════════════ -->
@@ -716,25 +768,4 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <p class="hero-eyebrow">Established · National Standard · Public Registry</p>
-      <h1 class="hero-headline">The Sovereign Registry of Behavioral and Organizational Readiness</h1>
-      <p class="hero-subheadline">The BRSA establishes, maintains, and verifies the readiness standing of individuals and institutions against a national behavioral standard. Readiness is not assumed. It is assessed, recorded, and publicly accountable.</p>
-      <div class="hero-actions">
-        <a href="#" class="btn-primary" onclick="showPage('registry')">Verify Readiness</a>
-        <a href="#" class="btn-ghost" onclick="showPage('mandate')">Read the Mandate</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- What is the Registry -->
-  <section class="section">
-    <div class="container">
-      <p class="section-label">What the Registry Is</p>
-      <h2 class="section-title">A permanent public record of verified readiness standing</h2>
-      <p class="section-body">The BRSA Registry is the authoritative national record of readiness verification. Each entry reflects a formal assessment against the FRARI standard — the Federal Readiness and Readiness Index — conducted by a credentialed BRSA evaluator.</p>
-      <p class="section-body mt-md">Registry entries are not self-reported. They are not assumed. They are assessed, scored, and assigned a canonical state. That state is publicly verifiable at any time.</p>
-      <div class="grid-3">
-        <div class="grid-card">
-          <p class="grid-card-num">01</p>
-          <h3 class="grid-card-title">Assessed</h3>
-          <p class="grid-card-body">Every read
+      <p class="hero-eyebrow">Established · National Standard · Public Registry</
