@@ -1,199 +1,179 @@
-/* BRSA Registry — Institutional Stylesheet
-   File: /assets/styles.css
-   Purpose: Sovereign, minimal, mobile-safe, no framework dependency
-*/
-
 :root{
-  --sovereign-blue:#0A1628;
-  --sovereign-blue-mid:#0F1E38;
-  --sovereign-blue-lit:#1E2D45;
-  --federal-white:#F5F5F0;
-  --federal-white-dim:rgba(245,245,240,.65);
-  --federal-white-faint:rgba(245,245,240,.18);
-  --institutional-gray:#6B7280;
-  --rule-line:#1E2D45;
+  --bg:#0A1628;
+  --bg2:#0F1E38;
+  --line:#1E2D45;
+  --text:#F5F5F0;
+  --dim:rgba(245,245,240,.65);
+  --muted:#6B7280;
 
-  --readiness-green:#1A6B3A;
-  --readiness-yellow:#B58A00;
-  --readiness-red:#8B1A1A;
+  --green:#1A6B3A;
+  --yellow:#B58A00;
+  --red:#8B1A1A;
 
-  --max-width:1120px;
-  --space-xs:8px;
-  --space-sm:16px;
-  --space-md:32px;
-  --space-lg:64px;
-  --space-xl:120px;
-
-  --font-serif:'Playfair Display', Georgia, serif;
-  --font-sans:'IBM Plex Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  --font-mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --serif:"Playfair Display", Georgia, serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  background:var(--sovereign-blue);
-  color:var(--federal-white);
-  font-family:var(--font-sans);
-  line-height:1.6;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
 }
 
-a{color:inherit}
-.container{
-  max-width:var(--max-width);
-  margin:0 auto;
-  padding:0 var(--space-md);
-}
+.mono{font-family:var(--mono)}
 
-/* NAV */
 .nav{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:var(--sovereign-blue);
-  border-bottom:1px solid var(--rule-line);
+  position:sticky; top:0; z-index:50;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
 }
 .nav-inner{
-  height:64px;
+  max-width:980px;
+  margin:0 auto;
+  padding:16px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:12px;
 }
 .wordmark{
-  font-family:var(--font-serif);
+  font-family:var(--serif);
+  font-size:18px;
   font-weight:700;
   letter-spacing:.02em;
 }
-.wordmark span{color:var(--federal-white-dim); font-weight:400}
-
-.main{padding-bottom:var(--space-xl)}
-
-/* HERO */
-.hero{
-  padding:var(--space-xl) 0 var(--space-lg);
-  border-bottom:1px solid var(--rule-line);
-}
-.eyebrow{
-  font-family:var(--font-mono);
-  font-size:11px;
-  letter-spacing:.16em;
+.wordmark span{color:var(--dim); font-weight:500}
+.tag{
+  font-size:12px;
+  letter-spacing:.12em;
   text-transform:uppercase;
-  color:var(--federal-white-dim);
-  margin:0 0 var(--space-md);
-}
-.h1{
-  font-family:var(--font-serif);
-  font-size:clamp(34px, 5vw, 64px);
-  line-height:1.08;
-  margin:0 0 var(--space-md);
-}
-.subhead{
-  margin:0 0 var(--space-lg);
-  font-size:18px;
-  font-weight:300;
-  color:var(--federal-white-dim);
-  max-width:720px;
+  color:var(--dim);
 }
 
-/* LOOKUP */
-.card{
-  border:1px solid var(--rule-line);
-  background:rgba(15,30,56,.25);
-  padding:var(--space-md);
+.main{max-width:980px; margin:0 auto; padding:28px 20px 60px}
+.hero{padding:18px 0 22px; border-bottom:1px solid var(--line)}
+.kicker{
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:12px;
 }
-.lookup-row{
+h1{
+  margin:0 0 10px;
+  font-family:var(--serif);
+  font-size:38px;
+  line-height:1.1;
+}
+.sub{margin:0; color:var(--dim); max-width:720px; line-height:1.7}
+
+.panel{
+  margin-top:22px;
+  border:1px solid var(--line);
+  background:rgba(15,30,56,.35);
+  padding:18px;
+}
+.panel-head{
   display:flex;
-  gap:0;
-  border:1px solid var(--rule-line);
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:14px;
+}
+.panel-title{
+  font-family:var(--serif);
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:4px;
+}
+.panel-hint{color:var(--muted); font-size:13px}
+.status-pill{
+  border:1px solid var(--line);
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--dim);
+  white-space:nowrap;
+}
+
+.lookup{
+  display:flex;
+  border:1px solid var(--line);
+  background:var(--bg2);
 }
 .lookup-input{
   flex:1;
   border:0;
-  outline:0;
-  padding:16px var(--space-sm);
-  background:var(--sovereign-blue-mid);
-  color:var(--federal-white);
-  font-family:var(--font-mono);
+  background:transparent;
+  color:var(--text);
+  padding:14px 12px;
   font-size:15px;
+  outline:none;
 }
-.lookup-input::placeholder{color:var(--institutional-gray)}
+.lookup-input::placeholder{color:var(--muted)}
 .lookup-btn{
   border:0;
-  cursor:pointer;
-  padding:16px var(--space-md);
-  background:var(--federal-white);
-  color:var(--sovereign-blue);
-  font-family:var(--font-sans);
-  font-size:12px;
+  background:var(--text);
+  color:var(--bg);
   font-weight:700;
-  letter-spacing:.12em;
+  padding:14px 14px;
+  cursor:pointer;
+  letter-spacing:.08em;
   text-transform:uppercase;
-  white-space:nowrap;
+  font-size:12px;
 }
 .lookup-btn:disabled{opacity:.6; cursor:not-allowed}
 
 .result{
-  margin-top:var(--space-md);
-  border-top:1px solid var(--rule-line);
-  padding-top:var(--space-md);
-  display:none;
+  margin-top:16px;
+  border-top:1px solid var(--line);
+  padding-top:16px;
 }
-.result.visible{display:block}
-
-.state{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
+.result-top{display:flex; flex-direction:column; gap:8px}
+.state{display:flex; align-items:center; gap:10px}
 .dot{
   width:10px;height:10px;border-radius:50%;
+  background:var(--muted);
 }
-.dot.green{background:var(--readiness-green)}
-.dot.yellow{background:var(--readiness-yellow)}
-.dot.red{background:var(--readiness-red)}
-.state-label{
-  font-family:var(--font-mono);
-  font-size:12px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-.state-label.green{color:var(--readiness-green)}
-.state-label.yellow{color:var(--readiness-yellow)}
-.state-label.red{color:var(--readiness-red)}
+.state-label{letter-spacing:.12em; text-transform:uppercase; font-size:12px}
+.headline{font-size:16px; color:var(--dim)}
 
-.meta{
-  color:var(--federal-white-dim);
-  font-size:14px;
-}
-.kv{
+.kv{margin-top:14px; display:grid; gap:10px}
+.kv-row{
   display:grid;
-  grid-template-columns:180px 1fr;
-  gap:10px 16px;
-  margin-top:12px;
+  grid-template-columns:160px 1fr;
+  gap:12px;
+  border-bottom:1px solid rgba(30,45,69,.7);
+  padding-bottom:10px;
 }
-.kv div{
-  padding:8px 0;
-  border-bottom:1px solid rgba(30,45,69,.6);
-}
-.k{font-family:var(--font-mono); color:var(--institutional-gray); font-size:12px; letter-spacing:.06em}
-.v{color:var(--federal-white); font-size:14px}
+.kv-k{color:var(--muted); font-size:12px; letter-spacing:.10em; text-transform:uppercase}
+.kv-v{color:var(--text); font-size:13px; overflow-wrap:anywhere}
 
 .disclaimer{
-  margin-top:var(--space-md);
-  padding-top:var(--space-sm);
-  border-top:1px solid var(--rule-line);
-  font-family:var(--font-mono);
+  margin-top:14px;
+  color:var(--muted);
   font-size:11px;
-  color:var(--institutional-gray);
   letter-spacing:.06em;
 }
+.config{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.04em;
+}
 
-/* MOBILE */
-@media (max-width:720px){
-  .kv{grid-template-columns:1fr}
-  .lookup-btn{padding:16px 18px}
-  }
+.footer{
+  margin-top:26px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.08em;
+}
