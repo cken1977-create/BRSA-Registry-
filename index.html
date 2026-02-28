@@ -3,101 +3,700 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BRSA Registry — Public Verification</title>
-  <meta name="description" content="Verify BRSA readiness standing by Registry ID. Public-safe fields only." />
-
-  <!-- Put your API base here (NO trailing slash). Example:
-       https://legacyline-core-production.up.railway.app
-  -->
-  <meta name="brsa-api-base" content="https://legacyline-core-production.up.railway.app" />
+  <title>BRSA Registry — Behavioral Readiness Standards Authority</title>
+  <meta name="description" content="The national registry of behavioral and organizational readiness. Verify standing. Enter the standard." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    /* ── TOKENS ───────────────────────────────────────────────── */
+    :root {
+      --navy:   #08111F;
+      --navy2:  #0D1B2E;
+      --navy3:  #142338;
+      --line:   rgba(255,255,255,.09);
+      --line2:  rgba(255,255,255,.05);
+      --text:   #F0EDE8;
+      --dim:    rgba(240,237,232,.62);
+      --faint:  rgba(240,237,232,.38);
+      --gold:   #C9A84C;
+      --gold2:  #E8C96A;
+      --green:  #2D7D52;
+      --yellow: #9B7A1A;
+      --red:    #8B2535;
+      --blue:   #2563EB;
+
+      --serif: "DM Serif Display", Georgia, serif;
+      --sans:  "DM Sans", system-ui, -apple-system, sans-serif;
+      --mono:  "DM Mono", ui-monospace, monospace;
+
+      --max: 1080px;
+      --pad: clamp(18px, 5vw, 48px);
+    }
+
+    /* ── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--sans); }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8,17,31,.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-mark {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), #8B6914);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 400;
+      flex-shrink: 0;
+    }
+    .nav-wordmark {
+      font-family: var(--serif);
+      font-size: 17px;
+      letter-spacing: .01em;
+      color: var(--text);
+    }
+    .nav-wordmark span { color: var(--dim); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-link {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--dim);
+      transition: color .15s, background .15s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .nav-link.active { color: var(--text); }
+    .nav-cta {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity .15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: .88; }
+    .nav-mobile-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--text);
+    }
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-mobile-btn { display: flex; }
+    }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding-top: 60px;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Topology / grid background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-bg svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: .07;
+    }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .hero-glow-1 {
+      width: 800px; height: 500px;
+      top: -100px; left: -200px;
+      background: radial-gradient(ellipse, rgba(201,168,76,.18), transparent 70%);
+    }
+    .hero-glow-2 {
+      width: 600px; height: 400px;
+      top: 200px; right: -100px;
+      background: radial-gradient(ellipse, rgba(37,99,235,.12), transparent 70%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: clamp(60px,10vh,120px) var(--pad) 60px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-line {
+      width: 32px; height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .hero-eyebrow-text {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 1.04;
+      letter-spacing: -.01em;
+      max-width: 820px;
+      margin-bottom: 24px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--dim);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    /* ── LOOKUP BOX ──────────────────────────────────────────── */
+    .lookup-section {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 680px;
+      backdrop-filter: blur(8px);
+    }
+    .lookup-label {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .lookup-form {
+      display: flex;
+      gap: 10px;
+    }
+    .lookup-input {
+      flex: 1;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color .2s;
+      min-width: 0;
+    }
+    .lookup-input::placeholder { color: var(--faint); }
+    .lookup-input:focus { border-color: rgba(201,168,76,.5); }
+    .lookup-btn {
+      padding: 14px 22px;
+      border-radius: 12px;
+      border: none;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: opacity .15s, transform .08s;
+      flex-shrink: 0;
+    }
+    .lookup-btn:hover { opacity: .88; }
+    .lookup-btn:active { transform: scale(.98); }
+    .lookup-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    @media (max-width: 500px) {
+      .lookup-form { flex-direction: column; }
+      .lookup-btn { width: 100%; }
+    }
+
+    /* Result card */
+    .lookup-result {
+      margin-top: 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: none;
+    }
+    .lookup-result.visible { display: block; }
+    .result-bar {
+      height: 4px;
+      background: var(--faint);
+    }
+    .result-bar.GREEN { background: var(--green); }
+    .result-bar.YELLOW { background: var(--yellow); }
+    .result-bar.RED { background: var(--red); }
+    .result-body { padding: 16px; }
+    .result-state {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .state-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--faint);
+      flex-shrink: 0;
+    }
+    .state-dot.GREEN { background: #2D9B63; box-shadow: 0 0 0 4px rgba(45,155,99,.15); }
+    .state-dot.YELLOW { background: #C9A130; box-shadow: 0 0 0 4px rgba(201,161,48,.15); }
+    .state-dot.RED { background: #C0303F; box-shadow: 0 0 0 4px rgba(192,48,63,.15); }
+    .state-label {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 480px) { .result-grid { grid-template-columns: 1fr; } }
+    .result-field { }
+    .result-field-k {
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 3px;
+    }
+    .result-field-v {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+    .result-msg {
+      font-size: 13px;
+      color: var(--dim);
+      font-style: italic;
+    }
+
+    /* ── PILLARS ─────────────────────────────────────────────── */
+    .pillars {
+      background: var(--navy2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .pillars-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px var(--pad);
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--dim);
+      font-size: 16px;
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 52px;
+    }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    @media (max-width: 720px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+    .pillar {
+      background: var(--navy2);
+      padding: 32px 28px;
+      transition: background .2s;
+    }
+    .pillar:hover { background: var(--navy3); }
+    .pillar-num {
+      font-family: var(--serif);
+      font-size: 48px;
+      color: rgba(201,168,76,.18);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .pillar-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .pillar-body {
+      font-size: 14px;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* ── STATES ──────────────────────────────────────────────── */
+    .states-section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px var(--pad);
+    }
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    @media (max-width: 720px) {
+      .states-grid { grid-template-columns: 1fr; }
+    }
+    .state-card {
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .state-card-bar { height: 5px; }
+    .state-card-bar.green { background: linear-gradient(90deg, #1A5C3A, #2D9B63); }
+    .state-card-bar.yellow { background: linear-gradient(90deg, #7A5C10, #C9A130); }
+    .state-card-bar.red { background: linear-gradient(90deg, #6B1A22, #C0303F); }
+    .state-card-body { padding: 24px; }
+    .state-card-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .state-card-label.green { color: #2D9B63; }
+    .state-card-label.yellow { color: #C9A130; }
+    .state-card-label.red { color: #C0303F; }
+    .state-card-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .state-card-desc {
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* ── CTA BAND ────────────────────────────────────────────── */
+    .cta-band {
+      background: var(--navy2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .cta-band-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 72px var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .cta-band-text { }
+    .cta-band-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 36px);
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+    .cta-band-sub {
+      color: var(--dim);
+      font-size: 15px;
+      max-width: 480px;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+    .cta-band-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 24px;
+      border-radius: 10px;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      transition: opacity .15s;
+      white-space: nowrap;
+    }
+    .btn-gold:hover { opacity: .88; }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 24px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.18);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.28);
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--line);
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 36px var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--dim);
+    }
+    .footer-legal {
+      font-size: 12px;
+      color: var(--faint);
+      font-family: var(--mono);
+      letter-spacing: .04em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-link {
+      font-size: 12px;
+      color: var(--faint);
+      transition: color .15s;
+    }
+    .footer-link:hover { color: var(--dim); }
+  </style>
 </head>
 
 <body>
+
+  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
-      <div class="wordmark">BRSA <span>Registry</span></div>
-      <div class="tag">Public Verification</div>
+      <a href="index.html" class="nav-brand">
+        <div class="nav-mark">B</div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" id="mobileMenuBtn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </header>
 
-  <main class="main">
-    <section class="hero">
-      <div class="kicker">Established · National Standard · Public Registry</div>
-      <h1>The Sovereign Registry of Behavioral and Organizational Readiness</h1>
-      <p class="sub">
-        Enter a BRSA Registry ID to verify readiness status. This lookup returns public-safe fields only.
-        No PII. No internal IDs. No audit payload.
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <!-- Subtle topology grid -->
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width=".5"/>
+          </pattern>
+          <radialGradient id="fade" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="white" stop-opacity="1"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </radialGradient>
+          <mask id="gridmask">
+            <rect width="1200" height="800" fill="url(#fade)"/>
+          </mask>
+        </defs>
+        <rect width="1200" height="800" fill="url(#grid)" mask="url(#gridmask)"/>
+      </svg>
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <div class="hero-eyebrow-text">Established · National Standard · Sovereign Registry</div>
+      </div>
+
+      <h1 class="hero-headline">
+        The standard for<br>
+        <em>behavioral readiness</em><br>
+        is now public.
+      </h1>
+
+      <p class="hero-sub">
+        BRSA is the governing authority for behavioral and organizational readiness.
+        Every Registry ID is a permanent, verifiable record of presence and standing.
       </p>
-    </section>
 
-    <section class="panel">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">Verify Readiness</div>
-          <div class="panel-hint">Format: <span class="mono">BRSA-26-3MU364EP</span></div>
+      <!-- REGISTRY LOOKUP -->
+      <div class="lookup-section">
+        <div class="lookup-label">Verify Registry Standing</div>
+        <div class="lookup-form">
+          <input
+            id="ridInput"
+            class="lookup-input"
+            type="text"
+            placeholder="BRSA-26-XXXXXXXX"
+            autocapitalize="characters"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="lookup-btn" id="lookupBtn">Verify</button>
         </div>
-        <div class="status-pill" id="statusPill">Idle</div>
-      </div>
-
-      <form class="lookup" id="lookupForm" autocomplete="off">
-        <input
-          id="ridInput"
-          class="lookup-input mono"
-          placeholder="BRSA-YY-XXXXXXXX"
-          inputmode="text"
-          autocapitalize="characters"
-          spellcheck="false"
-        />
-        <button class="lookup-btn" type="submit">Lookup</button>
-      </form>
-
-      <div class="result" id="result" aria-live="polite">
-        <div class="result-top">
-          <div class="state">
-            <span class="dot" id="stateDot"></span>
-            <span class="state-label mono" id="stateLabel">—</span>
-          </div>
-          <div class="headline" id="headline">Enter a Registry ID to verify.</div>
-        </div>
-
-        <div class="kv">
-          <div class="kv-row">
-            <div class="kv-k mono">registry_id</div>
-            <div class="kv-v mono" id="kv_registry_id">—</div>
-          </div>
-          <div class="kv-row">
-            <div class="kv-k mono">readiness_state</div>
-            <div class="kv-v mono" id="kv_readiness_state">—</div>
-          </div>
-          <div class="kv-row">
-            <div class="kv-k mono">status</div>
-            <div class="kv-v mono" id="kv_status">—</div>
-          </div>
-          <div class="kv-row">
-            <div class="kv-k mono">last_updated_at</div>
-            <div class="kv-v mono" id="kv_last_updated_at">—</div>
-          </div>
-        </div>
-
-        <div class="disclaimer mono">
-          This registry endpoint is public-safe by design. If a record exists, only readiness fields are returned.
+        <div class="lookup-result" id="lookupResult">
+          <div class="result-bar" id="resultBar"></div>
+          <div class="result-body" id="resultBody"></div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="config mono" id="configNote"></div>
-    </section>
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="pillars-inner">
+      <div class="section-eyebrow">What BRSA Does</div>
+      <h2 class="section-title">A new category of authority</h2>
+      <p class="section-sub">
+        BRSA was built because behavioral readiness had no standard.
+        We created one — deterministic, auditable, and permanent.
+      </p>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-title">Registry of Presence</div>
+          <div class="pillar-body">
+            Every individual and organization that enters the system receives a permanent
+            Registry ID. Presence is immutable. It cannot be revoked.
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-title">Readiness Assessment</div>
+          <div class="pillar-body">
+            Readiness is computed through the FRARI ruleset — deterministic,
+            evidence-based, and governed. No sentiment. No subjectivity.
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-title">Public Verification</div>
+          <div class="pillar-body">
+            Anyone can verify a Registry ID. The public record returns readiness state
+            only — no PII, no internal audit data, no private fields.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer class="footer mono">
-      BRSA Registry · Public Verification Service
-    </footer>
-  </main>
-
-  <script defer src="assets/app.js"></script>
-</body>
-</html>
+  <!-- READINESS STATES -->
+  <section class="states-section">
+    <div class="section-e
