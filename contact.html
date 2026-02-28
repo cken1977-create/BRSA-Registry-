@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA Registry — Contact & Evaluator Onboarding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-mark">B</div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">Evaluators & Partners</div>
+      <h1 class="page-title">Contact BRSA</h1>
+      <p class="page-sub">For evaluator accreditation inquiries, institutional partnerships, and governance questions. This is a high-gravity entry point — read the requirements before submitting.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#role" class="toc-link">Evaluator Role</a>
+          <a href="#eligibility" class="toc-link">Eligibility</a>
+          <a href="#request" class="toc-link">Request Form</a>
+          <a href="#expectations" class="toc-link">Expectations</a>
+          <a href="#pathway" class="toc-link">Accreditation Pathway</a>
+        </nav>
+      </aside>
+
+      <article class="prose">
+
+        <section id="role" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">The Evaluator Role</h2>
+          <p>BRSA evaluators are the practitioners of the standard. They conduct assessments, gather evidence, apply the FRARI ruleset, and publish findings to the registry. The evaluator role is the most consequential position in the BRSA ecosystem — every readiness determination that reaches the public record passes through an accredited evaluator.</p>
+          <p>Evaluators are not employees of BRSA. They are accredited practitioners who have demonstrated competence with the standard, committed to the governance framework, and accepted the ethical obligations of the role.</p>
+          <blockquote class="prose-quote">
+            "An evaluator's signature on a readiness finding is a statement of professional and institutional integrity. We treat it accordingly."
+          </blockquote>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="eligibility" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">Eligibility Requirements</h2>
+          <p>BRSA evaluator accreditation is not open to everyone. The following baseline requirements apply to all applicants during the pilot phase:</p>
+          <ul class="prose-list">
+            <li>Demonstrated professional background in behavioral assessment, social work, case management, counseling, legal advocacy, or a related discipline</li>
+            <li>Familiarity with structured documentation and evidence standards</li>
+            <li>No active conflicts of interest with subjects you would assess</li>
+            <li>Willingness to complete the BRSA evaluator training program</li>
+            <li>Commitment to the BRSA governance framework and publication rules</li>
+          </ul>
+          <p>Institutional partners — organizations that wish to integrate BRSA assessments into their service delivery — have a separate pathway. Include your organization's name and mission in your submission.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="request" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">Evaluator Onboarding Request</h2>
+          <p>Submit your contact information and a brief statement of your background. BRSA will respond within 5 business days. During the pilot phase, capacity is limited.</p>
+
+          <div id="contactForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf_name">Full Name *</label>
+                <input id="cf_name" type="text" placeholder="Your full name" />
+              </div>
+              <div class="form-field">
+                <label for="cf_title">Professional Title</label>
+                <input id="cf_title" type="text" placeholder="e.g. Licensed Social Worker" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf_email">Email Address *</label>
+                <input id="cf_email" type="email" placeholder="your@email.com" />
+              </div>
+              <div class="form-field">
+                <label for="cf_org">Organization (if applicable)</label>
+                <input id="cf_org" type="text" placeholder="Organization name" />
+              </div>
+            </div>
+            <div class="form-field" style="margin-top:14px">
+              <label for="cf_type">Inquiry Type *</label>
+              <select id="cf_type">
+                <option value="">Select…</option>
+                <option value="evaluator">Evaluator Accreditation</option>
+                <option value="partner">Institutional Partnership</option>
+                <option value="governance">Governance Question</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-field" style="margin-top:14px">
+              <label for="cf_statement">Brief Statement *</label>
+              <textarea id="cf_statement" rows="5" placeholder="Describe your background, your interest in BRSA, and what you hope to contribute to or gain from the evaluator program."></textarea>
+            </div>
+
+            <div id="cf_error" class="form-error" style="display:none"></div>
+            <div id="cf_success" class="form-success" style="display:none">
+              <strong>Submission received.</strong> BRSA will contact you at the email provided within 5 business days.
+            </div>
+
+            <button id="cf_submit" class="btn-submit">Submit Request</button>
+            <p class="submit-note">This form does not create a registry record. To enter the registry as an individual, use <a href="onboard.html">Individual Intake</a>.</p>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="expectations" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">Governance & Compliance Expectations</h2>
+          <ul class="prose-list">
+            <li>All assessments must be conducted in accordance with the current published FRARI ruleset</li>
+            <li>Evidence must be gathered with the explicit, documented consent of the subject</li>
+            <li>Findings may not be published to the registry without completing the full assessment lifecycle</li>
+            <li>Evaluators must recuse themselves from any assessment where a conflict of interest exists</li>
+            <li>Violations of the governance framework result in immediate suspension of accreditation pending review</li>
+          </ul>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="pathway" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Accreditation Pathway</h2>
+          <div class="lifecycle-steps">
+            <div class="lifecycle-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <div class="step-title">Application Review</div>
+                <div class="step-body">BRSA reviews your background statement and eligibility. Response within 5 business days.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <div class="step-title">Evaluator Training</div>
+                <div class="step-body">Completion of the BRSA evaluator training program, covering the FRARI ruleset, assessment lifecycle, and publication rules.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <div class="step-title">Supervised Assessment</div>
+                <div class="step-body">Completion of at least one supervised assessment reviewed by a senior BRSA evaluator.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <div class="step-title">Accreditation Issued</div>
+                <div class="step-body">Evaluator accreditation is issued. You are authorized to conduct independent assessments and publish findings to the registry.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    const btn = document.getElementById("cf_submit");
+    const errEl = document.getElementById("cf_error");
+    const successEl = document.getElementById("cf_success");
+
+    function val(id){ return (document.getElementById(id)?.value || "").trim(); }
+    function showErr(msg){ errEl.textContent = msg; errEl.style.display = "block"; }
+    function clearErr(){ errEl.style.display = "none"; errEl.textContent = ""; }
+
+    btn.addEventListener("click", function(){
+      clearErr();
+      const name = val("cf_name");
+      const email = val("cf_email");
+      const type = val("cf_type");
+      const statement = val("cf_statement");
+
+      if(!name) return showErr("Full name is required.");
+      if(!email || !email.includes("@")) return showErr("A valid email address is required.");
+      if(!type) return showErr("Please select an inquiry type.");
+      if(!statement || statement.length < 40) return showErr("Please provide a brief statement of at least 40 characters.");
+
+      // In pilot phase: show success without sending anywhere.
+      // Wire to email/backend when ready.
+      btn.disabled = true;
+      btn.textContent = "Submitting…";
+      setTimeout(function(){
+        document.getElementById("contactForm").style.opacity = ".5";
+        document.getElementById("contactForm").style.pointerEvents = "none";
+        successEl.style.display = "block";
+      }, 800);
+    });
+  })();
+  </script>
+</body>
+    </html>
+    
