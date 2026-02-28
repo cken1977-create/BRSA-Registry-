@@ -1,116 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>BRSA — Individual Onboarding</title>
-<style>
-body {
-  font-family: Inter, system-ui, sans-serif;
-  background: #ffffff;
-  color: #000;
-  margin: 0;
-  padding: 40px 24px;
-}
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-}
-h1 {
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 16px;
-}
-p {
-  opacity: 0.7;
-  line-height: 1.5;
-}
-button {
-  margin-top: 32px;
-  padding: 12px 24px;
-  font-size: 16px;
-  background: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-button:disabled {
-  opacity: 0.4;
-}
-.result {
-  margin-top: 40px;
-  padding: 24px;
-  border: 1px solid rgba(0,0,0,0.2);
-}
-.code {
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 12px;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BRSA — Individual Onboarding</title>
+  <style>
+    :root{
+      --foreground:#000;
+      --background:#fff;
+      --border: rgba(0,0,0,.2);
+      --text-secondary: rgba(0,0,0,.7);
+    }
+    body{
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      margin:0;
+      padding:40px 24px;
+    }
+    .container{
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1{
+      font-size: 28px;
+      font-weight: 500;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.01em;
+    }
+    p{
+      margin: 0 0 16px 0;
+      opacity: .85;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    button{
+      margin-top: 24px;
+      padding: 14px 22px;
+      font-size: 16px;
+      background: #000;
+      color:#fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 0;
+    }
+    button:disabled{ opacity:.4; cursor: not-allowed; }
+    .result, .error, .debug{
+      margin-top: 28px;
+      padding: 18px;
+      border: 1px solid var(--border);
+    }
+    .result strong{ display:block; margin-bottom: 10px; }
+    .code{
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin: 8px 0 10px 0;
+      word-break: break-word;
+    }
+    .muted{
+      font-size: 13px;
+      opacity: .7;
+      line-height: 1.5;
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .ghost{
+      background: transparent;
+      border: 1px solid var(--border);
+      color:#000;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      opacity: .8;
+    }
+    pre{
+      margin: 10px 0 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      line-height: 1.4;
+      opacity:.85;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>Enter the Behavioral Readiness System</h1>
-  <p>
-    This brief, consent-based intake issues a BRSA Registry ID immediately.
-    No accounts. No passwords. Your presence is recorded; your readiness is governed.
-  </p>
+  <div class="container">
+    <h1>Enter the Behavioral Readiness System</h1>
+    <p>
+      This brief, consent-based intake issues a BRSA Registry ID immediately.
+      No accounts. No passwords. Your presence is recorded; your readiness is governed.
+    </p>
 
-  <button id="beginBtn">Begin Onboarding</button>
+    <button id="beginBtn" type="button">Begin Onboarding</button>
 
-  <div id="result" class="result" style="display:none;">
-    <strong>Your BRSA Registry ID</strong>
-    <div id="registryId" class="code"></div>
-    <p>Save this ID. It is your presence in the Behavioral Readiness Registry.</p>
+    <div id="result" class="result" style="display:none;">
+      <strong>Your BRSA Registry ID</strong>
+      <div id="registryId" class="code"></div>
+      <div class="row">
+        <button id="copyBtn" class="ghost" type="button">Copy ID</button>
+        <span id="copyStatus" class="pill" style="display:none;"></span>
+      </div>
+      <p class="muted" style="margin-top:12px;">
+        Save this ID. It is your presence in the Behavioral Readiness Registry.
+      </p>
+      <p class="muted">
+        Next: an evaluator may contact you to begin governed evidence collection.
+      </p>
+    </div>
+
+    <div id="error" class="error" style="display:none;">
+      <strong>Onboarding error</strong>
+      <div id="errorMsg" class="muted"></div>
+      <pre id="errorDetails"></pre>
+    </div>
+
+    <div id="debug" class="debug" style="display:none;">
+      <strong>Debug</strong>
+      <div class="muted">This is only for us while wiring. Remove later.</div>
+      <pre id="debugOut"></pre>
+    </div>
   </div>
-</div>
 
 <script>
-const API_BASE = "https://legacyline-core-production.up.railway.app";
+(function () {
+  // ✅ Your live API base
+  const API_BASE = "https://legacyline-core-production.up.railway.app";
 
-const btn = document.getElementById("beginBtn");
-const result = document.getElementById("result");
-const registryIdEl = document.getElementById("registryId");
+  const btn = document.getElementById("beginBtn");
+  const result = document.getElementById("result");
+  const registryIdEl = document.getElementById("registryId");
 
-btn.addEventListener("click", async () => {
-  btn.disabled = true;
-  btn.textContent = "Processing...";
+  const errBox = document.getElementById("error");
+  const errMsg = document.getElementById("errorMsg");
+  const errDetails = document.getElementById("errorDetails");
 
-  try {
-    const createRes = await fetch(\`\${API_BASE}/participants\`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: "{}"
-    });
+  const dbg = document.getElementById("debug");
+  const dbgOut = document.getElementById("debugOut");
 
-    if (!createRes.ok) throw new Error("create failed");
+  const copyBtn = document.getElementById("copyBtn");
+  const copyStatus = document.getElementById("copyStatus");
 
-    const createData = await createRes.json();
-    const participantId = createData.participant_id;
-    const registryId = createData.registry_id;
-
-    const consentRes = await fetch(\`\${API_BASE}/participants/\${participantId}/consents\`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        consent_type: "registry_public_presence",
-        version: "v1.0"
-      })
-    });
-
-    if (!consentRes.ok) throw new Error("consent failed");
-
-    registryIdEl.textContent = registryId;
-    result.style.display = "block";
-    btn.style.display = "none";
-
-  } catch (err) {
-    alert("Onboarding error. Please try again.");
-    btn.disabled = false;
-    btn.textContent = "Begin Onboarding";
+  function showError(message, details) {
+    errBox.style.display = "block";
+    errMsg.textContent = message || "Unknown error.";
+    errDetails.textContent = details ? String(details) : "";
   }
-});
+
+  function setDebug(obj) {
+    dbg.style.display = "block";
+    try { dbgOut.textContent = JSON.stringify(obj, null, 2); }
+    catch { dbgOut.textContent = String(obj); }
+  }
+
+  async function safeJson(res) {
+    const text = await res.text();
+    try { return { json: JSON.parse(text), text }; }
+    catch { return { json: null, text }; }
+  }
+
+  async function beginOnboarding() {
+    // reset UI
+    errBox.style.display = "none";
+    errMsg.textContent = "";
+    errDetails.textContent = "";
+    // keep debug visible once shown
+
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+
+    try {
+      // Step 1 — Create Participant
+      const createRes = await fetch(`${API_BASE}/participants`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{}"
+      });
+
+      const created = await safeJson(createRes);
+      if (!createRes.ok || !created.json) {
+        throw new Error(`Create failed (${createRes.status}). Body: ${created.text}`);
+      }
+
+      const participantId = created.json.participant_id || created.json.id;
+      const registryId = created.json.registry_id;
+
+      if (!participantId || !registryId) {
+        throw new Error(`Create response missing participant_id or registry_id. Body: ${created.text}`);
+      }
+
+      // Step 2 — Record Consent
+      const consentRes = await fetch(`${API_BASE}/participants/${encodeURIComponent(participantId)}/consents`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          consent_type: "registry_public_presence",
+          version: "v1.0"
+        })
+      });
+
+      const consented = await safeJson(consentRes);
+      if (!consentRes.ok) {
+        throw new Error(`Consent failed (${consentRes.status}). Body: ${consented.text}`);
+      }
+
+      // Step 3 — Display Registry ID
+      registryIdEl.textContent = registryId;
+      result.style.display = "block";
+      btn.style.display = "none";
+
+      // Debug output so we see exactly what happened
+      setDebug({
+        api_base: API_BASE,
+        create_status: createRes.status,
+        create_body: created.json,
+        consent_status: consentRes.status,
+        consent_body: consented.json || consented.text
+      });
+
+    } catch (e) {
+      showError(
+        "Tap failed. This is usually CORS, a route mismatch, or the consent endpoint returning non-200.",
+        e && e.message ? e.message : e
+      );
+      btn.disabled = false;
+      btn.textContent = "Begin Onboarding";
+      setDebug({ api_base: API_BASE, error: (e && e.message) ? e.message : String(e) });
+    }
+  }
+
+  async function copyId() {
+    const text = registryIdEl.textContent || "";
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      copyStatus.style.display = "inline-flex";
+      copyStatus.textContent = "Copied";
+      setTimeout(() => { copyStatus.style.display = "none"; }, 1500);
+    } catch {
+      // Fallback for older mobile browsers
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+
+      copyStatus.style.display = "inline-flex";
+      copyStatus.textContent = "Copied";
+      setTimeout(() => { copyStatus.style.display = "none"; }, 1500);
+    }
+  }
+
+  // Wire events
+  btn.addEventListener("click", beginOnboarding);
+  copyBtn.addEventListener("click", copyId);
+
+})();
 </script>
 </body>
 </html>
