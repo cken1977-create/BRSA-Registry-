@@ -1,341 +1,492 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BRSA — Individual Onboarding</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BRSA — Onboarding</title>
 
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #0b0b0b;
-      --muted: #6a6a6a;
-      --border: rgba(0,0,0,.12);
-      --shadow: 0 1px 0 rgba(0,0,0,.06), 0 8px 30px rgba(0,0,0,.06);
-      --btn: #0b0b0b;
-      --btnText: #ffffff;
-      --dangerBg: #fff3f3;
-      --dangerBorder: rgba(255,0,0,.25);
-    }
+    <style>
+      :root{
+        --bg: #0b0d10;
+        --panel: #0f1318;
+        --panel2:#0c1015;
+        --text: #e9eef5;
+        --muted:#aab4c0;
+        --line:#1a232e;
+        --shadow: 0 14px 40px rgba(0,0,0,.35);
+        --btn:#ffffff;
+        --btnText:#0b0d10;
+        --danger:#ff4d4d;
+        --ok:#18c37e;
+        --warn:#ffd24d;
 
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 40px 18px;
-    }
+        --radius: 18px;
+      }
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body{
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+        background:
+          radial-gradient(1200px 700px at 20% 10%, rgba(255,255,255,.06), transparent 55%),
+          radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,.04), transparent 60%),
+          linear-gradient(180deg, #080a0c 0%, #0b0d10 100%);
+        color: var(--text);
+      }
 
-    h1 {
-      font-size: 42px;
-      line-height: 1.05;
-      margin: 0 0 14px 0;
-      letter-spacing: -0.02em;
-    }
+      .wrap{
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 36px 18px 60px;
+      }
 
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: var(--muted);
-      margin: 0 0 22px 0;
-    }
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom: 18px;
+      }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 0;
-      background: var(--btn);
-      color: var(--btnText);
-      padding: 16px 22px;
-      font-size: 18px;
-      border-radius: 0;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      min-width: 220px;
-    }
+      .mark{
+        width: 34px; height: 34px;
+        border-radius: 12px;
+        background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+        border: 1px solid rgba(255,255,255,.08);
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      }
 
-    .btn:disabled {
-      opacity: .7;
-      cursor: not-allowed;
-    }
+      .brand h1{
+        font-size: 14px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0;
+      }
 
-    .card {
-      margin-top: 18px;
-      border: 1px solid var(--border);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      background: #fff;
-    }
+      .card{
+        background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
 
-    .label {
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+      .cardInner{
+        padding: 26px 22px;
+      }
 
-    .code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 18px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      background: #fafafa;
-      word-break: break-all;
-    }
+      .title{
+        font-size: 34px;
+        line-height: 1.05;
+        margin: 0 0 10px;
+        letter-spacing: -0.02em;
+      }
 
-    .row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
+      .desc{
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.55;
+        max-width: 64ch;
+      }
 
-    .small {
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 10px;
-    }
+      .pillRow{
+        display:flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 14px 0 22px;
+      }
+      .pill{
+        font-size: 12px;
+        color: var(--muted);
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.22);
+        padding: 8px 10px;
+        border-radius: 999px;
+        display:inline-flex;
+        align-items:center;
+        gap: 8px;
+      }
+      .dot{
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.35);
+      }
 
-    .pill {
-      display: none;
-      font-size: 13px;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      background: #f6f6f6;
-    }
+      .actions{
+        display:flex;
+        align-items:center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
 
-    .error {
-      display: none;
-      margin-top: 18px;
-      border: 1px solid var(--dangerBorder);
-      background: var(--dangerBg);
-      padding: 16px;
-    }
+      button{
+        appearance:none;
+        border: 0;
+        border-radius: 14px;
+        padding: 14px 16px;
+        font-size: 15px;
+        font-weight: 650;
+        cursor: pointer;
+        transition: transform .06s ease, opacity .12s ease;
+      }
+      button:active{ transform: translateY(1px); }
+      button[disabled]{ opacity: .55; cursor: not-allowed; }
 
-    .error h3 {
-      margin: 0 0 6px 0;
-      font-size: 18px;
-    }
+      .primary{
+        background: var(--btn);
+        color: var(--btnText);
+        min-width: 220px;
+      }
 
-    .error pre {
-      margin: 10px 0 0 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 14px;
-    }
+      .ghost{
+        background: rgba(255,255,255,.06);
+        color: var(--text);
+        border: 1px solid rgba(255,255,255,.10);
+      }
 
-    .debug {
-      display: none;
-      margin-top: 16px;
-      border: 1px solid var(--border);
-      padding: 16px;
-      background: #fff;
-    }
+      .hint{
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 10px;
+      }
 
-    .debug h3 {
-      margin: 0 0 8px 0;
-      font-size: 16px;
-    }
+      .divider{
+        height: 1px;
+        background: rgba(255,255,255,.08);
+        margin: 22px 0;
+      }
 
-    .debug pre {
-      margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      color: #111;
-    }
-  </style>
-</head>
+      .errorBox{
+        display:none;
+        background: rgba(255,77,77,.10);
+        border: 1px solid rgba(255,77,77,.35);
+        border-radius: 14px;
+        padding: 14px 14px;
+        margin-top: 14px;
+      }
+      .errorTitle{
+        margin: 0 0 6px;
+        font-weight: 750;
+        color: #ffd1d1;
+      }
+      .errorDetails{
+        margin: 0;
+        color: #ffd1d1;
+        opacity: .9;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
 
-<body>
-  <div class="container">
-    <h1>Enter the Behavioral Readiness System</h1>
-    <p>
-      This brief, consent-based intake issues a BRSA Registry ID immediately.
-      No accounts. No passwords. Your presence is recorded; your readiness is governed.
-    </p>
+      .result{
+        display:none;
+        margin-top: 16px;
+        background: rgba(24,195,126,.10);
+        border: 1px solid rgba(24,195,126,.35);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .resultLabel{
+        color: #d6ffef;
+        font-weight: 750;
+        margin: 0 0 10px;
+      }
+      .idBox{
+        display:flex;
+        align-items:center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .idValue{
+        flex: 1;
+        min-width: 240px;
+        padding: 14px 14px;
+        border-radius: 12px;
+        background: rgba(0,0,0,.22);
+        border: 1px solid rgba(255,255,255,.10);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 16px;
+        letter-spacing: .02em;
+      }
+      .copied{
+        display:none;
+        font-size: 12px;
+        color: #d6ffef;
+        opacity: .9;
+        margin-left: 6px;
+      }
 
-    <button id="beginBtn" class="btn" type="button">Begin Onboarding</button>
+      .foot{
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
 
-    <!-- Error -->
-    <div id="error" class="error">
-      <h3 id="errorMsg">Onboarding error</h3>
-      <div class="small">Details:</div>
-      <pre id="errorDetails"></pre>
-    </div>
+      .debug{
+        display:none;
+        margin-top: 18px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.24);
+        overflow:hidden;
+      }
+      .debugHead{
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .debugHead strong{
+        font-size: 12px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .debugBody{
+        padding: 12px 14px;
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 12px;
+        color: #dfe7f1;
+      }
 
-    <!-- Result -->
-    <div id="result" class="card" style="display:none;">
-      <div class="label">Your BRSA Registry ID</div>
-      <div id="registryId" class="code"></div>
+      .small{
+        font-size: 12px;
+        color: var(--muted);
+      }
 
-      <div class="row">
-        <button id="copyBtn" class="btn" type="button" style="min-width:160px;">Copy ID</button>
-        <span id="copyStatus" class="pill">Copied</span>
+      @media (max-width: 520px){
+        .title{ font-size: 30px; }
+        .primary{ min-width: 100%; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Behavioral Readiness Standards Authority</h1>
       </div>
 
-      <div class="small">
-        Save this ID. It is your presence in the BRSA Registry.
+      <div class="card">
+        <div class="cardInner">
+          <h2 class="title">Enter the Behavioral Readiness System</h2>
+          <p class="desc">
+            This brief, consent-based intake issues a BRSA Registry ID immediately.
+            No accounts. No passwords. Your presence is recorded; your readiness is governed.
+          </p>
+
+          <div class="pillRow">
+            <span class="pill"><span class="dot"></span> Consent-based</span>
+            <span class="pill"><span class="dot"></span> Registry ID issued instantly</span>
+            <span class="pill"><span class="dot"></span> No login required</span>
+          </div>
+
+          <div class="actions">
+            <button id="beginBtn" class="primary">Begin Onboarding</button>
+            <button id="resetBtn" class="ghost" style="display:none;">Start Over</button>
+          </div>
+          <div class="hint" id="hint">Tap once. If you’re on spotty signal, give it a second.</div>
+
+          <div id="error" class="errorBox">
+            <p class="errorTitle">Onboarding error</p>
+            <p id="errorDetails" class="errorDetails"></p>
+          </div>
+
+          <div id="result" class="result">
+            <p class="resultLabel">Your BRSA Registry ID</p>
+            <div class="idBox">
+              <div id="registryId" class="idValue">—</div>
+              <button id="copyBtn" class="ghost">Copy ID</button>
+              <span id="copyStatus" class="copied">Copied</span>
+            </div>
+            <div class="foot">
+              Save this ID. It is your presence in the BRSA Registry.
+            </div>
+          </div>
+
+          <div id="debug" class="debug">
+            <div class="debugHead">
+              <strong>Debug</strong>
+              <span class="small">Shown only with <code>?debug=1</code></span>
+            </div>
+            <pre id="debugOut" class="debugBody"></pre>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px; color: var(--muted); font-size:12px; line-height:1.5;">
+        © BRSA Registry — Public Intake Surface
       </div>
     </div>
 
-    <!-- Debug -->
-    <div id="debug" class="debug">
-      <h3>Debug</h3>
-      <div class="small">This is only for us while wiring. Remove later.</div>
-      <pre id="debugOut"></pre>
-    </div>
-  </div>
+    <script>
+      (function () {
+        // Live API base
+        const API_BASE = "https://legacyline-core-production.up.railway.app";
 
-  <script>
-    (function () {
-      // ✅ LIVE API base
-      const API_BASE = "https://legacyline-core-production.up.railway.app";
+        const btn = document.getElementById("beginBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const hint = document.getElementById("hint");
 
-      const btn = document.getElementById("beginBtn");
-      const result = document.getElementById("result");
-      const registryIdEl = document.getElementById("registryId");
+        const result = document.getElementById("result");
+        const registryIdEl = document.getElementById("registryId");
 
-      const errBox = document.getElementById("error");
-      const errMsg = document.getElementById("errorMsg");
-      const errDetails = document.getElementById("errorDetails");
+        const errBox = document.getElementById("error");
+        const errDetails = document.getElementById("errorDetails");
 
-      const dbg = document.getElementById("debug");
-      const dbgOut = document.getElementById("debugOut");
+        const dbg = document.getElementById("debug");
+        const dbgOut = document.getElementById("debugOut");
 
-      const copyBtn = document.getElementById("copyBtn");
-      const copyStatus = document.getElementById("copyStatus");
+        const copyBtn = document.getElementById("copyBtn");
+        const copyStatus = document.getElementById("copyStatus");
 
-      function hideError() {
-        errBox.style.display = "none";
-        errMsg.textContent = "";
-        errDetails.textContent = "";
-      }
+        const url = new URL(window.location.href);
+        const debugOn = url.searchParams.get("debug") === "1";
+        if (debugOn) dbg.style.display = "block";
 
-      function showError(title, details) {
-        errBox.style.display = "block";
-        errMsg.textContent = title || "Error";
-        errDetails.textContent = details ? String(details) : "";
-      }
-
-      function setDebug(obj) {
-        dbg.style.display = "block";
-        try {
-          dbgOut.textContent = JSON.stringify(obj, null, 2);
-        } catch {
-          dbgOut.textContent = String(obj);
+        function setDebug(obj) {
+          if (!debugOn) return;
+          try { dbgOut.textContent = JSON.stringify(obj, null, 2); }
+          catch { dbgOut.textContent = String(obj); }
         }
-      }
 
-      async function safeJson(res) {
-        const text = await res.text();
-        try {
-          return { json: JSON.parse(text), text };
-        } catch {
-          return { json: null, text };
+        function showError(details) {
+          errBox.style.display = "block";
+          errDetails.textContent = String(details || "Unknown error");
         }
-      }
 
-      async function beginOnboarding() {
-        hideError();
+        function clearError() {
+          errBox.style.display = "none";
+          errDetails.textContent = "";
+        }
 
-        const oldText = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = "Processing...";
+        function setLoading(isLoading) {
+          btn.disabled = isLoading;
+          btn.textContent = isLoading ? "Processing..." : "Begin Onboarding";
+          hint.textContent = isLoading
+            ? "Issuing registry ID and recording consent…"
+            : "Tap once. If you’re on spotty signal, give it a second.";
+        }
 
-        try {
-          // Step 1 — Create Participant
-          const createRes = await fetch(`${API_BASE}/participants`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: "{}"
-          });
+        async function safeText(res) {
+          const text = await res.text();
+          try { return { json: JSON.parse(text), text }; }
+          catch { return { json: null, text }; }
+        }
 
-          const created = await safeJson(createRes);
+        async function beginOnboarding() {
+          clearError();
+          setLoading(true);
 
-          if (!createRes.ok || !created.json) {
-            throw new Error(`Create failed (${createRes.status}). Body: ${created.text}`);
-          }
+          try {
+            // Step 1 — Create participant
+            const createRes = await fetch(`${API_BASE}/participants`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: "{}"
+            });
 
-          const participantId = created.json.participant_id || created.json.id;
-          const registryId = created.json.registry_id;
+            const created = await safeText(createRes);
+            if (!createRes.ok || !created.json) {
+              throw new Error(`Create failed (${createRes.status}). Body: ${created.text}`);
+            }
 
-          if (!participantId || !registryId) {
-            throw new Error(`Missing participant_id or registry_id. Body: ${created.text}`);
-          }
+            const participantId = created.json.participant_id || created.json.id;
+            const registryId = created.json.registry_id;
 
-          // Step 2 — Consent (matches your Go handler)
-          const consentRes = await fetch(
-            `${API_BASE}/participants/${encodeURIComponent(participantId)}/consents`,
-            {
+            if (!participantId || !registryId) {
+              throw new Error(`Create missing participant_id or registry_id. Body: ${created.text}`);
+            }
+
+            // Step 2 — Record consent
+            // Backend accepts BRSA shape (consent_type/version) OR legacy (status/scope).
+            const consentRes = await fetch(`${API_BASE}/participants/${encodeURIComponent(participantId)}/consents`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                status: "granted",
-                scope: ["registry_public_presence"]
+                consent_type: "registry_public_presence",
+                version: "v1.0"
               })
+            });
+
+            const consented = await safeText(consentRes);
+            if (!consentRes.ok) {
+              throw new Error(`Consent failed (${consentRes.status}). Body: ${consented.text}`);
             }
-          );
 
-          const consented = await safeJson(consentRes);
+            // Success UI
+            registryIdEl.textContent = registryId;
+            result.style.display = "block";
+            resetBtn.style.display = "inline-flex";
+            btn.style.display = "none";
+            hint.textContent = "Registry issued. Copy and save your ID.";
 
-          if (!consentRes.ok) {
-            throw new Error(`Consent failed (${consentRes.status}). Body: ${consented.text}`);
+            setDebug({
+              api_base: API_BASE,
+              create_status: createRes.status,
+              create_body: created.json,
+              consent_status: consentRes.status,
+              consent_body: consented.json || consented.text
+            });
+
+          } catch (e) {
+            setLoading(false);
+            showError(e && e.message ? e.message : e);
+            setDebug({ api_base: API_BASE, error: (e && e.message) ? e.message : String(e) });
+          }
+        }
+
+        async function copyId() {
+          const text = (registryIdEl.textContent || "").trim();
+          if (!text) return;
+
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch {
+            // Fallback for older mobile browsers
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
           }
 
-          // Step 3 — Display Registry ID
-          registryIdEl.textContent = registryId;
-          result.style.display = "block";
-          btn.style.display = "none";
-
-          setDebug({
-            api_base: API_BASE,
-            create_status: createRes.status,
-            create_body: created.json,
-            consent_status: consentRes.status,
-            consent_body: consented.json || consented.text
-          });
-        } catch (e) {
-          showError("Onboarding failed.", e && e.message ? e.message : String(e));
-          setDebug({ api_base: API_BASE, error: e && e.message ? e.message : String(e) });
-
-          btn.disabled = false;
-          btn.textContent = oldText || "Begin Onboarding";
-        }
-      }
-
-      async function copyId() {
-        const text = registryIdEl.textContent || "";
-        if (!text) return;
-
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch {
-          // fallback for older mobile
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          document.body.removeChild(ta);
+          copyStatus.style.display = "inline-flex";
+          copyStatus.textContent = "Copied";
+          setTimeout(() => { copyStatus.style.display = "none"; }, 1400);
         }
 
-        copyStatus.style.display = "inline-flex";
-        copyStatus.textContent = "Copied";
-        setTimeout(() => { copyStatus.style.display = "none"; }, 1500);
-      }
+        function reset() {
+          clearError();
+          result.style.display = "none";
+          btn.style.display = "inline-flex";
+          resetBtn.style.display = "none";
+          registryIdEl.textContent = "—";
+          setLoading(false);
+          hint.textContent = "Tap once. If you’re on spotty signal, give it a second.";
+        }
 
-      btn.addEventListener("click", beginOnboarding);
-      copyBtn.addEventListener("click", copyId);
-    })();
-  </script>
-</body>
+        btn.addEventListener("click", beginOnboarding);
+        copyBtn.addEventListener("click", copyId);
+        resetBtn.addEventListener("click", reset);
+
+        // small quality-of-life: if user refreshes after success, keep it clean
+        window.addEventListener("pageshow", () => {
+          // do nothing — just prevents weird cached button states in some mobile browsers
+        });
+      })();
+    </script>
+  </body>
 </html>
