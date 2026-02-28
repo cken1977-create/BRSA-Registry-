@@ -6,573 +6,32 @@
   <title>BRSA Registry — Behavioral Readiness Standards Authority</title>
   <meta name="description" content="The national registry of behavioral and organizational readiness. Verify standing. Enter the standard." />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+  <!-- External Sovereign Stylesheet -->
+  <link rel="stylesheet" href="assets/styles.css" />
+
+  <!-- Small Inline Overrides (B2) -->
   <style>
-    /* ── TOKENS ───────────────────────────────────────────────── */
-    :root {
-      --navy:   #08111F;
-      --navy2:  #0D1B2E;
-      --navy3:  #142338;
-      --line:   rgba(255,255,255,.09);
-      --line2:  rgba(255,255,255,.05);
-      --text:   #F0EDE8;
-      --dim:    rgba(240,237,232,.62);
-      --faint:  rgba(240,237,232,.38);
-      --gold:   #C9A84C;
-      --gold2:  #E8C96A;
-      --green:  #2D7D52;
-      --yellow: #9B7A1A;
-      --red:    #8B2535;
-      --blue:   #2563EB;
-
-      --serif: "DM Serif Display", Georgia, serif;
-      --sans:  "DM Sans", system-ui, -apple-system, sans-serif;
-      --mono:  "DM Mono", ui-monospace, monospace;
-
-      --max: 1080px;
-      --pad: clamp(18px, 5vw, 48px);
-    }
-
-    /* ── RESET ───────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--navy);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    button { font-family: var(--sans); }
-
-    /* ── NAV ─────────────────────────────────────────────────── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      border-bottom: 1px solid var(--line);
-      background: rgba(8,17,31,.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-    .nav-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 var(--pad);
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .nav-mark {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--gold), #8B6914);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--serif);
-      font-size: 14px;
-      color: var(--navy);
-      font-weight: 400;
-      flex-shrink: 0;
-    }
-    .nav-wordmark {
-      font-family: var(--serif);
-      font-size: 17px;
-      letter-spacing: .01em;
-      color: var(--text);
-    }
-    .nav-wordmark span { color: var(--dim); }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .nav-link {
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--dim);
-      transition: color .15s, background .15s;
-      white-space: nowrap;
-    }
-    .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
-    .nav-link.active { color: var(--text); }
-    .nav-cta {
-      padding: 8px 16px;
-      border-radius: 8px;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 13px;
-      font-weight: 600;
-      transition: opacity .15s;
-      white-space: nowrap;
-    }
-    .nav-cta:hover { opacity: .88; }
-    .nav-mobile-btn {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--text);
-    }
-    @media (max-width: 720px) {
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .nav-mobile-btn { display: flex; }
-    }
-
-    /* ── HERO ────────────────────────────────────────────────── */
-    .hero {
-      position: relative;
-      padding-top: 60px;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Topology / grid background */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .hero-bg svg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      opacity: .07;
-    }
-    .hero-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-    }
-    .hero-glow-1 {
-      width: 800px; height: 500px;
-      top: -100px; left: -200px;
-      background: radial-gradient(ellipse, rgba(201,168,76,.18), transparent 70%);
-    }
-    .hero-glow-2 {
-      width: 600px; height: 400px;
-      top: 200px; right: -100px;
-      background: radial-gradient(ellipse, rgba(37,99,235,.12), transparent 70%);
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: clamp(60px,10vh,120px) var(--pad) 60px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .hero-eyebrow-line {
-      width: 32px; height: 1px;
-      background: var(--gold);
-      flex-shrink: 0;
-    }
-    .hero-eyebrow-text {
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 500;
-    }
-
-    .hero-headline {
-      font-family: var(--serif);
-      font-size: clamp(38px, 6vw, 76px);
-      line-height: 1.04;
-      letter-spacing: -.01em;
-      max-width: 820px;
-      margin-bottom: 24px;
-    }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .hero-sub {
-      font-size: clamp(15px, 2vw, 17px);
-      color: var(--dim);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-      font-weight: 300;
-    }
-
-    /* ── LOOKUP BOX ──────────────────────────────────────────── */
-    .lookup-section {
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 28px;
-      max-width: 680px;
-      backdrop-filter: blur(8px);
-    }
-    .lookup-label {
-      font-size: 12px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 500;
-      margin-bottom: 14px;
-    }
-    .lookup-form {
-      display: flex;
-      gap: 10px;
-    }
-    .lookup-input {
-      flex: 1;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 15px;
-      padding: 14px 16px;
-      outline: none;
-      transition: border-color .2s;
-      min-width: 0;
-    }
-    .lookup-input::placeholder { color: var(--faint); }
-    .lookup-input:focus { border-color: rgba(201,168,76,.5); }
-    .lookup-btn {
-      padding: 14px 22px;
-      border-radius: 12px;
-      border: none;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: opacity .15s, transform .08s;
-      flex-shrink: 0;
-    }
-    .lookup-btn:hover { opacity: .88; }
-    .lookup-btn:active { transform: scale(.98); }
-    .lookup-btn:disabled { opacity: .5; cursor: not-allowed; }
-
-    @media (max-width: 500px) {
-      .lookup-form { flex-direction: column; }
-      .lookup-btn { width: 100%; }
-    }
-
-    /* Result card */
-    .lookup-result {
-      margin-top: 16px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      display: none;
-    }
-    .lookup-result.visible { display: block; }
-    .result-bar {
-      height: 4px;
-      background: var(--faint);
-    }
-    .result-bar.GREEN { background: var(--green); }
-    .result-bar.YELLOW { background: var(--yellow); }
-    .result-bar.RED { background: var(--red); }
-    .result-body { padding: 16px; }
-    .result-state {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .state-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--faint);
-      flex-shrink: 0;
-    }
-    .state-dot.GREEN { background: #2D9B63; box-shadow: 0 0 0 4px rgba(45,155,99,.15); }
-    .state-dot.YELLOW { background: #C9A130; box-shadow: 0 0 0 4px rgba(201,161,48,.15); }
-    .state-dot.RED { background: #C0303F; box-shadow: 0 0 0 4px rgba(192,48,63,.15); }
-    .state-label {
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 480px) { .result-grid { grid-template-columns: 1fr; } }
-    .result-field { }
-    .result-field-k {
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 3px;
-    }
-    .result-field-v {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--text);
-      overflow-wrap: anywhere;
-    }
-    .result-msg {
-      font-size: 13px;
-      color: var(--dim);
-      font-style: italic;
-    }
-
-    /* ── PILLARS ─────────────────────────────────────────────── */
-    .pillars {
-      background: var(--navy2);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-    .pillars-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 80px var(--pad);
-    }
-    .section-eyebrow {
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 500;
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(28px, 4vw, 46px);
-      line-height: 1.1;
-      margin-bottom: 14px;
-    }
-    .section-sub {
-      color: var(--dim);
-      font-size: 16px;
-      max-width: 560px;
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 52px;
-    }
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-    @media (max-width: 720px) {
-      .pillars-grid { grid-template-columns: 1fr; }
-    }
-    .pillar {
-      background: var(--navy2);
-      padding: 32px 28px;
-      transition: background .2s;
-    }
-    .pillar:hover { background: var(--navy3); }
-    .pillar-num {
-      font-family: var(--serif);
-      font-size: 48px;
-      color: rgba(201,168,76,.18);
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-    .pillar-title {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-    .pillar-body {
-      font-size: 14px;
-      color: var(--dim);
-      line-height: 1.7;
-    }
-
-    /* ── STATES ──────────────────────────────────────────────── */
-    .states-section {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 80px var(--pad);
-    }
-    .states-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 48px;
-    }
-    @media (max-width: 720px) {
-      .states-grid { grid-template-columns: 1fr; }
-    }
-    .state-card {
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-    }
-    .state-card-bar { height: 5px; }
-    .state-card-bar.green { background: linear-gradient(90deg, #1A5C3A, #2D9B63); }
-    .state-card-bar.yellow { background: linear-gradient(90deg, #7A5C10, #C9A130); }
-    .state-card-bar.red { background: linear-gradient(90deg, #6B1A22, #C0303F); }
-    .state-card-body { padding: 24px; }
-    .state-card-label {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .state-card-label.green { color: #2D9B63; }
-    .state-card-label.yellow { color: #C9A130; }
-    .state-card-label.red { color: #C0303F; }
-    .state-card-title {
-      font-family: var(--serif);
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-    .state-card-desc {
-      font-size: 13px;
-      color: var(--dim);
-      line-height: 1.7;
-    }
-
-    /* ── CTA BAND ────────────────────────────────────────────── */
-    .cta-band {
-      background: var(--navy2);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-    .cta-band-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 72px var(--pad);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .cta-band-text { }
-    .cta-band-title {
-      font-family: var(--serif);
-      font-size: clamp(24px, 3vw, 36px);
-      margin-bottom: 8px;
-      line-height: 1.15;
-    }
-    .cta-band-sub {
-      color: var(--dim);
-      font-size: 15px;
-      max-width: 480px;
-      line-height: 1.65;
-      font-weight: 300;
-    }
-    .cta-band-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      flex-shrink: 0;
-    }
-    .btn-gold {
-      display: inline-flex;
-      align-items: center;
-      padding: 13px 24px;
-      border-radius: 10px;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .02em;
-      transition: opacity .15s;
-      white-space: nowrap;
-    }
-    .btn-gold:hover { opacity: .88; }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      padding: 13px 24px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.18);
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 500;
-      transition: background .15s, border-color .15s;
-      white-space: nowrap;
-    }
-    .btn-outline:hover {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.28);
-    }
-
-    /* ── FOOTER ──────────────────────────────────────────────── */
-    .footer {
-      border-top: 1px solid var(--line);
-    }
-    .footer-inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 36px var(--pad);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .footer-brand {
-      font-family: var(--serif);
-      font-size: 15px;
-      color: var(--dim);
-    }
-    .footer-legal {
-      font-size: 12px;
-      color: var(--faint);
-      font-family: var(--mono);
-      letter-spacing: .04em;
-    }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-    .footer-link {
-      font-size: 12px;
-      color: var(--faint);
-      transition: color .15s;
-    }
-    .footer-link:hover { color: var(--dim); }
+    /* Homepage-only spacing refinement */
+    .hero-inner { padding-bottom: 80px; }
+    .lookup-section { margin-top: 8px; }
   </style>
 </head>
 
 <body>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="mandate.html" class="mobile-menu-link">Mandate</a>
+    <a href="doctrine.html" class="mobile-menu-link">Doctrine</a>
+    <a href="registry.html" class="mobile-menu-link">Registry</a>
+    <a href="contact.html" class="mobile-menu-link">Contact</a>
+    <a href="onboard.html" class="mobile-menu-cta">Enter Registry</a>
+  </div>
 
   <!-- NAV -->
   <header class="nav">
@@ -588,7 +47,7 @@
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
       <a href="onboard.html" class="nav-cta">Enter Registry</a>
-      <button class="nav-mobile-btn" id="mobileMenuBtn" aria-label="Menu">
+      <button class="nav-mobile-btn" id="mobileMenuBtn">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
           <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
@@ -599,8 +58,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">
-      <!-- Subtle topology grid -->
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
         <defs>
           <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
             <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width=".5"/>
@@ -636,10 +94,10 @@
         Every Registry ID is a permanent, verifiable record of presence and standing.
       </p>
 
-      <!-- REGISTRY LOOKUP -->
+      <!-- LOOKUP -->
       <div class="lookup-section">
         <div class="lookup-label">Verify Registry Standing</div>
-        <div class="lookup-form">
+        <div class="lookup-row">
           <input
             id="ridInput"
             class="lookup-input"
@@ -651,6 +109,7 @@
           />
           <button class="lookup-btn" id="lookupBtn">Verify</button>
         </div>
+
         <div class="lookup-result" id="lookupResult">
           <div class="result-bar" id="resultBar"></div>
           <div class="result-body" id="resultBody"></div>
@@ -664,39 +123,236 @@
     <div class="pillars-inner">
       <div class="section-eyebrow">What BRSA Does</div>
       <h2 class="section-title">A new category of authority</h2>
-      <p class="section-sub">
-        BRSA was built because behavioral readiness had no standard.
-        We created one — deterministic, auditable, and permanent.
-      </p>
+      <p class="section-sub">BRSA was built because behavioral readiness had no standard. We created one — deterministic, auditable, and permanent.</p>
+
       <div class="pillars-grid">
         <div class="pillar">
           <div class="pillar-num">01</div>
           <div class="pillar-title">Registry of Presence</div>
-          <div class="pillar-body">
-            Every individual and organization that enters the system receives a permanent
-            Registry ID. Presence is immutable. It cannot be revoked.
-          </div>
+          <div class="pillar-body">Every individual and organization that enters the system receives a permanent Registry ID. Presence is immutable. It cannot be revoked.</div>
         </div>
+
         <div class="pillar">
           <div class="pillar-num">02</div>
           <div class="pillar-title">Readiness Assessment</div>
-          <div class="pillar-body">
-            Readiness is computed through the FRARI ruleset — deterministic,
-            evidence-based, and governed. No sentiment. No subjectivity.
-          </div>
+          <div class="pillar-body">Readiness is computed through the FRARI ruleset — deterministic, evidence-based, and governed. No sentiment. No subjectivity.</div>
         </div>
+
         <div class="pillar">
           <div class="pillar-num">03</div>
           <div class="pillar-title">Public Verification</div>
-          <div class="pillar-body">
-            Anyone can verify a Registry ID. The public record returns readiness state
-            only — no PII, no internal audit data, no private fields.
-          </div>
+          <div class="pillar-body">Anyone can verify a Registry ID. The public record returns readiness state only — no PII, no internal audit data, no private fields.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- READINESS STATES -->
+  <!-- STATES -->
   <section class="states-section">
-    <div class="section-e
+    <div class="section-eyebrow">Readiness States</div>
+    <h2 class="section-title">Three states. One standard.</h2>
+    <p class="section-sub">Every registered entity carries one of three canonical readiness states. States are computed, not assigned. They reflect evidence, not opinion.</p>
+
+    <div class="states-grid">
+      <div class="state-card">
+        <div class="state-card-bar green"></div>
+        <div class="state-card-body">
+          <div class="state-card-label green">Green</div>
+          <div class="state-card-title">Verified Ready</div>
+          <div class="state-card-desc">Sufficient evidence of behavioral discipline, documentation integrity, and consistent pattern compliance. Score 70 or above.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <div class="state-card-bar yellow"></div>
+        <div class="state-card-body">
+          <div class="state-card-label yellow">Yellow</div>
+          <div class="state-card-title">Developing</div>
+          <div class="state-card-desc">Evidence collection underway. Readiness trajectory is being established. Active engagement with the assessment process. Score 40–69.</div>
+        </div>
+      </div>
+
+      <div class="state-card">
+        <div class="state-card-bar red"></div>
+        <div class="state-card-body">
+          <div class="state-card-label red">Red</div>
+          <div class="state-card-title">Unverified</div>
+          <div class="state-card-desc">Insufficient evidence or assessment not yet completed. Default state at registration. Score below 40.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div>
+        <div class="cta-band-title">Ready to enter the registry?</div>
+        <p class="cta-band-sub">Individuals and organizations can register in minutes. Your Registry ID is issued immediately. No accounts. No passwords.</p>
+      </div>
+
+      <div class="cta-band-actions">
+        <a href="onboard.html" class="btn-gold">Individual Intake</a>
+        <a href="org-onboard.html" class="btn-outline">Organization Intake</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">2026 BRSA — Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    (function() {
+      var API = "https://legacyline-core-production.up.railway.app";
+
+      var menuBtn = document.getElementById("mobileMenuBtn");
+      var mobileMenu = document.getElementById("mobileMenu");
+      var menuOpen = false;
+
+      menuBtn.addEventListener("click", function() {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle("open", menuOpen);
+      });
+
+      mobileMenu.addEventListener("click", function(e) {
+        if (e.target.tagName === "A") {
+          menuOpen = false;
+          mobileMenu.classList.remove("open");
+        }
+      });
+
+      window.addEventListener("resize", function() {
+        if (window.innerWidth > 720 && menuOpen) {
+          menuOpen = false;
+          mobileMenu.classList.remove("open");
+        }
+      });
+
+      var lookupBtn = document.getElementById("lookupBtn");
+      var ridInput = document.getElementById("ridInput");
+      var lookupResult = document.getElementById("lookupResult");
+      var resultBar = document.getElementById("resultBar");
+      var resultBody = document.getElementById("resultBody");
+
+      lookupBtn.addEventListener("click", function() {
+        var rid = ridInput.value.trim().toUpperCase();
+
+        if (!rid) {
+          alert("Please enter a Registry ID");
+          return;
+        }
+
+        var ridPattern = /^BRSA-\d{2}-[A-Z0-9]{8}$/;
+        if (!ridPattern.test(rid)) {
+          alert("Invalid Registry ID format. Expected: BRSA-26-XXXXXXXX");
+          return;
+        }
+
+        lookupBtn.disabled = true;
+        lookupBtn.textContent = "VERIFYING";
+
+        fetch(API + "/registry/v1/lookup?rid=" + encodeURIComponent(rid))
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            lookupBtn.disabled = false;
+            lookupBtn.textContent = "VERIFY";
+
+            if (data.error) {
+              resultBar.className = "result-bar RED";
+              resultBody.innerHTML = `
+                <div class="result-state">
+                  <div class="state-dot RED"></div>
+                  <div class="state-label">NOT FOUND</div>
+                </div>
+                <p class="result-msg">${data.error}</p>
+              `;
+              lookupResult.classList.add("visible");
+              return;
+            }
+
+            var state = data.readiness_state;
+            resultBar.className = "result-bar " + state;
+
+            resultBody.innerHTML = `
+              <div class="result-state">
+                <div class="state-dot ${state}"></div>
+                <div class="state-label">${state}</div>
+              </div>
+
+              <div class="result-grid">
+                <div>
+                  <div class="result-field-k">Registry ID</div>
+                  <div class="result-field-v">${data.registry_id}</div>
+                </div>
+
+                <div>
+                  <div class="result-field-k">Status</div>
+                  <div class="result-field-v">${data.status}</div>
+                </div>
+
+                <div>
+                  <div class="result-field-k">Readiness State</div>
+                  <div class="result-field-v">${data.readiness_state}</div>
+                </div>
+
+                <div>
+                  <div class="result-field-k">Last Updated</div>
+                  <div class="result-field-v">${data.last_updated_at}</div>
+                </div>
+              </div>
+            `;
+
+            lookupResult.classList.add("visible");
+          })
+          .catch(function() {
+            lookupBtn.disabled = false;
+            lookupBtn.textContent = "VERIFY";
+
+            resultBar.className = "result-bar RED";
+            resultBody.innerHTML = `
+              <div class="result-state">
+                <div class="state-dot RED"></div>
+                <div class="state-label">ERROR</div>
+              </div>
+              <p class="result-msg">Unable to reach registry service.</p>
+            `;
+            lookupResult.classList.add("visible");
+          });
+      });
+
+      ridInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") lookupBtn.click();
+      });
+
+      ridInput.addEventListener("input", function(e) {
+        var value = e.target.value.toUpperCase();
+        value = value.replace(/[^A-Z0-9-]/g, "");
+
+        if (value && !value.startsWith("BRSA-")) {
+          value = "BRSA-" + value.replace(/^BRSA-?/i, "");
+        }
+
+        if (value.length > 20) value = value.slice(0, 20);
+        e.target.value = value;
+      });
+
+      ridInput.addEventListener("focus", function() {
+        lookupResult.classList.remove("visible");
+      });
+    })();
+  </script>
+
+</body>
+  </html>
