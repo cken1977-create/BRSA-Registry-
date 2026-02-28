@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA Registry — Readiness Doctrine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-mark">B</div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link active">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">Technical Canon</div>
+      <h1 class="page-title">Readiness Doctrine</h1>
+      <p class="page-sub">The FRARI framework, assessment lifecycle, trajectory model, and publication rules that govern every readiness determination.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#philosophy" class="toc-link">Philosophy</a>
+          <a href="#frari" class="toc-link">FRARI Ruleset</a>
+          <a href="#trajectory" class="toc-link">Trajectory Model</a>
+          <a href="#indicators" class="toc-link">Indicators</a>
+          <a href="#lifecycle" class="toc-link">Assessment Lifecycle</a>
+          <a href="#publication" class="toc-link">Publication Rules</a>
+        </nav>
+      </aside>
+
+      <article class="prose">
+
+        <section id="philosophy" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">Readiness Philosophy</h2>
+          <p>Readiness is not a feeling. It is not a reputation. It is not a credential issued by proximity to the right institution. Readiness is a pattern — observable, documentable, and computable.</p>
+          <p>The BRSA readiness model rejects subjective assessment entirely. Every readiness determination is produced by applying a versioned ruleset to a structured evidence record. The same evidence, evaluated by the same ruleset, produces the same result every time. This is the foundation of a credible standard.</p>
+          <blockquote class="prose-quote">
+            "Readiness is deterministic. If your method produces different results under the same conditions, you do not have a method — you have an opinion."
+          </blockquote>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="frari" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">FRARI Ruleset</h2>
+          <p>FRARI — the Foundational Readiness and Accreditation Ruleset for Individuals — is the scoring engine at the core of BRSA assessments. It is versioned, published, and applied consistently across all individual assessments.</p>
+          <p>Current version: <span class="mono-inline">frariindividualv0.1.0</span></p>
+
+          <div class="score-table">
+            <div class="score-table-head">
+              <div>Event Type</div>
+              <div>Point Value</div>
+              <div>Rationale</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">PARTICIPANT_CREATED</div>
+              <div class="score-pos">+5</div>
+              <div>Voluntary entry into the governed system</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">CONSENT_GRANTED</div>
+              <div class="score-pos">+10</div>
+              <div>Active, documented consent to assessment</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">CONSENT_REVOKED</div>
+              <div class="score-neg">−15</div>
+              <div>Withdrawal signals disengagement from process</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">ASSESSMENT_REQUESTED</div>
+              <div class="score-pos">+5</div>
+              <div>Active participation in the assessment lifecycle</div>
+            </div>
+          </div>
+
+          <p>The ruleset will expand as the institution matures. Each version is permanently archived. Every assessment record contains the exact ruleset version used to compute the score.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="trajectory" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">Trajectory Model</h2>
+          <p>Beyond a point-in-time score, BRSA tracks readiness trajectory — the directional movement of a score across multiple assessments over time.</p>
+          <div class="prose-cards">
+            <div class="prose-card">
+              <div class="prose-card-title" style="color:#2D9B63">Stable</div>
+              <div class="prose-card-body">Score 60 or above. Consistent pattern of engagement and documentation. Trajectory is maintained or improving.</div>
+            </div>
+            <div class="prose-card">
+              <div class="prose-card-title" style="color:#C9A130">Developing</div>
+              <div class="prose-card-body">Score 30–59. Active engagement with the process. Evidence collection underway. Trajectory is being established.</div>
+            </div>
+            <div class="prose-card">
+              <div class="prose-card-title" style="color:#C0303F">At Risk</div>
+              <div class="prose-card-body">Score below 30. Insufficient evidence, disengagement signals, or pattern inconsistency. Immediate intervention recommended.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="indicators" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">Readiness Indicators</h2>
+          <p>Five canonical indicators are evaluated in every BRSA assessment. Each is rated independently and contributes to the composite readiness score.</p>
+          <ul class="prose-list">
+            <li><strong>Documentation Discipline:</strong> The consistency, completeness, and timeliness of the subject's own record-keeping and filing practices.</li>
+            <li><strong>Consent Compliance:</strong> Adherence to consent protocols — granting, maintaining, and not revoking consent without cause.</li>
+            <li><strong>Evidence Completeness:</strong> The degree to which the submitted evidence record addresses all required assessment domains.</li>
+            <li><strong>Pattern Consistency:</strong> Observable regularity in behavior across different contexts and time periods.</li>
+            <li><strong>Escalation Integrity:</strong> The appropriate and timely escalation of issues, conflicts, or anomalies to the appropriate authority.</li>
+          </ul>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="lifecycle" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Assessment Lifecycle</h2>
+          <p>Every BRSA assessment passes through a defined lifecycle. No assessment may skip a stage. Each stage is logged to the immutable ledger with a timestamp and actor.</p>
+          <div class="lifecycle-steps">
+            <div class="lifecycle-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <div class="step-title">Registration</div>
+                <div class="step-body">Participant enters the registry. Consent is recorded. Registry ID is issued.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <div class="step-title">Assessment Requested</div>
+                <div class="step-body">Evaluator or participant requests a readiness assessment. Window and ruleset version are specified.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <div class="step-title">Evidence Collection</div>
+                <div class="step-body">Evaluator gathers and submits structured evidence across all five indicator domains.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <div class="step-title">Score Computed</div>
+                <div class="step-body">FRARI ruleset applied to the evidence record. Score and trajectory are generated deterministically.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                <div class="step-title">Published to Registry</div>
+                <div class="step-body">Public readiness state is updated. Internal snapshot is sealed. Ledger entry is permanent.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="publication" class="prose-section">
+          <div class="prose-section-num">06</div>
+          <h2 class="prose-h2">Publication Rules</h2>
+          <p>BRSA applies strict data minimalism to every public record. The following rules govern what is published and what remains internal:</p>
+          <ul class="prose-list">
+            <li><strong>Public fields:</strong> Registry ID, readiness state (RED/YELLOW/GREEN), status, last updated timestamp.</li>
+            <li><strong>Internal only:</strong> Raw score, trajectory label, individual indicator ratings, evidence record, ledger audit trail, subject number, participant ID.</li>
+            <li><strong>Never published:</strong> PII of any kind, contact information, financial data, legal documents, or any field not explicitly listed as public.</li>
+            <li><strong>Immutability:</strong> Once a readiness snapshot is written to the ledger, it cannot be modified or deleted. Only a new assessment can change the public state.</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="cta-band-title">Understand the Registry</div>
+        <p class="cta-band-sub">How Registry IDs work, what public presence means, and how verification protects privacy.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="registry.html" class="btn-gold">Registry Overview →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+</body>
+  </html>
+  
