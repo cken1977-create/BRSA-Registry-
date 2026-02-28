@@ -1,492 +1,662 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BRSA — Onboarding</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BRSA Registry — Public Intake</title>
 
-    <style>
-      :root{
-        --bg: #0b0d10;
-        --panel: #0f1318;
-        --panel2:#0c1015;
-        --text: #e9eef5;
-        --muted:#aab4c0;
-        --line:#1a232e;
-        --shadow: 0 14px 40px rgba(0,0,0,.35);
-        --btn:#ffffff;
-        --btnText:#0b0d10;
-        --danger:#ff4d4d;
-        --ok:#18c37e;
-        --warn:#ffd24d;
+  <style>
+    :root{
+      /* Executive Luxury Deep Blue */
+      --bg0: #070b14;
+      --bg1: #0a1022;
+      --bg2: #0c1633;
 
-        --radius: 18px;
-      }
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.12);
 
-      * { box-sizing: border-box; }
-      html, body { height: 100%; }
-      body{
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-        background:
-          radial-gradient(1200px 700px at 20% 10%, rgba(255,255,255,.06), transparent 55%),
-          radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,.04), transparent 60%),
-          linear-gradient(180deg, #080a0c 0%, #0b0d10 100%);
-        color: var(--text);
-      }
+      --text: #eef2ff;
+      --muted: rgba(238,242,255,.72);
+      --faint: rgba(238,242,255,.55);
 
-      .wrap{
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 36px 18px 60px;
-      }
+      /* BRSA signature blues */
+      --blue: #2f6bff;
+      --blue2: #0b3d91;
+      --blueSoft: rgba(47,107,255,.15);
 
-      .brand{
-        display:flex;
-        align-items:center;
-        gap:12px;
-        margin-bottom: 18px;
-      }
+      /* Accent (luxury “ink”) */
+      --ink: #0b122a;
 
-      .mark{
-        width: 34px; height: 34px;
-        border-radius: 12px;
-        background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
-        border: 1px solid rgba(255,255,255,.08);
-        box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      }
+      --danger: #ff5a6a;
+      --ok: #32d296;
 
-      .brand h1{
-        font-size: 14px;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 0;
-      }
+      --radius: 18px;
+      --radius2: 22px;
 
-      .card{
-        background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-        border: 1px solid rgba(255,255,255,.08);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+    }
 
-      .cardInner{
-        padding: 26px 22px;
-      }
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
 
-      .title{
-        font-size: 34px;
-        line-height: 1.05;
-        margin: 0 0 10px;
-        letter-spacing: -0.02em;
-      }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(47,107,255,.22), transparent 60%),
+        radial-gradient(900px 600px at 85% 18%, rgba(11,61,145,.22), transparent 55%),
+        radial-gradient(900px 600px at 30% 85%, rgba(47,107,255,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, var(--bg2) 100%);
+    }
 
-      .desc{
-        margin: 0 0 18px;
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
-        max-width: 64ch;
-      }
+    a{ color: inherit; }
 
-      .pillRow{
-        display:flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin: 14px 0 22px;
-      }
-      .pill{
-        font-size: 12px;
-        color: var(--muted);
-        border: 1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.22);
-        padding: 8px 10px;
-        border-radius: 999px;
-        display:inline-flex;
-        align-items:center;
-        gap: 8px;
-      }
-      .dot{
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(255,255,255,.35);
-      }
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
 
-      .actions{
-        display:flex;
-        align-items:center;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
 
-      button{
-        appearance:none;
-        border: 0;
-        border-radius: 14px;
-        padding: 14px 16px;
-        font-size: 15px;
-        font-weight: 650;
-        cursor: pointer;
-        transition: transform .06s ease, opacity .12s ease;
-      }
-      button:active{ transform: translateY(1px); }
-      button[disabled]{ opacity: .55; cursor: not-allowed; }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-      .primary{
-        background: var(--btn);
-        color: var(--btnText);
-        min-width: 220px;
-      }
+    .mark{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background:
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.45), transparent 60%),
+        linear-gradient(135deg, rgba(47,107,255,.95), rgba(11,61,145,.95));
+      box-shadow: 0 10px 26px rgba(47,107,255,.18);
+      border: 1px solid rgba(255,255,255,.14);
+    }
 
-      .ghost{
-        background: rgba(255,255,255,.06);
-        color: var(--text);
-        border: 1px solid rgba(255,255,255,.10);
-      }
+    .brandText{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.1;
+      min-width: 0;
+    }
 
-      .hint{
-        color: var(--muted);
-        font-size: 13px;
-        margin-top: 10px;
-      }
+    .brandText .name{
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
 
-      .divider{
-        height: 1px;
-        background: rgba(255,255,255,.08);
-        margin: 22px 0;
-      }
+    .brandText .sub{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
 
-      .errorBox{
-        display:none;
-        background: rgba(255,77,77,.10);
-        border: 1px solid rgba(255,77,77,.35);
-        border-radius: 14px;
-        padding: 14px 14px;
-        margin-top: 14px;
-      }
-      .errorTitle{
-        margin: 0 0 6px;
-        font-weight: 750;
-        color: #ffd1d1;
-      }
-      .errorDetails{
-        margin: 0;
-        color: #ffd1d1;
-        opacity: .9;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        font-size: 12px;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 12px;
+      user-select: none;
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: rgba(50,210,150,.95);
+      box-shadow: 0 0 0 4px rgba(50,210,150,.12);
+    }
 
-      .result{
-        display:none;
-        margin-top: 16px;
-        background: rgba(24,195,126,.10);
-        border: 1px solid rgba(24,195,126,.35);
-        border-radius: 14px;
-        padding: 16px;
-      }
-      .resultLabel{
-        color: #d6ffef;
-        font-weight: 750;
-        margin: 0 0 10px;
-      }
-      .idBox{
-        display:flex;
-        align-items:center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .idValue{
-        flex: 1;
-        min-width: 240px;
-        padding: 14px 14px;
-        border-radius: 12px;
-        background: rgba(0,0,0,.22);
-        border: 1px solid rgba(255,255,255,.10);
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        font-size: 16px;
-        letter-spacing: .02em;
-      }
-      .copied{
-        display:none;
-        font-size: 12px;
-        color: #d6ffef;
-        opacity: .9;
-        margin-left: 6px;
-      }
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 12px;
+    }
 
-      .foot{
-        margin-top: 10px;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
-      }
+    @media (max-width: 860px){
+      .hero{ grid-template-columns: 1fr; }
+    }
 
-      .debug{
-        display:none;
-        margin-top: 18px;
-        border-radius: 14px;
-        border: 1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.24);
-        overflow:hidden;
-      }
-      .debugHead{
-        padding: 12px 14px;
-        border-bottom: 1px solid rgba(255,255,255,.08);
-        display:flex;
-        align-items:center;
-        justify-content: space-between;
-        gap: 10px;
-      }
-      .debugHead strong{
-        font-size: 12px;
-        letter-spacing: .14em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-      .debugBody{
-        padding: 12px 14px;
-        margin: 0;
-        white-space: pre-wrap;
-        word-break: break-word;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        font-size: 12px;
-        color: #dfe7f1;
-      }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      overflow: hidden;
+    }
 
-      .small{
-        font-size: 12px;
-        color: var(--muted);
-      }
+    .cardInner{
+      padding: 22px;
+    }
 
-      @media (max-width: 520px){
-        .title{ font-size: 30px; }
-        .primary{ min-width: 100%; }
-      }
-    </style>
-  </head>
+    .title{
+      font-size: 34px;
+      line-height: 1.06;
+      font-weight: 900;
+      letter-spacing: -0.6px;
+      margin: 0 0 10px;
+    }
 
-  <body>
-    <div class="wrap">
+    .lead{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 58ch;
+    }
+
+    .divider{
+      height: 1px;
+      background: rgba(255,255,255,.10);
+      margin: 18px 0;
+    }
+
+    .actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    button{
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 800;
+      letter-spacing: .2px;
+      transition: transform .08s ease, opacity .12s ease, box-shadow .12s ease;
+      user-select: none;
+    }
+
+    button:active{ transform: translateY(1px); }
+
+    .primary{
+      background: linear-gradient(135deg, rgba(47,107,255,1), rgba(11,61,145,1));
+      color: white;
+      min-width: 240px;
+      box-shadow: 0 18px 40px rgba(47,107,255,.18);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .primary:hover{ opacity: .95; }
+
+    .ghost{
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .ghost:hover{ opacity: .95; }
+
+    .note{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.5;
+    }
+
+    .sideCard .cardInner{
+      padding: 20px;
+    }
+
+    .sideTitle{
+      font-weight: 900;
+      letter-spacing: .2px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: rgba(238,242,255,.92);
+      text-transform: uppercase;
+    }
+
+    .bullets{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    /* Result */
+    .result{
+      display:none;
+      margin-top: 18px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(47,107,255,.35);
+      background:
+        radial-gradient(700px 220px at 20% 0%, rgba(47,107,255,.22), transparent 55%),
+        linear-gradient(180deg, rgba(47,107,255,.10), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .resultInner{
+      padding: 18px;
+    }
+
+    .resultLabel{
+      font-weight: 900;
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: .1px;
+    }
+
+    .idBox{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .idValue{
+      flex: 1;
+      min-width: 220px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 20px;
+      letter-spacing: 1px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 14px 14px;
+      border-radius: 14px;
+    }
+
+    .copyBtn{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      min-width: 140px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 900;
+    }
+
+    .copyStatus{
+      display:none;
+      margin-left: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(50,210,150,.14);
+      border: 1px solid rgba(50,210,150,.30);
+      color: rgba(238,242,255,.92);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .resultHint{
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Error */
+    .error{
+      display:none;
+      margin-top: 16px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,90,106,.35);
+      background: linear-gradient(180deg, rgba(255,90,106,.12), rgba(255,255,255,.03));
+      overflow: hidden;
+    }
+
+    .errorInner{ padding: 16px; }
+    .errorTitle{
+      margin: 0 0 6px;
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .errorMsg{
+      margin: 0;
+      color: rgba(238,242,255,.86);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .errorDetails{
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: rgba(238,242,255,.82);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    /* Debug */
+    .debug{
+      display:none;
+      margin-top: 16px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+    .debugHead{
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      align-items:center;
+    }
+    .debugHead .label{
+      font-weight: 900;
+      letter-spacing: .18em;
+      font-size: 12px;
+      opacity: .92;
+    }
+    .debugHead .hint{
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .debug pre{
+      margin: 0;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      color: rgba(238,242,255,.86);
+      overflow:auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    footer{
+      margin-top: 22px;
+      color: rgba(238,242,255,.45);
+      font-size: 12px;
+      text-align: center;
+      padding: 10px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true"></div>
-        <h1>Behavioral Readiness Standards Authority</h1>
+        <div class="brandText">
+          <div class="name">BRSA Registry</div>
+          <div class="sub">Public Intake Surface — Behavioral Readiness System</div>
+        </div>
       </div>
+      <div class="pill" title="No accounts, no passwords">
+        <span class="dot"></span>
+        No login required
+      </div>
+    </div>
 
+    <div class="hero">
       <div class="card">
         <div class="cardInner">
-          <h2 class="title">Enter the Behavioral Readiness System</h2>
-          <p class="desc">
+          <h1 class="title">Enter the Behavioral Readiness System</h1>
+          <p class="lead">
             This brief, consent-based intake issues a BRSA Registry ID immediately.
             No accounts. No passwords. Your presence is recorded; your readiness is governed.
           </p>
-
-          <div class="pillRow">
-            <span class="pill"><span class="dot"></span> Consent-based</span>
-            <span class="pill"><span class="dot"></span> Registry ID issued instantly</span>
-            <span class="pill"><span class="dot"></span> No login required</span>
-          </div>
 
           <div class="actions">
             <button id="beginBtn" class="primary">Begin Onboarding</button>
             <button id="resetBtn" class="ghost" style="display:none;">Start Over</button>
           </div>
-          <div class="hint" id="hint">Tap once. If you’re on spotty signal, give it a second.</div>
 
-          <div id="error" class="errorBox">
-            <p class="errorTitle">Onboarding error</p>
-            <p id="errorDetails" class="errorDetails"></p>
+          <div class="note">
+            By proceeding you consent to creation of a registry record and issuance of a Registry ID.
+          </div>
+
+          <div id="error" class="error" role="alert">
+            <div class="errorInner">
+              <div class="errorTitle">Onboarding error</div>
+              <p class="errorMsg" id="errorMsg"></p>
+              <div class="errorDetails" id="errorDetails"></div>
+            </div>
           </div>
 
           <div id="result" class="result">
-            <p class="resultLabel">Your BRSA Registry ID</p>
-            <div class="idBox">
-              <div id="registryId" class="idValue">—</div>
-              <button id="copyBtn" class="ghost">Copy ID</button>
-              <span id="copyStatus" class="copied">Copied</span>
-            </div>
-            <div class="foot">
-              Save this ID. It is your presence in the BRSA Registry.
+            <div class="resultInner">
+              <div class="resultLabel">Your BRSA Registry ID</div>
+              <div class="idBox">
+                <div id="registryId" class="idValue" aria-live="polite"></div>
+                <button id="copyBtn" class="copyBtn">Copy ID</button>
+                <span id="copyStatus" class="copyStatus">Copied</span>
+              </div>
+              <p class="resultHint">
+                Save this ID. It is your presence in the BRSA Registry.
+              </p>
             </div>
           </div>
 
           <div id="debug" class="debug">
             <div class="debugHead">
-              <strong>Debug</strong>
-              <span class="small">Shown only with <code>?debug=1</code></span>
+              <div class="label">DEBUG</div>
+              <div class="hint">Shown only with <code>?debug=1</code></div>
             </div>
-            <pre id="debugOut" class="debugBody"></pre>
+            <pre id="debugOut"></pre>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:14px; color: var(--muted); font-size:12px; line-height:1.5;">
-        © BRSA Registry — Public Intake Surface
+      <div class="card sideCard">
+        <div class="cardInner">
+          <div class="sideTitle">What This Does</div>
+          <ul class="bullets">
+            <li>Creates a participant record in the BRSA Registry.</li>
+            <li>Records consent as <code>registry_public_presence</code>.</li>
+            <li>Returns your Registry ID for future lookup and evaluation.</li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <div class="sideTitle">Operational Notes</div>
+          <ul class="bullets">
+            <li>No username / password model.</li>
+            <li>All writes go through the API (no direct DB access).</li>
+            <li>Deterministic readiness is computed only when authorized.</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <script>
-      (function () {
-        // Live API base
-        const API_BASE = "https://legacyline-core-production.up.railway.app";
+    <footer>© BRSA Registry — Public Intake Surface</footer>
+  </div>
 
-        const btn = document.getElementById("beginBtn");
-        const resetBtn = document.getElementById("resetBtn");
-        const hint = document.getElementById("hint");
+  <script>
+  (function () {
+    const API_BASE = "https://legacyline-core-production.up.railway.app";
 
-        const result = document.getElementById("result");
-        const registryIdEl = document.getElementById("registryId");
+    const btn = document.getElementById("beginBtn");
+    const resetBtn = document.getElementById("resetBtn");
 
-        const errBox = document.getElementById("error");
-        const errDetails = document.getElementById("errorDetails");
+    const result = document.getElementById("result");
+    const registryIdEl = document.getElementById("registryId");
 
-        const dbg = document.getElementById("debug");
-        const dbgOut = document.getElementById("debugOut");
+    const errBox = document.getElementById("error");
+    const errMsg = document.getElementById("errorMsg");
+    const errDetails = document.getElementById("errorDetails");
 
-        const copyBtn = document.getElementById("copyBtn");
-        const copyStatus = document.getElementById("copyStatus");
+    const dbg = document.getElementById("debug");
+    const dbgOut = document.getElementById("debugOut");
+    const debugOn = new URLSearchParams(window.location.search).get("debug") === "1";
 
-        const url = new URL(window.location.href);
-        const debugOn = url.searchParams.get("debug") === "1";
-        if (debugOn) dbg.style.display = "block";
+    const copyBtn = document.getElementById("copyBtn");
+    const copyStatus = document.getElementById("copyStatus");
 
-        function setDebug(obj) {
-          if (!debugOn) return;
-          try { dbgOut.textContent = JSON.stringify(obj, null, 2); }
-          catch { dbgOut.textContent = String(obj); }
-        }
+    function showError(message, details) {
+      errBox.style.display = "block";
+      errMsg.textContent = message || "Unknown error.";
+      errDetails.textContent = details ? String(details) : "";
+    }
 
-        function showError(details) {
-          errBox.style.display = "block";
-          errDetails.textContent = String(details || "Unknown error");
-        }
+    function clearError() {
+      errBox.style.display = "none";
+      errMsg.textContent = "";
+      errDetails.textContent = "";
+    }
 
-        function clearError() {
-          errBox.style.display = "none";
-          errDetails.textContent = "";
-        }
+    function setDebug(obj) {
+      if (!debugOn) return;
+      dbg.style.display = "block";
+      try { dbgOut.textContent = JSON.stringify(obj, null, 2); }
+      catch { dbgOut.textContent = String(obj); }
+    }
 
-        function setLoading(isLoading) {
-          btn.disabled = isLoading;
-          btn.textContent = isLoading ? "Processing..." : "Begin Onboarding";
-          hint.textContent = isLoading
-            ? "Issuing registry ID and recording consent…"
-            : "Tap once. If you’re on spotty signal, give it a second.";
-        }
+    async function safeJson(res) {
+      const text = await res.text();
+      try { return { json: JSON.parse(text), text }; }
+      catch { return { json: null, text }; }
+    }
 
-        async function safeText(res) {
-          const text = await res.text();
-          try { return { json: JSON.parse(text), text }; }
-          catch { return { json: null, text }; }
-        }
+    function setBusy(on) {
+      btn.disabled = on;
+      btn.textContent = on ? "Processing..." : "Begin Onboarding";
+    }
 
-        async function beginOnboarding() {
-          clearError();
-          setLoading(true);
+    function showResult(registryId) {
+      registryIdEl.textContent = registryId;
+      result.style.display = "block";
+      btn.style.display = "none";
+      resetBtn.style.display = "inline-flex";
+    }
 
-          try {
-            // Step 1 — Create participant
-            const createRes = await fetch(`${API_BASE}/participants`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: "{}"
-            });
+    function resetUI() {
+      clearError();
+      result.style.display = "none";
+      btn.style.display = "inline-flex";
+      resetBtn.style.display = "none";
+      setBusy(false);
+      if (debugOn) {
+        dbg.style.display = "none";
+        dbgOut.textContent = "";
+      }
+      copyStatus.style.display = "none";
+      registryIdEl.textContent = "";
+    }
 
-            const created = await safeText(createRes);
-            if (!createRes.ok || !created.json) {
-              throw new Error(`Create failed (${createRes.status}). Body: ${created.text}`);
-            }
+    async function beginOnboarding() {
+      resetUI();
+      setBusy(true);
 
-            const participantId = created.json.participant_id || created.json.id;
-            const registryId = created.json.registry_id;
-
-            if (!participantId || !registryId) {
-              throw new Error(`Create missing participant_id or registry_id. Body: ${created.text}`);
-            }
-
-            // Step 2 — Record consent
-            // Backend accepts BRSA shape (consent_type/version) OR legacy (status/scope).
-            const consentRes = await fetch(`${API_BASE}/participants/${encodeURIComponent(participantId)}/consents`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                consent_type: "registry_public_presence",
-                version: "v1.0"
-              })
-            });
-
-            const consented = await safeText(consentRes);
-            if (!consentRes.ok) {
-              throw new Error(`Consent failed (${consentRes.status}). Body: ${consented.text}`);
-            }
-
-            // Success UI
-            registryIdEl.textContent = registryId;
-            result.style.display = "block";
-            resetBtn.style.display = "inline-flex";
-            btn.style.display = "none";
-            hint.textContent = "Registry issued. Copy and save your ID.";
-
-            setDebug({
-              api_base: API_BASE,
-              create_status: createRes.status,
-              create_body: created.json,
-              consent_status: consentRes.status,
-              consent_body: consented.json || consented.text
-            });
-
-          } catch (e) {
-            setLoading(false);
-            showError(e && e.message ? e.message : e);
-            setDebug({ api_base: API_BASE, error: (e && e.message) ? e.message : String(e) });
-          }
-        }
-
-        async function copyId() {
-          const text = (registryIdEl.textContent || "").trim();
-          if (!text) return;
-
-          try {
-            await navigator.clipboard.writeText(text);
-          } catch {
-            // Fallback for older mobile browsers
-            const ta = document.createElement("textarea");
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand("copy");
-            document.body.removeChild(ta);
-          }
-
-          copyStatus.style.display = "inline-flex";
-          copyStatus.textContent = "Copied";
-          setTimeout(() => { copyStatus.style.display = "none"; }, 1400);
-        }
-
-        function reset() {
-          clearError();
-          result.style.display = "none";
-          btn.style.display = "inline-flex";
-          resetBtn.style.display = "none";
-          registryIdEl.textContent = "—";
-          setLoading(false);
-          hint.textContent = "Tap once. If you’re on spotty signal, give it a second.";
-        }
-
-        btn.addEventListener("click", beginOnboarding);
-        copyBtn.addEventListener("click", copyId);
-        resetBtn.addEventListener("click", reset);
-
-        // small quality-of-life: if user refreshes after success, keep it clean
-        window.addEventListener("pageshow", () => {
-          // do nothing — just prevents weird cached button states in some mobile browsers
+      try {
+        // Step 1 — Create Participant
+        const createRes = await fetch(`${API_BASE}/participants`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: "{}"
         });
-      })();
-    </script>
-  </body>
+
+        const created = await safeJson(createRes);
+        if (!createRes.ok || !created.json) {
+          throw new Error(`Create failed (${createRes.status}). Body: ${created.text}`);
+        }
+
+        const participantId = created.json.participant_id || created.json.id;
+        const registryId = created.json.registry_id;
+
+        if (!participantId || !registryId) {
+          throw new Error(`Create response missing participant_id or registry_id. Body: ${created.text}`);
+        }
+
+        // Step 2 — Record Consent
+        // Backend accepts both:
+        // - { consent_type: "registry_public_presence" }
+        // - { scope: ["registry_public_presence"], status: "granted" }
+        const consentRes = await fetch(`${API_BASE}/participants/${encodeURIComponent(participantId)}/consents`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            consent_type: "registry_public_presence"
+          })
+        });
+
+        const consented = await safeJson(consentRes);
+        if (!consentRes.ok) {
+          throw new Error(`Consent failed (${consentRes.status}). Body: ${consented.text}`);
+        }
+
+        // Step 3 — Display Registry ID
+        showResult(registryId);
+
+        // Debug output
+        setDebug({
+          api_base: API_BASE,
+          create_status: createRes.status,
+          create_body: created.json,
+          consent_status: consentRes.status,
+          consent_body: consented.json || consented.text
+        });
+
+      } catch (e) {
+        showError(
+          "Tap failed. This is usually CORS, a route mismatch, or the consent endpoint returning non-200.",
+          e && e.message ? e.message : e
+        );
+        setBusy(false);
+        setDebug({ api_base: API_BASE, error: (e && e.message) ? e.message : String(e) });
+      }
+    }
+
+    async function copyId() {
+      const text = registryIdEl.textContent || "";
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // mobile fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+
+      copyStatus.style.display = "inline-flex";
+      copyStatus.textContent = "Copied";
+      setTimeout(() => { copyStatus.style.display = "none"; }, 1400);
+    }
+
+    btn.addEventListener("click", beginOnboarding);
+    resetBtn.addEventListener("click", resetUI);
+    copyBtn.addEventListener("click", copyId);
+
+    // If user navigates back/forward, keep UI sane
+    window.addEventListener("pageshow", () => {
+      if (!registryIdEl.textContent) resetUI();
+    });
+
+  })();
+  </script>
+</body>
 </html>
