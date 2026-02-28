@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BRSA — Individual Onboarding</title>
+<style>
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: #ffffff;
+  color: #000;
+  margin: 0;
+  padding: 40px 24px;
+}
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+p {
+  opacity: 0.7;
+  line-height: 1.5;
+}
+button {
+  margin-top: 32px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.4;
+}
+.result {
+  margin-top: 40px;
+  padding: 24px;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.code {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Enter the Behavioral Readiness System</h1>
+  <p>
+    This brief, consent-based intake issues a BRSA Registry ID immediately.
+    No accounts. No passwords. Your presence is recorded; your readiness is governed.
+  </p>
+
+  <button id="beginBtn">Begin Onboarding</button>
+
+  <div id="result" class="result" style="display:none;">
+    <strong>Your BRSA Registry ID</strong>
+    <div id="registryId" class="code"></div>
+    <p>Save this ID. It is your presence in the Behavioral Readiness Registry.</p>
+  </div>
+</div>
+
+<script>
+const API_BASE = "https://legacyline-core-production.up.railway.app";
+
+const btn = document.getElementById("beginBtn");
+const result = document.getElementById("result");
+const registryIdEl = document.getElementById("registryId");
+
+btn.addEventListener("click", async () => {
+  btn.disabled = true;
+  btn.textContent = "Processing...";
+
+  try {
+    const createRes = await fetch(\`\${API_BASE}/participants\`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}"
+    });
+
+    if (!createRes.ok) throw new Error("create failed");
+
+    const createData = await createRes.json();
+    const participantId = createData.participant_id;
+    const registryId = createData.registry_id;
+
+    const consentRes = await fetch(\`\${API_BASE}/participants/\${participantId}/consents\`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        consent_type: "registry_public_presence",
+        version: "v1.0"
+      })
+    });
+
+    if (!consentRes.ok) throw new Error("consent failed");
+
+    registryIdEl.textContent = registryId;
+    result.style.display = "block";
+    btn.style.display = "none";
+
+  } catch (err) {
+    alert("Onboarding error. Please try again.");
+    btn.disabled = false;
+    btn.textContent = "Begin Onboarding";
+  }
+});
+</script>
+</body>
+</html>
