@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA Registry — Registry Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-mark">B</div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link active">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">Public Explanation</div>
+      <h1 class="page-title">The BRSA Registry</h1>
+      <p class="page-sub">What the registry is, what a Registry ID represents, and how public verification works without exposing private data.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#what" class="toc-link">What the Registry Is</a>
+          <a href="#id" class="toc-link">What an ID Represents</a>
+          <a href="#presence" class="toc-link">Public Presence</a>
+          <a href="#states" class="toc-link">Readiness States</a>
+          <a href="#verify" class="toc-link">How Verification Works</a>
+          <a href="#privacy" class="toc-link">Privacy Rules</a>
+        </nav>
+      </aside>
+
+      <article class="prose">
+
+        <section id="what" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">What the Registry Is</h2>
+          <p>The BRSA Registry is the authoritative public record of behavioral and organizational readiness. It is not a database of personal information. It is not a background check system. It is not a credit bureau.</p>
+          <p>The registry contains one thing: a verified record of presence and standing. Every entry consists of a Registry ID, a readiness state, a status, and a timestamp. That is the entire public record.</p>
+          <p>Behind that public record is a governed, auditable system of evidence collection, assessment, and scoring. That system is internal. The public never sees it. The public only sees the outcome.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="id" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">What a Registry ID Represents</h2>
+          <p>A BRSA Registry ID is a permanent identifier. It is issued at the moment of registration and never changes. It is not tied to any personal identifier — not a name, not a Social Security number, not an email address.</p>
+          <p>The format is: <span class="mono-inline">BRSA-YY-XXXXXXXX</span></p>
+          <ul class="prose-list">
+            <li><strong>BRSA</strong> — the issuing authority</li>
+            <li><strong>YY</strong> — the two-digit year of issuance</li>
+            <li><strong>XXXXXXXX</strong> — an 8-character cryptographically random identifier (excluding ambiguous characters I, O, 0, 1)</li>
+          </ul>
+          <p>A Registry ID represents three things simultaneously: that you entered the system voluntarily, that consent was recorded, and that a governed record of your presence exists. It does not represent a specific readiness level — that is communicated separately through the readiness state field.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="presence" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">How Public Presence Works</h2>
+          <p>Public presence is the principle that your registry record exists and can be verified by anyone who has your Registry ID. You control whether to share your ID. BRSA does not publish a directory. There is no searchable list of registrants.</p>
+          <p>To be found in the registry, someone must know your exact Registry ID. If you choose not to share it, your record exists in the system but is practically inaccessible to the public. You can share it selectively — with employers, evaluators, institutional partners, or courts — on your own terms.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="states" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">What Readiness States Mean</h2>
+          <div class="prose-cards">
+            <div class="prose-card" style="border-top:3px solid #2D9B63">
+              <div class="prose-card-title" style="color:#2D9B63">GREEN — Verified Ready</div>
+              <div class="prose-card-body">The evidence record meets or exceeds the threshold for verified readiness. Score 70 or above. This state signals active, documented, and consistent behavioral patterns.</div>
+            </div>
+            <div class="prose-card" style="border-top:3px solid #C9A130">
+              <div class="prose-card-title" style="color:#C9A130">YELLOW — Developing</div>
+              <div class="prose-card-body">Assessment is underway. Evidence is being collected. The subject is engaged with the process. Score 40–69. This is not a negative state — it reflects active participation.</div>
+            </div>
+            <div class="prose-card" style="border-top:3px solid #C0303F">
+              <div class="prose-card-title" style="color:#C0303F">RED — Unverified</div>
+              <div class="prose-card-body">No assessment has been completed, or the evidence record is insufficient. Score below 40. This is the default state at registration. It does not imply negative behavior — only that assessment has not yet occurred.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="verify" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">How Verification Works</h2>
+          <p>Verification is simple and immediate. Enter a Registry ID on the homepage. The system queries the live registry endpoint and returns the public record in real time.</p>
+          <p>The verification endpoint returns exactly four fields:</p>
+          <div class="score-table">
+            <div class="score-table-head">
+              <div>Field</div>
+              <div>Description</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">registry_id</div>
+              <div>The Registry ID that was queried</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">readiness_state</div>
+              <div>RED, YELLOW, or GREEN</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">status</div>
+              <div>Current registry status (data_collecting, active, suspended)</div>
+            </div>
+            <div class="score-row">
+              <div class="mono-inline">last_updated_at</div>
+              <div>ISO 8601 timestamp of the most recent readiness update</div>
+            </div>
+          </div>
+          <p>Nothing else is returned. The endpoint is public-safe by design.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="privacy" class="prose-section">
+          <div class="prose-section-num">06</div>
+          <h2 class="prose-h2">Privacy & Public Safety Rules</h2>
+          <ul class="prose-list">
+            <li>No personally identifiable information is ever returned by the public verification endpoint.</li>
+            <li>The registry does not publish a directory. You cannot search by name, email, or location.</li>
+            <li>Registry IDs are cryptographically random and not derived from any personal identifier.</li>
+            <li>Internal participant IDs, subject numbers, and audit records are never exposed publicly.</li>
+            <li>BRSA does not sell, license, or share registry data with third parties.</li>
+            <li>All data storage and processing is governed by the BRSA data minimalism principle — we collect only what is necessary for the assessment and no more.</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="cta-band-title">Enter the Registry</div>
+        <p class="cta-band-sub">Registration is immediate. No accounts. No passwords. Your Registry ID is issued the moment you complete intake.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="onboard.html" class="btn-gold">Individual Intake</a>
+        <a href="org-onboard.html" class="btn-outline">Organization Intake</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+</body>
+  </html>
+  
