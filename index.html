@@ -6,26 +6,55 @@
   <title>BRSA Registry — Behavioral Readiness Standards Authority</title>
   <meta name="description" content="The national registry of behavioral and organizational readiness. Verify standing. Enter the standard." />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- External Sovereign Stylesheet -->
   <link rel="stylesheet" href="assets/styles.css" />
 
-  <!-- Small Inline Overrides (B2) -->
   <style>
-    /* Homepage-only spacing refinement */
-    .hero-inner { padding-bottom: 80px; }
-    .lookup-section { margin-top: 8px; }
+    /* Homepage-only: mobile menu + any page-specific tweaks */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+      z-index: 99;
+      background: rgba(8,17,31,.97);
+      border-top: 1px solid rgba(255,255,255,.09);
+      padding: 24px 20px;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu-link {
+      display: block; padding: 14px 16px; border-radius: 10px;
+      font-size: 16px; font-weight: 500; color: rgba(240,237,232,.8);
+      text-decoration: none; border: 1px solid transparent;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .mobile-menu-link:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.09);
+      color: #F0EDE8;
+    }
+
+    .mobile-menu-cta {
+      display: block; margin-top: 8px; padding: 14px 16px;
+      border-radius: 10px; background: #C9A84C; color: #08111F;
+      font-size: 15px; font-weight: 700; text-align: center; text-decoration: none;
+    }
+
+    /* Small polish: prevent tap highlight on iOS, keep button consistent */
+    button { -webkit-tap-highlight-color: transparent; }
   </style>
 </head>
 
 <body>
 
   <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <a href="mandate.html" class="mobile-menu-link">Mandate</a>
     <a href="doctrine.html" class="mobile-menu-link">Doctrine</a>
     <a href="registry.html" class="mobile-menu-link">Registry</a>
@@ -40,14 +69,17 @@
         <div class="nav-mark">B</div>
         <div class="nav-wordmark">BRSA <span>Registry</span></div>
       </a>
+
       <nav class="nav-links">
         <a href="mandate.html" class="nav-link">Mandate</a>
         <a href="doctrine.html" class="nav-link">Doctrine</a>
         <a href="registry.html" class="nav-link">Registry</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+
       <a href="onboard.html" class="nav-cta">Enter Registry</a>
-      <button class="nav-mobile-btn" id="mobileMenuBtn">
+
+      <button class="nav-mobile-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
           <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
@@ -58,7 +90,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
             <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" stroke-width=".5"/>
@@ -97,6 +129,7 @@
       <!-- LOOKUP -->
       <div class="lookup-section">
         <div class="lookup-label">Verify Registry Standing</div>
+
         <div class="lookup-row">
           <input
             id="ridInput"
@@ -106,11 +139,12 @@
             autocapitalize="characters"
             autocomplete="off"
             spellcheck="false"
+            inputmode="text"
           />
-          <button class="lookup-btn" id="lookupBtn">Verify</button>
+          <button class="lookup-btn" id="lookupBtn" type="button">Verify</button>
         </div>
 
-        <div class="lookup-result" id="lookupResult">
+        <div class="lookup-result" id="lookupResult" aria-live="polite">
           <div class="result-bar" id="resultBar"></div>
           <div class="result-body" id="resultBody"></div>
         </div>
@@ -131,13 +165,11 @@
           <div class="pillar-title">Registry of Presence</div>
           <div class="pillar-body">Every individual and organization that enters the system receives a permanent Registry ID. Presence is immutable. It cannot be revoked.</div>
         </div>
-
         <div class="pillar">
           <div class="pillar-num">02</div>
           <div class="pillar-title">Readiness Assessment</div>
           <div class="pillar-body">Readiness is computed through the FRARI ruleset — deterministic, evidence-based, and governed. No sentiment. No subjectivity.</div>
         </div>
-
         <div class="pillar">
           <div class="pillar-num">03</div>
           <div class="pillar-title">Public Verification</div>
@@ -183,14 +215,13 @@
     </div>
   </section>
 
-  <!-- CTA BAND -->
+  <!-- CTA -->
   <section class="cta-band">
     <div class="cta-band-inner">
       <div>
         <div class="cta-band-title">Ready to enter the registry?</div>
         <p class="cta-band-sub">Individuals and organizations can register in minutes. Your Registry ID is issued immediately. No accounts. No passwords.</p>
       </div>
-
       <div class="cta-band-actions">
         <a href="onboard.html" class="btn-gold">Individual Intake</a>
         <a href="org-onboard.html" class="btn-outline">Organization Intake</a>
@@ -208,151 +239,251 @@
         <a href="registry.html" class="footer-link">Registry</a>
         <a href="contact.html" class="footer-link">Contact</a>
       </div>
-      <div class="footer-legal">2026 BRSA — Sovereign Standards Authority</div>
+      <div class="footer-legal">2026 BRSA · Sovereign Standards Authority</div>
     </div>
   </footer>
 
-  <!-- JS -->
+  <!-- JS (complete, not truncated) -->
   <script>
-    (function() {
+    (function () {
       var API = "https://legacyline-core-production.up.railway.app";
 
+      // -------------------------
+      // Mobile menu
+      // -------------------------
       var menuBtn = document.getElementById("mobileMenuBtn");
       var mobileMenu = document.getElementById("mobileMenu");
       var menuOpen = false;
 
-      menuBtn.addEventListener("click", function() {
-        menuOpen = !menuOpen;
-        mobileMenu.classList.toggle("open", menuOpen);
-      });
-
-      mobileMenu.addEventListener("click", function(e) {
-        if (e.target.tagName === "A") {
-          menuOpen = false;
+      function setMenu(open) {
+        menuOpen = !!open;
+        if (menuOpen) {
+          mobileMenu.classList.add("open");
+          mobileMenu.setAttribute("aria-hidden", "false");
+          menuBtn.setAttribute("aria-expanded", "true");
+          document.body.style.overflow = "hidden";
+        } else {
           mobileMenu.classList.remove("open");
+          mobileMenu.setAttribute("aria-hidden", "true");
+          menuBtn.setAttribute("aria-expanded", "false");
+          document.body.style.overflow = "";
         }
-      });
+      }
 
-      window.addEventListener("resize", function() {
-        if (window.innerWidth > 720 && menuOpen) {
-          menuOpen = false;
-          mobileMenu.classList.remove("open");
-        }
-      });
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", function () {
+          setMenu(!menuOpen);
+        });
 
+        // Close on link click
+        mobileMenu.addEventListener("click", function (e) {
+          var t = e.target;
+          if (t && t.tagName === "A") setMenu(false);
+        });
+
+        // ESC closes
+        window.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && menuOpen) setMenu(false);
+        });
+
+        // Resize safety
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 720 && menuOpen) setMenu(false);
+        });
+      }
+
+      // -------------------------
+      // Registry lookup
+      // -------------------------
       var lookupBtn = document.getElementById("lookupBtn");
       var ridInput = document.getElementById("ridInput");
       var lookupResult = document.getElementById("lookupResult");
       var resultBar = document.getElementById("resultBar");
       var resultBody = document.getElementById("resultBody");
 
-      lookupBtn.addEventListener("click", function() {
-        var rid = ridInput.value.trim().toUpperCase();
+      function escapeHtml(s) {
+        return String(s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function showResult(state, html) {
+        if (!lookupResult) return;
+        lookupResult.classList.add("visible");
+        resultBar.className = "result-bar " + state;
+        resultBody.innerHTML = html;
+      }
+
+      function setLookupBusy(on) {
+        if (!lookupBtn) return;
+        lookupBtn.disabled = !!on;
+        lookupBtn.textContent = on ? "VERIFYING" : "Verify";
+      }
+
+      function normalizeRid(input) {
+        var v = (input || "").toUpperCase().trim();
+        // Keep only A-Z 0-9 and dash
+        v = v.replace(/[^A-Z0-9-]/g, "");
+        // If user starts typing year/id without prefix, auto-prefix
+        if (v && v.indexOf("BRSA-") !== 0) {
+          v = "BRSA-" + v.replace(/^BRSA-?/i, "");
+        }
+        // prevent runaway length
+        if (v.length > 20) v = v.slice(0, 20);
+        return v;
+      }
+
+      function isValidRid(rid) {
+        // BRSA-YY-XXXXXXXX where X is A-Z0-9, 8 chars
+        // (Matches your docs and current UI)
+        return /^BRSA-\d{2}-[A-Z0-9]{8}$/.test(rid);
+      }
+
+      async function safeJson(res) {
+        var text = await res.text();
+        try { return { json: JSON.parse(text), text: text }; }
+        catch (e) { return { json: null, text: text }; }
+      }
+
+      async function doLookup() {
+        var rid = normalizeRid(ridInput ? ridInput.value : "");
+        if (ridInput) ridInput.value = rid;
 
         if (!rid) {
-          alert("Please enter a Registry ID");
+          showResult("RED",
+            '<div class="result-state">' +
+              '<div class="state-dot RED"></div>' +
+              '<div class="state-label">MISSING</div>' +
+            '</div>' +
+            '<p class="result-msg">Enter a Registry ID to verify standing.</p>'
+          );
           return;
         }
 
-        var ridPattern = /^BRSA-\d{2}-[A-Z0-9]{8}$/;
-        if (!ridPattern.test(rid)) {
-          alert("Invalid Registry ID format. Expected: BRSA-26-XXXXXXXX");
+        if (!isValidRid(rid)) {
+          showResult("RED",
+            '<div class="result-state">' +
+              '<div class="state-dot RED"></div>' +
+              '<div class="state-label">INVALID</div>' +
+            '</div>' +
+            '<p class="result-msg">Expected format: <span style="font-family:DM Mono,monospace;">BRSA-26-XXXXXXXX</span></p>'
+          );
           return;
         }
 
-        lookupBtn.disabled = true;
-        lookupBtn.textContent = "VERIFYING";
+        setLookupBusy(true);
 
-        fetch(API + "/registry/v1/lookup?rid=" + encodeURIComponent(rid))
-          .then(function(res) { return res.json(); })
-          .then(function(data) {
-            lookupBtn.disabled = false;
-            lookupBtn.textContent = "VERIFY";
+        try {
+          var url = API + "/registry/v1/lookup?rid=" + encodeURIComponent(rid);
+          var res = await fetch(url, { method: "GET" });
+          var out = await safeJson(res);
 
-            if (data.error) {
-              resultBar.className = "result-bar RED";
-              resultBody.innerHTML = `
-                <div class="result-state">
-                  <div class="state-dot RED"></div>
-                  <div class="state-label">NOT FOUND</div>
-                </div>
-                <p class="result-msg">${data.error}</p>
-              `;
-              lookupResult.classList.add("visible");
-              return;
-            }
+          if (!res.ok) {
+            // If API returns JSON error
+            var message = (out.json && (out.json.error || out.json.message)) ? (out.json.error || out.json.message) : out.text;
+            showResult("RED",
+              '<div class="result-state">' +
+                '<div class="state-dot RED"></div>' +
+                '<div class="state-label">ERROR</div>' +
+              '</div>' +
+              '<p class="result-msg">' + escapeHtml(message || ("Request failed (" + res.status + ")")) + '</p>'
+            );
+            return;
+          }
 
-            var state = data.readiness_state;
-            resultBar.className = "result-bar " + state;
+          if (!out.json) {
+            showResult("RED",
+              '<div class="result-state">' +
+                '<div class="state-dot RED"></div>' +
+                '<div class="state-label">ERROR</div>' +
+              '</div>' +
+              '<p class="result-msg">Unexpected response format from registry service.</p>'
+            );
+            return;
+          }
 
-            resultBody.innerHTML = `
-              <div class="result-state">
-                <div class="state-dot ${state}"></div>
-                <div class="state-label">${state}</div>
-              </div>
+          // expected: registry_id, readiness_state, status, last_updated_at
+          if (out.json.error) {
+            showResult("RED",
+              '<div class="result-state">' +
+                '<div class="state-dot RED"></div>' +
+                '<div class="state-label">NOT FOUND</div>' +
+              '</div>' +
+              '<p class="result-msg">' + escapeHtml(out.json.error) + '</p>'
+            );
+            return;
+          }
 
-              <div class="result-grid">
-                <div>
-                  <div class="result-field-k">Registry ID</div>
-                  <div class="result-field-v">${data.registry_id}</div>
-                </div>
+          var state = (out.json.readiness_state || "RED").toUpperCase();
+          if (state !== "GREEN" && state !== "YELLOW" && state !== "RED") state = "RED";
 
-                <div>
-                  <div class="result-field-k">Status</div>
-                  <div class="result-field-v">${data.status}</div>
-                </div>
+          var html =
+            '<div class="result-state">' +
+              '<div class="state-dot ' + state + '"></div>' +
+              '<div class="state-label">' + escapeHtml(state) + '</div>' +
+            '</div>' +
 
-                <div>
-                  <div class="result-field-k">Readiness State</div>
-                  <div class="result-field-v">${data.readiness_state}</div>
-                </div>
+            '<div class="result-grid">' +
+              '<div>' +
+                '<div class="result-field-k">Registry ID</div>' +
+                '<div class="result-field-v">' + escapeHtml(out.json.registry_id || rid) + '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="result-field-k">Status</div>' +
+                '<div class="result-field-v">' + escapeHtml(out.json.status || "—") + '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="result-field-k">Readiness State</div>' +
+                '<div class="result-field-v">' + escapeHtml(state) + '</div>' +
+              '</div>' +
+              '<div>' +
+                '<div class="result-field-k">Last Updated</div>' +
+                '<div class="result-field-v">' + escapeHtml(out.json.last_updated_at || "—") + '</div>' +
+              '</div>' +
+            '</div>';
 
-                <div>
-                  <div class="result-field-k">Last Updated</div>
-                  <div class="result-field-v">${data.last_updated_at}</div>
-                </div>
-              </div>
-            `;
+          showResult(state, html);
 
-            lookupResult.classList.add("visible");
-          })
-          .catch(function() {
-            lookupBtn.disabled = false;
-            lookupBtn.textContent = "VERIFY";
-
-            resultBar.className = "result-bar RED";
-            resultBody.innerHTML = `
-              <div class="result-state">
-                <div class="state-dot RED"></div>
-                <div class="state-label">ERROR</div>
-              </div>
-              <p class="result-msg">Unable to reach registry service.</p>
-            `;
-            lookupResult.classList.add("visible");
-          });
-      });
-
-      ridInput.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") lookupBtn.click();
-      });
-
-      ridInput.addEventListener("input", function(e) {
-        var value = e.target.value.toUpperCase();
-        value = value.replace(/[^A-Z0-9-]/g, "");
-
-        if (value && !value.startsWith("BRSA-")) {
-          value = "BRSA-" + value.replace(/^BRSA-?/i, "");
+        } catch (e) {
+          showResult("RED",
+            '<div class="result-state">' +
+              '<div class="state-dot RED"></div>' +
+              '<div class="state-label">OFFLINE</div>' +
+            '</div>' +
+            '<p class="result-msg">Unable to reach registry service. Check connection and try again.</p>'
+          );
+        } finally {
+          setLookupBusy(false);
         }
+      }
 
-        if (value.length > 20) value = value.slice(0, 20);
-        e.target.value = value;
-      });
+      if (ridInput) {
+        ridInput.addEventListener("input", function (e) {
+          e.target.value = normalizeRid(e.target.value);
+        });
 
-      ridInput.addEventListener("focus", function() {
-        lookupResult.classList.remove("visible");
-      });
+        ridInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            doLookup();
+          }
+        });
+
+        ridInput.addEventListener("focus", function () {
+          if (lookupResult) lookupResult.classList.remove("visible");
+        });
+      }
+
+      if (lookupBtn) {
+        lookupBtn.addEventListener("click", function () {
+          doLookup();
+        });
+      }
     })();
   </script>
 
 </body>
-  </html>
+          </html>
