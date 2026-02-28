@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BRSA Registry — Organization Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .intake-wrap { max-width: 760px; margin: 0 auto; padding: 80px var(--pad) 60px; }
+
+    .card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 20px; overflow: hidden; margin-top: 16px;
+    }
+    .card-inner { padding: 32px 28px; }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--dim); font-size: 12px; margin-bottom: 20px;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,.15);
+    }
+
+    .intake-title {
+      font-family: var(--serif); font-size: clamp(26px,4vw,38px);
+      line-height: 1.1; margin: 0 0 12px;
+    }
+    .intake-lead {
+      margin: 0 0 28px; color: var(--dim);
+      font-size: 15px; line-height: 1.7; font-weight: 300;
+    }
+
+    .form-section { margin-bottom: 28px; }
+    .section-label {
+      font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--faint); margin-bottom: 14px; display: block;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width:560px){ .form-grid{ grid-template-columns:1fr; } }
+    .full { grid-template-columns: 1fr !important; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; color: var(--dim); letter-spacing: .04em; }
+    .field input, .field select {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; color: var(--text);
+      font-family: var(--sans); font-size: 14px;
+      padding: 12px 14px; outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field input:focus, .field select:focus { border-color: rgba(201,168,76,.5); }
+    .field input::placeholder { color: var(--faint); }
+    .field select option { background: #0a1022; }
+
+    .form-divider { height: 1px; background: rgba(255,255,255,.08); margin: 24px 0; }
+
+    .consent-block {
+      background: rgba(201,168,76,.06);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 14px; padding: 18px; margin-bottom: 22px;
+    }
+    .consent-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .consent-row:last-child { margin-bottom: 0; }
+    .consent-row input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 2px;
+      flex-shrink: 0; accent-color: var(--gold); cursor: pointer;
+    }
+    .consent-row label { font-size: 13px; color: var(--dim); line-height: 1.6; cursor: pointer; }
+
+    .btn-submit {
+      width: 100%; padding: 16px 20px; border: none; border-radius: 12px;
+      background: var(--gold); color: var(--navy);
+      font-family: var(--sans); font-size: 15px; font-weight: 700;
+      letter-spacing: .02em; cursor: pointer;
+      transition: opacity .15s, transform .08s;
+    }
+    .btn-submit:hover { opacity: .88; }
+    .btn-submit:active { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .45; cursor: not-allowed; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center;
+      padding: 11px 18px; border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px; background: rgba(255,255,255,.04);
+      color: var(--text); font-family: var(--sans);
+      font-size: 13px; font-weight: 500; text-decoration: none;
+      transition: opacity .15s;
+    }
+    .btn-ghost:hover { opacity: .82; }
+
+    .submit-note { margin-top: 10px; font-size: 12px; color: var(--faint); text-align: center; line-height: 1.55; }
+
+    .result-box {
+      display: none; margin-top: 22px; border-radius: 16px;
+      border: 1px solid rgba(201,168,76,.3);
+      background: linear-gradient(180deg, rgba(201,168,76,.08), rgba(255,255,255,.03));
+    }
+    .result-inner { padding: 24px; }
+    .result-label { font-family: var(--serif); font-size: 22px; margin: 0 0 6px; }
+    .result-org { color: var(--dim); font-size: 14px; margin: 0 0 16px; }
+    .id-display {
+      font-family: var(--mono); font-size: 22px; letter-spacing: 1.5px;
+      background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; word-break: break-all;
+    }
+    .copy-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .btn-copy {
+      padding: 10px 18px; border: 1px solid rgba(255,255,255,.16);
+      border-radius: 10px; background: rgba(255,255,255,.07);
+      color: var(--text); font-family: var(--sans);
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .15s;
+    }
+    .btn-copy:hover { opacity: .82; }
+    .copy-confirm {
+      display: none; padding: 6px 12px; border-radius: 999px;
+      background: rgba(45,155,99,.14); border: 1px solid rgba(45,155,99,.3);
+      color: #7DDCAA; font-size: 12px; font-weight: 700;
+    }
+    .result-hint { margin: 14px 0 0; color: var(--dim); font-size: 13px; line-height: 1.65; }
+
+    .error-box {
+      display: none; margin-top: 16px; border-radius: 14px;
+      border: 1px solid rgba(192,48,63,.35);
+      background: rgba(192,48,63,.07); padding: 16px;
+    }
+    .error-title { font-weight: 600; margin: 0 0 6px; font-size: 15px; }
+    .error-msg { margin: 0; color: var(--dim); font-size: 13px; line-height: 1.55; }
+    .error-detail { margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--dim); white-space: pre-wrap; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-mark">B</div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="intake-wrap">
+    <div class="card">
+      <div class="card-inner">
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          Pilot Phase — OBR Registry
+        </div>
+
+        <h1 class="intake-title">Register Your Organization</h1>
+        <p class="intake-lead">
+          Establish your organization's presence in the BRSA Registry. You receive a Registry ID
+          immediately. A BRSA evaluator will contact your primary contact to begin governed
+          evidence collection and readiness assessment.
+        </p>
+
+        <div id="intakeForm">
+
+          <!-- Identity -->
+          <div class="form-section">
+            <span class="section-label">Organization Identity</span>
+            <div class="form-grid">
+              <div class="field" style="grid-column:1/-1">
+                <label for="orgName">Organization Name *</label>
+                <input id="orgName" type="text" placeholder="Full legal name" />
+              </div>
+              <div class="field">
+                <label for="orgType">Organization Type *</label>
+                <select id="orgType">
+                  <option value="">Select type…</option>
+                  <option value="nonprofit">Nonprofit / 501(c)(3)</option>
+                  <option value="llc">LLC</option>
+                  <option value="corporation">Corporation</option>
+                  <option value="government">Government Agency</option>
+                  <option value="education">Educational Institution</option>
+                  <option value="faith">Faith-Based Organization</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="orgState">State of Operation *</label>
+                <input id="orgState" type="text" placeholder="e.g. Georgia" />
+              </div>
+              <div class="field">
+                <label for="orgYear">Year Established</label>
+                <input id="orgYear" type="number" placeholder="e.g. 2015" min="1800" max="2026" />
+              </div>
+              <div class="field">
+                <label for="orgEmployees">Number of Employees</label>
+                <select id="orgEmployees">
+                  <option value="">Select range…</option>
+                  <option value="1-5">1–5</option>
+                  <option value="6-25">6–25</option>
+                  <option value="26-100">26–100</option>
+                  <option value="101-500">101–500</option>
+                  <option value="500+">500+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- Scale -->
+          <div class="form-section">
+            <span class="section-label">Organizational Scale</span>
+            <div class="form-grid">
+              <div class="field">
+                <label for="orgFunding">Annual Funding / Revenue</label>
+                <select id="orgFunding">
+                  <option value="">Select range…</option>
+                  <option value="under-100k">Under $100K</option>
+                  <option value="100k-500k">$100K – $500K</option>
+                  <option value="500k-1m">$500K – $1M</option>
+                  <option value="1m-5m">$1M – $5M</option>
+                  <option value="5m-25m">$5M – $25M</option>
+                  <option value="25m+">$25M+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="orgMission">Primary Mission Area</label>
+                <select id="orgMission">
+                  <option value="">Select area…</option>
+                  <option value="community-development">Community Development</option>
+                  <option value="workforce">Workforce Development</option>
+                  <option value="education">Education</option>
+                  <option value="health">Health &amp; Wellness</option>
+                  <option value="housing">Housing</option>
+                  <option value="justice">Criminal Justice / Reentry</option>
+                  <option value="youth">Youth Services</option>
+                  <option value="advocacy">Advocacy / Policy</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- Contact -->
+          <div class="form-section">
+            <span class="section-label">Primary Contact</span>
+            <div class="form-grid">
+              <div class="field">
+                <label for="contactName">Contact Name *</label>
+                <input id="contactName" type="text" placeholder="Full name" />
+              </div>
+              <div class="field">
+                <label for="contactTitle">Title / Role</label>
+                <input id="contactTitle" type="text" placeholder="e.g. Executive Director" />
+              </div>
+              <div class="field" style="grid-column:1/-1">
+                <label for="contactEmail">Contact Email *</label>
+                <input id="contactEmail" type="email" placeholder="name@organization.org" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- Consent -->
+          <div class="consent-block">
+            <div class="consent-row">
+              <input type="checkbox" id="consentPresence" />
+              <label for="consentPresence">
+                I consent to creation of a registry record for this organization and issuance of a
+                BRSA Registry ID under the public presence standard.
+              </label>
+            </div>
+            <div class="consent-row">
+              <input type="checkbox" id="consentPilot" />
+              <label for="consentPilot">
+                I acknowledge this is a pilot-phase registration and that additional evaluation
+                and documentation may be required to achieve verified readiness standing.
+              </label>
+            </div>
+          </div>
+
+          <div id="errorBox" class="error-box" role="alert">
+            <div class="error-title">Registration error</div>
+            <p class="error-msg" id="errorMsg"></p>
+            <div class="error-detail" id="errorDetail"></div>
+          </div>
+
+          <button id="submitBtn" class="btn-submit">Register Organization</button>
+          <p class="submit-note">Your Registry ID is issued immediately. No payment required. No account created.</p>
+        </div>
+
+        <!-- Result -->
+        <div id="resultBox" class="result-box">
+          <div class="result-inner">
+            <div class="result-label">Organization Registered</div>
+            <p class="result-org" id="resultOrgName"></p>
+            <div id="registryId" class="id-display" aria-live="polite"></div>
+            <div class="copy-row">
+              <button id="copyBtn" class="btn-copy">Copy ID</button>
+              <span id="copyConfirm" class="copy-confirm">Copied</span>
+            </div>
+            <p class="result-hint">
+              Save this Registry ID. It is your organization's permanent presence in the BRSA Registry.
+              A BRSA evaluator will contact <span id="resultContact"></span> to begin the
+              readiness assessment process.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="index.html" class="btn-ghost">Verify a Registry ID</a>
+          <a href="onboard.html" class="btn-ghost">Individual Intake</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    const API = "https://legacyline-core-production.up.railway.app";
+    const submitBtn    = document.getElementById("submitBtn");
+    const resultBox    = document.getElementById("resultBox");
+    const registryIdEl = document.getElementById("registryId");
+    const resultOrgEl  = document.getElementById("resultOrgName");
+    const resultContactEl = document.getElementById("resultContact");
+    const errorBox     = document.getElementById("errorBox");
+    const errorMsg     = document.getElementById("errorMsg");
+    const errorDetail  = document.getElementById("errorDetail");
+    const copyBtn      = document.getElementById("copyBtn");
+    const copyConfirm  = document.getElementById("copyConfirm");
+
+    function val(id){ return (document.getElementById(id)?.value||"").trim(); }
+    function clearError(){ errorBox.style.display="none"; errorMsg.textContent=""; errorDetail.textContent=""; }
+    function showError(msg,detail){ errorBox.style.display="block"; errorMsg.textContent=msg||"Unknown error."; errorDetail.textContent=detail||""; submitBtn.disabled=false; submitBtn.textContent="Register Organization"; }
+    async function safeJson(res){ const t=await res.text(); try{return{json:JSON.parse(t),text:t};}catch{return{json:null,text:t};} }
+
+    async function submit(){
+      clearError();
+      const orgName=val("orgName"), orgType=val("orgType"), orgState=val("orgState");
+      const contactName=val("contactName"), contactEmail=val("contactEmail");
+      if(!orgName) return showError("Organization name is required.");
+      if(!orgType) return showError("Organization type is required.");
+      if(!orgState) return showError("State of operation is required.");
+      if(!contactName) return showError("Primary contact name is required.");
+      if(!contactEmail||!contactEmail.includes("@")) return showError("A valid contact email is required.");
+      if(!document.getElementById("consentPresence").checked) return showError("You must consent to registry presence to proceed.");
+      if(!document.getElementById("consentPilot").checked) return showError("You must acknowledge the pilot phase terms to proceed.");
+
+      submitBtn.disabled=true; submitBtn.textContent="Registering…";
+
+      const payload = {
+        org_name: orgName, org_type: orgType, org_state: orgState,
+        org_year: val("orgYear"), org_employees: val("orgEmployees"),
+        org_funding: val("orgFunding"), org_mission: val("orgMission"),
+        contact_name: contactName, contact_title: val("contactTitle"),
+        contact_email: contactEmail, entity_type: "organization", pilot_phase: true
+      };
+
+      try{
+        const r1 = await fetch(`${API}/participants`,{method:"POST",headers:{"Content-Type":"application/json","X-Actor":`org-intake:${contactEmail}`},body:JSON.stringify(payload)});
+        const d1 = await safeJson(r1);
+        if(!r1.ok||!d1.json) throw new Error(`Create failed (${r1.status}): ${d1.text}`);
+        const pid=d1.json.participant_id||d1.json.id, rid=d1.json.registry_id;
+        if(!pid||!rid) throw new Error(`Missing participant_id or registry_id: ${d1.text}`);
+
+        const r2 = await fetch(`${API}/participants/${encodeURIComponent(pid)}/consents`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({consent_type:"registry_public_presence",scope:["registry_public_presence","org_evaluation_pilot"]})});
+        const d2 = await safeJson(r2);
+        if(!r2.ok) throw new Error(`Consent failed (${r2.status}): ${d2.text}`);
+
+        registryIdEl.textContent=rid;
+        resultOrgEl.textContent=orgName;
+        resultContactEl.textContent=contactEmail;
+        document.getElementById("intakeForm").style.display="none";
+        resultBox.style.display="block";
+      } catch(e){
+        showError("Registration failed. Check your connection and try again.", e&&e.message?e.message:String(e));
+      }
+    }
+
+    async function copyId(){
+      const text=registryIdEl.textContent||"";
+      if(!text) return;
+      try{ await navigator.clipboard.writeText(text); }
+      catch{ const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); }
+      copyConfirm.style.display="inline-flex";
+      setTimeout(()=>{ copyConfirm.style.display="none"; },1800);
+    }
+
+    submitBtn.addEventListener("click", submit);
+    copyBtn.addEventListener("click", copyId);
+  })();
+  </script>
+</body>
+  </html>
+  
