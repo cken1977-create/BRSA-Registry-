@@ -5,55 +5,270 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BRSA Registry — Behavioral Readiness Standards Authority</title>
   <meta name="description" content="The national registry of behavioral and organizational readiness. Verify standing. Enter the standard." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="assets/styles.css" />
-
   <style>
-    /* Homepage-only: mobile menu + any page-specific tweaks */
+    button { -webkit-tap-highlight-color: transparent; }
+
     .mobile-menu {
-      display: none;
-      position: fixed;
+      display: none; position: fixed;
       top: 60px; left: 0; right: 0; bottom: 0;
-      z-index: 99;
-      background: rgba(8,17,31,.97);
+      z-index: 99; background: rgba(8,17,31,.97);
       border-top: 1px solid rgba(255,255,255,.09);
-      padding: 24px 20px;
-      flex-direction: column;
-      gap: 8px;
-      overflow-y: auto;
+      padding: 24px 20px; flex-direction: column; gap: 8px; overflow-y: auto;
     }
     .mobile-menu.open { display: flex; }
-
     .mobile-menu-link {
       display: block; padding: 14px 16px; border-radius: 10px;
       font-size: 16px; font-weight: 500; color: rgba(240,237,232,.8);
-      text-decoration: none; border: 1px solid transparent;
-      transition: background .15s, border-color .15s, color .15s;
+      border: 1px solid transparent; transition: background .15s, border-color .15s, color .15s;
     }
-    .mobile-menu-link:hover {
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.09);
-      color: #F0EDE8;
-    }
-
+    .mobile-menu-link:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.09); color: #F0EDE8; }
     .mobile-menu-cta {
       display: block; margin-top: 8px; padding: 14px 16px;
       border-radius: 10px; background: #C9A84C; color: #08111F;
-      font-size: 15px; font-weight: 700; text-align: center; text-decoration: none;
+      font-size: 15px; font-weight: 700; text-align: center;
     }
 
-    /* Small polish: prevent tap highlight on iOS, keep button consistent */
-    button { -webkit-tap-highlight-color: transparent; }
+    /* NAV SEAL */
+    .nav-seal {
+      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
+      flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+    }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding-top: 60px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .hero-bg svg { width: 100%; height: 100%; opacity: .04; }
+    .hero-glow {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); pointer-events: none;
+    }
+    .hero-glow-1 {
+      width: 600px; height: 600px;
+      background: rgba(201,168,76,.12);
+      top: -100px; right: -200px;
+    }
+    .hero-glow-2 {
+      width: 400px; height: 400px;
+      background: rgba(45,100,200,.08);
+      bottom: 0; left: -100px;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(60px,10vh,120px) var(--pad) 80px;
+      width: 100%;
+    }
+
+    /* SEAL DISPLAY */
+    .hero-seal {
+      width: 80px; height: 80px; border-radius: 50%; overflow: hidden;
+      border: 2px solid rgba(201,168,76,.4);
+      box-shadow: 0 0 0 6px rgba(201,168,76,.06), 0 0 40px rgba(201,168,76,.12);
+      margin-bottom: 32px;
+    }
+    .hero-seal img { width: 100%; height: 100%; object-fit: cover; }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+    }
+    .hero-eyebrow-line {
+      width: 32px; height: 1px; background: var(--gold); opacity: .6;
+    }
+    .hero-eyebrow-text {
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500;
+    }
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 1.04; margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .hero-headline em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px); color: var(--dim);
+      max-width: 540px; line-height: 1.75; font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* LOOKUP */
+    .lookup-section { max-width: 520px; }
+    .lookup-label {
+      font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--faint); margin-bottom: 12px; font-weight: 500;
+    }
+    .lookup-row { display: flex; gap: 10px; }
+    .lookup-input {
+      flex: 1; padding: 14px 18px; border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text); font-family: var(--mono);
+      font-size: 14px; outline: none; letter-spacing: .06em;
+      transition: border-color .2s;
+    }
+    .lookup-input:focus { border-color: rgba(201,168,76,.5); }
+    .lookup-input::placeholder { color: var(--faint); letter-spacing: .04em; font-family: var(--mono); }
+    .lookup-btn {
+      padding: 14px 22px; border-radius: 12px; border: none;
+      background: var(--gold); color: var(--navy);
+      font-size: 13px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; white-space: nowrap;
+      transition: opacity .15s;
+    }
+    .lookup-btn:hover { opacity: .88; }
+    .lookup-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .lookup-result {
+      margin-top: 16px; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      display: none;
+    }
+    .lookup-result.visible { display: block; }
+    .result-bar { height: 3px; }
+    .result-bar.GREEN { background: #2D9B63; }
+    .result-bar.YELLOW { background: #C9A130; }
+    .result-bar.RED { background: #C0303F; }
+    .result-body { padding: 20px; background: rgba(255,255,255,.03); }
+    .result-state { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .state-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .state-dot.GREEN { background: #2D9B63; }
+    .state-dot.YELLOW { background: #C9A130; }
+    .state-dot.RED { background: #C0303F; }
+    .state-label { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .1em; }
+    .result-msg { font-size: 14px; color: var(--dim); line-height: 1.6; }
+    .result-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .result-field-k { font-size: 11px; color: var(--faint); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+    .result-field-v { font-family: var(--mono); font-size: 13px; color: var(--text); }
+
+    /* PILLARS */
+    .pillars { border-top: 1px solid var(--line); }
+    .pillars-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(60px,8vh,100px) var(--pad);
+    }
+    .section-eyebrow {
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.12; margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--dim); font-size: 16px; max-width: 560px;
+      line-height: 1.75; font-weight: 300; margin-bottom: 48px;
+    }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .pillar {
+      background: var(--navy2); padding: 36px 32px;
+      border: 1px solid var(--line); position: relative; overflow: hidden;
+      transition: background .2s;
+    }
+    .pillar:hover { background: var(--navy3); }
+    .pillar::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform .3s;
+    }
+    .pillar:hover::after { transform: scaleX(1); }
+    .pillar-num {
+      font-family: var(--serif); font-size: 13px;
+      color: var(--gold); margin-bottom: 16px; letter-spacing: .08em;
+    }
+    .pillar-title {
+      font-family: var(--serif); font-size: 22px;
+      margin-bottom: 12px; line-height: 1.2;
+    }
+    .pillar-body { font-size: 14px; color: var(--dim); line-height: 1.75; font-weight: 300; }
+
+    /* FRARI CALLOUT */
+    .frari-callout {
+      border-top: 1px solid var(--line);
+      background: linear-gradient(135deg, var(--navy2) 0%, var(--navy3) 100%);
+    }
+    .frari-callout-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(60px,8vh,100px) var(--pad);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    @media (max-width: 720px) { .frari-callout-inner { grid-template-columns: 1fr; } }
+    .frari-callout-left {}
+    .frari-version-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2);
+      border-radius: 20px; padding: 6px 14px; margin-bottom: 20px;
+    }
+    .frari-pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+    .frari-pill-text { font-family: var(--mono); font-size: 12px; color: var(--gold); letter-spacing: .08em; }
+    .frari-callout-title {
+      font-family: var(--serif); font-size: clamp(24px,3vw,38px);
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .frari-callout-body {
+      font-size: 15px; color: var(--dim); line-height: 1.8;
+      font-weight: 300; margin-bottom: 24px;
+    }
+    .frari-weights { display: flex; flex-direction: column; gap: 12px; }
+    .frari-weight-row {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .frari-weight-bar-wrap {
+      flex: 1; height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden;
+    }
+    .frari-weight-bar { height: 100%; background: var(--gold); border-radius: 2px; }
+    .frari-weight-label { font-size: 13px; color: var(--dim); min-width: 160px; }
+    .frari-weight-pct { font-family: var(--mono); font-size: 13px; color: var(--gold); min-width: 36px; text-align: right; }
+
+    /* STATES SECTION */
+    .states-section {
+      border-top: 1px solid var(--line);
+      max-width: var(--max); margin: 0 auto;
+      padding: clamp(60px,8vh,100px) var(--pad);
+    }
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 14px; margin-top: 40px;
+    }
+    .state-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--line); background: var(--navy2);
+    }
+    .state-card-bar { height: 4px; }
+    .state-card-bar.green { background: #2D9B63; }
+    .state-card-bar.yellow { background: #C9A130; }
+    .state-card-bar.red { background: #C0303F; }
+    .state-card-body { padding: 24px 22px; }
+    .state-card-label { font-size: 11px; letter-spacing: .14em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .state-card-label.green { color: #2D9B63; }
+    .state-card-label.yellow { color: #C9A130; }
+    .state-card-label.red { color: #C0303F; }
+    .state-card-title { font-family: var(--serif); font-size: 22px; margin-bottom: 10px; }
+    .state-card-desc { font-size: 13px; color: var(--dim); line-height: 1.7; font-weight: 300; }
   </style>
 </head>
-
 <body>
 
-  <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <a href="mandate.html" class="mobile-menu-link">Mandate</a>
     <a href="doctrine.html" class="mobile-menu-link">Doctrine</a>
@@ -62,23 +277,21 @@
     <a href="onboard.html" class="mobile-menu-cta">Enter Registry</a>
   </div>
 
-  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <div class="nav-mark">B</div>
+        <div class="nav-seal">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+        </div>
         <div class="nav-wordmark">BRSA <span>Registry</span></div>
       </a>
-
       <nav class="nav-links">
         <a href="mandate.html" class="nav-link">Mandate</a>
         <a href="doctrine.html" class="nav-link">Doctrine</a>
         <a href="registry.html" class="nav-link">Registry</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
-
       <a href="onboard.html" class="nav-cta">Enter Registry</a>
-
       <button class="nav-mobile-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
           <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -110,6 +323,10 @@
     </div>
 
     <div class="hero-inner">
+      <div class="hero-seal">
+        <img src="assets/logo-seal.png" alt="BRSA Seal" />
+      </div>
+
       <div class="hero-eyebrow">
         <div class="hero-eyebrow-line"></div>
         <div class="hero-eyebrow-text">Established · National Standard · Sovereign Registry</div>
@@ -126,24 +343,15 @@
         Every Registry ID is a permanent, verifiable record of presence and standing.
       </p>
 
-      <!-- LOOKUP -->
       <div class="lookup-section">
         <div class="lookup-label">Verify Registry Standing</div>
-
         <div class="lookup-row">
-          <input
-            id="ridInput"
-            class="lookup-input"
-            type="text"
+          <input id="ridInput" class="lookup-input" type="text"
             placeholder="BRSA-26-XXXXXXXX"
-            autocapitalize="characters"
-            autocomplete="off"
-            spellcheck="false"
-            inputmode="text"
-          />
+            autocapitalize="characters" autocomplete="off"
+            spellcheck="false" inputmode="text" />
           <button class="lookup-btn" id="lookupBtn" type="button">Verify</button>
         </div>
-
         <div class="lookup-result" id="lookupResult" aria-live="polite">
           <div class="result-bar" id="resultBar"></div>
           <div class="result-body" id="resultBody"></div>
@@ -152,13 +360,12 @@
     </div>
   </section>
 
-  <!-- PILLARS -->
+    <!-- PILLARS -->
   <section class="pillars">
     <div class="pillars-inner">
       <div class="section-eyebrow">What BRSA Does</div>
       <h2 class="section-title">A new category of authority</h2>
       <p class="section-sub">BRSA was built because behavioral readiness had no standard. We created one — deterministic, auditable, and permanent.</p>
-
       <div class="pillars-grid">
         <div class="pillar">
           <div class="pillar-num">01</div>
@@ -168,7 +375,7 @@
         <div class="pillar">
           <div class="pillar-num">02</div>
           <div class="pillar-title">Readiness Assessment</div>
-          <div class="pillar-body">Readiness is computed through the FRARI ruleset — deterministic, evidence-based, and governed. No sentiment. No subjectivity.</div>
+          <div class="pillar-body">Readiness is computed through the FRARI v1.0.0 ruleset — a weighted composite model across four evidence dimensions. Deterministic. Governed. No subjectivity.</div>
         </div>
         <div class="pillar">
           <div class="pillar-num">03</div>
@@ -179,12 +386,50 @@
     </div>
   </section>
 
+  <!-- FRARI CALLOUT -->
+  <section class="frari-callout">
+    <div class="frari-callout-inner">
+      <div class="frari-callout-left">
+        <div class="frari-version-pill">
+          <div class="frari-pill-dot"></div>
+          <div class="frari-pill-text">FRARI Individual v1.0.0 — Active</div>
+        </div>
+        <div class="frari-callout-title">A scoring engine built on evidence, not opinion</div>
+        <p class="frari-callout-body">The FRARI ruleset computes a composite readiness score from four weighted dimensions. Every score is deterministic — the same evidence always produces the same result. Evaluators observe and record. The engine computes.</p>
+        <a href="doctrine.html" class="btn-gold" style="display:inline-flex;">Read the Doctrine →</a>
+      </div>
+      <div>
+        <div class="frari-weights">
+          <div class="frari-weight-row">
+            <div class="frari-weight-label">Evidence Engagement</div>
+            <div class="frari-weight-bar-wrap"><div class="frari-weight-bar" style="width:30%"></div></div>
+            <div class="frari-weight-pct">30%</div>
+          </div>
+          <div class="frari-weight-row">
+            <div class="frari-weight-label">Intake Completeness</div>
+            <div class="frari-weight-bar-wrap"><div class="frari-weight-bar" style="width:25%"></div></div>
+            <div class="frari-weight-pct">25%</div>
+          </div>
+          <div class="frari-weight-row">
+            <div class="frari-weight-label">Lifecycle Progression</div>
+            <div class="frari-weight-bar-wrap"><div class="frari-weight-bar" style="width:25%"></div></div>
+            <div class="frari-weight-pct">25%</div>
+          </div>
+          <div class="frari-weight-row">
+            <div class="frari-weight-label">Consent Compliance</div>
+            <div class="frari-weight-bar-wrap"><div class="frari-weight-bar" style="width:20%"></div></div>
+            <div class="frari-weight-pct">20%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- STATES -->
   <section class="states-section">
     <div class="section-eyebrow">Readiness States</div>
     <h2 class="section-title">Three states. One standard.</h2>
     <p class="section-sub">Every registered entity carries one of three canonical readiness states. States are computed, not assigned. They reflect evidence, not opinion.</p>
-
     <div class="states-grid">
       <div class="state-card">
         <div class="state-card-bar green"></div>
@@ -194,7 +439,6 @@
           <div class="state-card-desc">Sufficient evidence of behavioral discipline, documentation integrity, and consistent pattern compliance. Score 70 or above.</div>
         </div>
       </div>
-
       <div class="state-card">
         <div class="state-card-bar yellow"></div>
         <div class="state-card-body">
@@ -203,13 +447,12 @@
           <div class="state-card-desc">Evidence collection underway. Readiness trajectory is being established. Active engagement with the assessment process. Score 40–69.</div>
         </div>
       </div>
-
       <div class="state-card">
         <div class="state-card-bar red"></div>
         <div class="state-card-body">
           <div class="state-card-label red">Red</div>
           <div class="state-card-title">Unverified</div>
-          <div class="state-card-desc">Insufficient evidence or assessment not yet completed. Default state at registration. Score below 40.</div>
+          <div class="state-card-desc">Insufficient evidence or assessment not yet completed. Default state at registration. Does not indicate disqualification. Score below 40.</div>
         </div>
       </div>
     </div>
@@ -229,7 +472,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">BRSA Registry</div>
@@ -239,62 +481,33 @@
         <a href="registry.html" class="footer-link">Registry</a>
         <a href="contact.html" class="footer-link">Contact</a>
       </div>
-      <div class="footer-legal">2026 BRSA · Sovereign Standards Authority</div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
     </div>
   </footer>
 
-  <!-- JS (complete, not truncated) -->
   <script>
     (function () {
       var API = "https://legacyline-core-production.up.railway.app";
 
-      // -------------------------
-      // Mobile menu
-      // -------------------------
       var menuBtn = document.getElementById("mobileMenuBtn");
       var mobileMenu = document.getElementById("mobileMenu");
       var menuOpen = false;
 
       function setMenu(open) {
         menuOpen = !!open;
-        if (menuOpen) {
-          mobileMenu.classList.add("open");
-          mobileMenu.setAttribute("aria-hidden", "false");
-          menuBtn.setAttribute("aria-expanded", "true");
-          document.body.style.overflow = "hidden";
-        } else {
-          mobileMenu.classList.remove("open");
-          mobileMenu.setAttribute("aria-hidden", "true");
-          menuBtn.setAttribute("aria-expanded", "false");
-          document.body.style.overflow = "";
-        }
+        mobileMenu.classList.toggle("open", menuOpen);
+        mobileMenu.setAttribute("aria-hidden", String(!menuOpen));
+        menuBtn.setAttribute("aria-expanded", String(menuOpen));
+        document.body.style.overflow = menuOpen ? "hidden" : "";
       }
 
       if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener("click", function () {
-          setMenu(!menuOpen);
-        });
-
-        // Close on link click
-        mobileMenu.addEventListener("click", function (e) {
-          var t = e.target;
-          if (t && t.tagName === "A") setMenu(false);
-        });
-
-        // ESC closes
-        window.addEventListener("keydown", function (e) {
-          if (e.key === "Escape" && menuOpen) setMenu(false);
-        });
-
-        // Resize safety
-        window.addEventListener("resize", function () {
-          if (window.innerWidth > 720 && menuOpen) setMenu(false);
-        });
+        menuBtn.addEventListener("click", function () { setMenu(!menuOpen); });
+        mobileMenu.addEventListener("click", function (e) { if (e.target.tagName === "A") setMenu(false); });
+        window.addEventListener("keydown", function (e) { if (e.key === "Escape" && menuOpen) setMenu(false); });
+        window.addEventListener("resize", function () { if (window.innerWidth > 720 && menuOpen) setMenu(false); });
       }
 
-      // -------------------------
-      // Registry lookup
-      // -------------------------
       var lookupBtn = document.getElementById("lookupBtn");
       var ridInput = document.getElementById("ridInput");
       var lookupResult = document.getElementById("lookupResult");
@@ -302,188 +515,82 @@
       var resultBody = document.getElementById("resultBody");
 
       function escapeHtml(s) {
-        return String(s || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
+        return String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
       }
 
       function showResult(state, html) {
-        if (!lookupResult) return;
         lookupResult.classList.add("visible");
         resultBar.className = "result-bar " + state;
         resultBody.innerHTML = html;
       }
 
       function setLookupBusy(on) {
-        if (!lookupBtn) return;
         lookupBtn.disabled = !!on;
         lookupBtn.textContent = on ? "VERIFYING" : "Verify";
       }
 
       function normalizeRid(input) {
-        var v = (input || "").toUpperCase().trim();
-        // Keep only A-Z 0-9 and dash
-        v = v.replace(/[^A-Z0-9-]/g, "");
-        // If user starts typing year/id without prefix, auto-prefix
-        if (v && v.indexOf("BRSA-") !== 0) {
-          v = "BRSA-" + v.replace(/^BRSA-?/i, "");
-        }
-        // prevent runaway length
+        var v = (input || "").toUpperCase().trim().replace(/[^A-Z0-9-]/g, "");
+        if (v && v.indexOf("BRSA-") !== 0) v = "BRSA-" + v.replace(/^BRSA-?/i, "");
         if (v.length > 20) v = v.slice(0, 20);
         return v;
       }
 
       function isValidRid(rid) {
-        // BRSA-YY-XXXXXXXX where X is A-Z0-9, 8 chars
-        // (Matches your docs and current UI)
         return /^BRSA-\d{2}-[A-Z0-9]{8}$/.test(rid);
       }
 
       async function safeJson(res) {
         var text = await res.text();
-        try { return { json: JSON.parse(text), text: text }; }
-        catch (e) { return { json: null, text: text }; }
+        try { return { json: JSON.parse(text), text }; } catch (e) { return { json: null, text }; }
       }
 
       async function doLookup() {
-        var rid = normalizeRid(ridInput ? ridInput.value : "");
-        if (ridInput) ridInput.value = rid;
+        var rid = normalizeRid(ridInput.value);
+        ridInput.value = rid;
 
-        if (!rid) {
+        if (!rid || !isValidRid(rid)) {
           showResult("RED",
-            '<div class="result-state">' +
-              '<div class="state-dot RED"></div>' +
-              '<div class="state-label">MISSING</div>' +
-            '</div>' +
-            '<p class="result-msg">Enter a Registry ID to verify standing.</p>'
-          );
-          return;
-        }
-
-        if (!isValidRid(rid)) {
-          showResult("RED",
-            '<div class="result-state">' +
-              '<div class="state-dot RED"></div>' +
-              '<div class="state-label">INVALID</div>' +
-            '</div>' +
-            '<p class="result-msg">Expected format: <span style="font-family:DM Mono,monospace;">BRSA-26-XXXXXXXX</span></p>'
+            '<div class="result-state"><div class="state-dot RED"></div><div class="state-label">' + (!rid ? "MISSING" : "INVALID") + '</div></div>' +
+            '<p class="result-msg">' + (!rid ? "Enter a Registry ID to verify standing." : "Expected format: <span style=\"font-family:var(--mono)\">BRSA-26-XXXXXXXX</span>") + '</p>'
           );
           return;
         }
 
         setLookupBusy(true);
-
         try {
-          var url = API + "/registry/v1/lookup?rid=" + encodeURIComponent(rid);
-          var res = await fetch(url, { method: "GET" });
+          var res = await fetch(API + "/registry/v1/lookup?rid=" + encodeURIComponent(rid));
           var out = await safeJson(res);
-
-          if (!res.ok) {
-            // If API returns JSON error
-            var message = (out.json && (out.json.error || out.json.message)) ? (out.json.error || out.json.message) : out.text;
-            showResult("RED",
-              '<div class="result-state">' +
-                '<div class="state-dot RED"></div>' +
-                '<div class="state-label">ERROR</div>' +
-              '</div>' +
-              '<p class="result-msg">' + escapeHtml(message || ("Request failed (" + res.status + ")")) + '</p>'
-            );
+          if (!res.ok || !out.json || out.json.error) {
+            var msg = (out.json && (out.json.error || out.json.message)) || ("Request failed (" + res.status + ")");
+            showResult("RED", '<div class="result-state"><div class="state-dot RED"></div><div class="state-label">NOT FOUND</div></div><p class="result-msg">' + escapeHtml(msg) + '</p>');
             return;
           }
-
-          if (!out.json) {
-            showResult("RED",
-              '<div class="result-state">' +
-                '<div class="state-dot RED"></div>' +
-                '<div class="state-label">ERROR</div>' +
-              '</div>' +
-              '<p class="result-msg">Unexpected response format from registry service.</p>'
-            );
-            return;
-          }
-
-          // expected: registry_id, readiness_state, status, last_updated_at
-          if (out.json.error) {
-            showResult("RED",
-              '<div class="result-state">' +
-                '<div class="state-dot RED"></div>' +
-                '<div class="state-label">NOT FOUND</div>' +
-              '</div>' +
-              '<p class="result-msg">' + escapeHtml(out.json.error) + '</p>'
-            );
-            return;
-          }
-
           var state = (out.json.readiness_state || "RED").toUpperCase();
-          if (state !== "GREEN" && state !== "YELLOW" && state !== "RED") state = "RED";
-
-          var html =
-            '<div class="result-state">' +
-              '<div class="state-dot ' + state + '"></div>' +
-              '<div class="state-label">' + escapeHtml(state) + '</div>' +
-            '</div>' +
-
+          if (!["GREEN","YELLOW","RED"].includes(state)) state = "RED";
+          showResult(state,
+            '<div class="result-state"><div class="state-dot ' + state + '"></div><div class="state-label">' + state + '</div></div>' +
             '<div class="result-grid">' +
-              '<div>' +
-                '<div class="result-field-k">Registry ID</div>' +
-                '<div class="result-field-v">' + escapeHtml(out.json.registry_id || rid) + '</div>' +
-              '</div>' +
-              '<div>' +
-                '<div class="result-field-k">Status</div>' +
-                '<div class="result-field-v">' + escapeHtml(out.json.status || "—") + '</div>' +
-              '</div>' +
-              '<div>' +
-                '<div class="result-field-k">Readiness State</div>' +
-                '<div class="result-field-v">' + escapeHtml(state) + '</div>' +
-              '</div>' +
-              '<div>' +
-                '<div class="result-field-k">Last Updated</div>' +
-                '<div class="result-field-v">' + escapeHtml(out.json.last_updated_at || "—") + '</div>' +
-              '</div>' +
-            '</div>';
-
-          showResult(state, html);
-
-        } catch (e) {
-          showResult("RED",
-            '<div class="result-state">' +
-              '<div class="state-dot RED"></div>' +
-              '<div class="state-label">OFFLINE</div>' +
-            '</div>' +
-            '<p class="result-msg">Unable to reach registry service. Check connection and try again.</p>'
+              '<div><div class="result-field-k">Registry ID</div><div class="result-field-v">' + escapeHtml(out.json.registry_id || rid) + '</div></div>' +
+              '<div><div class="result-field-k">Status</div><div class="result-field-v">' + escapeHtml(out.json.status || "—") + '</div></div>' +
+              '<div><div class="result-field-k">Readiness State</div><div class="result-field-v">' + escapeHtml(state) + '</div></div>' +
+              '<div><div class="result-field-k">Last Updated</div><div class="result-field-v">' + escapeHtml(out.json.last_updated_at || "—") + '</div></div>' +
+            '</div>'
           );
+        } catch (e) {
+          showResult("RED", '<div class="result-state"><div class="state-dot RED"></div><div class="state-label">OFFLINE</div></div><p class="result-msg">Unable to reach registry service. Check connection and try again.</p>');
         } finally {
           setLookupBusy(false);
         }
       }
 
       if (ridInput) {
-        ridInput.addEventListener("input", function (e) {
-          e.target.value = normalizeRid(e.target.value);
-        });
-
-        ridInput.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            doLookup();
-          }
-        });
-
-        ridInput.addEventListener("focus", function () {
-          if (lookupResult) lookupResult.classList.remove("visible");
-        });
+        ridInput.addEventListener("input", function (e) { e.target.value = normalizeRid(e.target.value); });
+        ridInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); doLookup(); } });
+        ridInput.addEventListener("focus", function () { lookupResult.classList.remove("visible"); });
       }
-
-      if (lookupBtn) {
-        lookupBtn.addEventListener("click", function () {
-          doLookup();
-        });
-      }
+      if (lookupBtn) lookupBtn.addEventListener("click", doLookup);
     })();
   </script>
-
 </body>
-          </html>
+</html>
