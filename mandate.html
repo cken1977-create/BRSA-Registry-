@@ -8,12 +8,124 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .nav-seal {
+      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
+      flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+    }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+
+    .commitment-row {
+      display: flex; gap: 18px; align-items: flex-start;
+      padding: 20px 0; border-bottom: 1px solid var(--line);
+    }
+    .commitment-row:last-child { border-bottom: none; }
+    .commitment-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; margin-top: 2px;
+    }
+    .commitment-title {
+      font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 5px;
+    }
+    .commitment-body {
+      font-size: 13px; color: var(--dim); line-height: 1.7;
+    }
+
+    .jurisdiction-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 14px; margin: 24px 0;
+    }
+    .jurisdiction-card {
+      background: var(--navy2); border: 1px solid var(--line);
+      border-radius: 14px; padding: 24px 20px; position: relative; overflow: hidden;
+    }
+    .jurisdiction-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px; background: var(--gold);
+    }
+    .jurisdiction-card-num {
+      font-family: var(--mono); font-size: 11px; color: var(--gold);
+      letter-spacing: .1em; margin-bottom: 10px;
+    }
+    .jurisdiction-card-title {
+      font-family: var(--serif); font-size: 18px; margin-bottom: 10px; line-height: 1.2;
+    }
+    .jurisdiction-card-body {
+      font-size: 13px; color: var(--dim); line-height: 1.7;
+    }
+    .jurisdiction-card-status {
+      margin-top: 12px; display: inline-block;
+      font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .jurisdiction-card-status.active {
+      background: rgba(45,155,99,.12); color: #2D9B63;
+      border: 1px solid rgba(45,155,99,.25);
+    }
+    .jurisdiction-card-status.development {
+      background: rgba(201,168,76,.1); color: var(--gold);
+      border: 1px solid rgba(201,168,76,.2);
+    }
+
+    .authority-list {
+      display: flex; flex-direction: column; gap: 2px; margin: 20px 0;
+    }
+    .authority-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; background: var(--navy2);
+      border: 1px solid var(--line); border-radius: 10px;
+    }
+    .authority-item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .authority-item-text { font-size: 14px; color: var(--dim); line-height: 1.5; }
+
+    .governance-rules {
+      display: flex; flex-direction: column; gap: 2px; margin: 20px 0;
+    }
+    .governance-rule {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px; background: var(--navy2);
+      border: 1px solid var(--line); border-radius: 10px;
+    }
+    .governance-rule-num {
+      font-family: var(--mono); font-size: 11px; color: var(--gold);
+      flex-shrink: 0; margin-top: 2px; letter-spacing: .06em;
+    }
+    .governance-rule-text { font-size: 14px; color: var(--dim); line-height: 1.6; }
+
+    .seal-mandate {
+      display: flex; align-items: center; gap: 20px;
+      padding: 24px 28px; margin-bottom: 40px;
+      background: rgba(201,168,76,.04);
+      border: 1px solid rgba(201,168,76,.14); border-radius: 16px;
+    }
+    .seal-mandate img {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 2px solid rgba(201,168,76,.3); flex-shrink: 0;
+    }
+    .seal-mandate-label {
+      font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 4px;
+    }
+    .seal-mandate-title {
+      font-family: var(--serif); font-size: 18px; color: var(--text); margin-bottom: 4px;
+    }
+    .seal-mandate-sub { font-size: 13px; color: var(--dim); }
+  </style>
 </head>
 <body>
+
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <div class="nav-mark">B</div>
+        <div class="nav-seal">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+        </div>
         <div class="nav-wordmark">BRSA <span>Registry</span></div>
       </a>
       <nav class="nav-links">
@@ -24,7 +136,9 @@
       </nav>
       <a href="onboard.html" class="nav-cta">Enter Registry</a>
       <button class="nav-mobile-btn" aria-label="Menu">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
       </button>
     </div>
   </header>
@@ -33,7 +147,7 @@
     <div class="page-hero-inner">
       <div class="page-eyebrow">Foundational Document</div>
       <h1 class="page-title">The BRSA Mandate</h1>
-      <p class="page-sub">The legal, doctrinal, and sovereign basis for the Behavioral Readiness Standards Authority.</p>
+      <p class="page-sub">The legal, doctrinal, and sovereign basis for the Behavioral Readiness Standards Authority. Est. 2026.</p>
     </div>
   </div>
 
@@ -53,6 +167,15 @@
 
       <article class="prose">
 
+        <div class="seal-mandate">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+          <div>
+            <div class="seal-mandate-label">Sovereign Standards Authority</div>
+            <div class="seal-mandate-title">BRSA Registry — Foundational Mandate</div>
+            <div class="seal-mandate-sub">Established 2026 · FRARI v1.0.0 Active · Pilot Phase</div>
+          </div>
+        </div>
+
         <section id="why" class="prose-section">
           <div class="prose-section-num">01</div>
           <h2 class="prose-h2">Why BRSA Exists</h2>
@@ -71,12 +194,24 @@
           <h2 class="prose-h2">Scope of Authority</h2>
           <p>BRSA's authority extends to any individual or organization that voluntarily enters the registry. Entry is consent-based. Once entered, the registry record is permanent. The presence of a Registry ID is a statement of institutional fact — not a certificate, not a credential, but a record.</p>
           <p>BRSA does not govern behavior directly. We govern the standard by which behavior is assessed, documented, and published. The distinction is critical. We are an authority over the method, not over the people the method evaluates.</p>
-          <ul class="prose-list">
-            <li>Authority over the readiness assessment standard (FRARI)</li>
-            <li>Authority over the registry format, ID structure, and public fields</li>
-            <li>Authority over evaluator training and accreditation requirements</li>
-            <li>Authority over what becomes public record and what remains internal</li>
-          </ul>
+          <div class="authority-list">
+            <div class="authority-item">
+              <div class="authority-item-dot"></div>
+              <div class="authority-item-text">Authority over the readiness assessment standard (FRARI v1.0.0)</div>
+            </div>
+            <div class="authority-item">
+              <div class="authority-item-dot"></div>
+              <div class="authority-item-text">Authority over the registry format, ID structure, and public fields</div>
+            </div>
+            <div class="authority-item">
+              <div class="authority-item-dot"></div>
+              <div class="authority-item-text">Authority over evaluator training, certification, and accreditation requirements</div>
+            </div>
+            <div class="authority-item">
+              <div class="authority-item-dot"></div>
+              <div class="authority-item-text">Authority over what becomes public record and what remains internal</div>
+            </div>
+          </div>
         </section>
 
         <div class="prose-divider"></div>
@@ -84,19 +219,25 @@
         <section id="jurisdiction" class="prose-section">
           <div class="prose-section-num">03</div>
           <h2 class="prose-h2">Standards Jurisdiction</h2>
-          <p>BRSA operates across three domains of jurisdiction, each with its own standards framework:</p>
-          <div class="prose-cards">
-            <div class="prose-card">
-              <div class="prose-card-title">Individual Readiness</div>
-              <div class="prose-card-body">Assessment of behavioral patterns, documentation discipline, evidence completeness, and consistency across time. Governed by the FRARI Individual Ruleset.</div>
+          <p>BRSA operates across three domains of jurisdiction, each with its own standards framework. All three domains share a unified evaluator system, dataset, and assessment engine.</p>
+          <div class="jurisdiction-grid">
+            <div class="jurisdiction-card">
+              <div class="jurisdiction-card-num">01 / INDIVIDUAL</div>
+              <div class="jurisdiction-card-title">Individual Readiness</div>
+              <div class="jurisdiction-card-body">Assessment of behavioral patterns, documentation discipline, evidence completeness, and consistency across time. Governed by the FRARI Individual Ruleset.</div>
+              <div class="jurisdiction-card-status active">ACTIVE · v1.0.0</div>
             </div>
-            <div class="prose-card">
-              <div class="prose-card-title">Organizational Readiness</div>
-              <div class="prose-card-body">Assessment of institutional integrity, governance structure, operational consistency, and compliance posture. Governed by the FRARI Organizational Ruleset (in development).</div>
+            <div class="jurisdiction-card">
+              <div class="jurisdiction-card-num">02 / ORGANIZATIONAL</div>
+              <div class="jurisdiction-card-title">Organizational Readiness</div>
+              <div class="jurisdiction-card-body">Assessment of institutional integrity, governance structure, operational consistency, and compliance posture. Governed by the FRARI Organizational Ruleset.</div>
+              <div class="jurisdiction-card-status development">IN DEVELOPMENT</div>
             </div>
-            <div class="prose-card">
-              <div class="prose-card-title">Evaluator Accreditation</div>
-              <div class="prose-card-body">Certification of individuals and institutions authorized to conduct BRSA assessments, submit evidence, and publish readiness findings to the registry.</div>
+            <div class="jurisdiction-card">
+              <div class="jurisdiction-card-num">03 / EVALUATOR</div>
+              <div class="jurisdiction-card-title">Evaluator Accreditation</div>
+              <div class="jurisdiction-card-body">Certification of individuals and institutions authorized to conduct BRSA assessments, submit evidence, and publish readiness findings to the registry.</div>
+              <div class="jurisdiction-card-status active">ACTIVE · 8 Modules</div>
             </div>
           </div>
         </section>
@@ -107,14 +248,28 @@
           <div class="prose-section-num">04</div>
           <h2 class="prose-h2">Governance Model</h2>
           <p>BRSA is founded under founder authority. The standards, the registry architecture, the assessment framework, and the public interface were designed and built by the founding authority. Amendments to the standard require a formal review process that will be published as the institution matures.</p>
-          <p>The current governance model for the pilot phase is as follows:</p>
-          <ul class="prose-list">
-            <li>Founder retains final authority over standard amendments</li>
-            <li>Evaluators are accredited through a defined training pathway</li>
-            <li>Registry records are immutable once written — no record may be deleted</li>
-            <li>Readiness states may be updated only through a new governed assessment</li>
-            <li>All governance decisions affecting the public record will be published</li>
-          </ul>
+          <div class="governance-rules">
+            <div class="governance-rule">
+              <div class="governance-rule-num">01</div>
+              <div class="governance-rule-text">Founder retains final authority over standard amendments during the pilot phase</div>
+            </div>
+            <div class="governance-rule">
+              <div class="governance-rule-num">02</div>
+              <div class="governance-rule-text">Evaluators are accredited through an 8-module certification pathway governed by the BRSA Standards Authority</div>
+            </div>
+            <div class="governance-rule">
+              <div class="governance-rule-num">03</div>
+              <div class="governance-rule-text">Registry records are immutable once written — no record may be deleted under any circumstance</div>
+            </div>
+            <div class="governance-rule">
+              <div class="governance-rule-num">04</div>
+              <div class="governance-rule-text">Readiness states may be updated only through a new governed assessment cycle with certified evaluator sign-off</div>
+            </div>
+            <div class="governance-rule">
+              <div class="governance-rule-num">05</div>
+              <div class="governance-rule-text">All governance decisions affecting the public record will be published in the official doctrine</div>
+            </div>
+          </div>
         </section>
 
         <div class="prose-divider"></div>
@@ -122,14 +277,45 @@
         <section id="commitments" class="prose-section">
           <div class="prose-section-num">05</div>
           <h2 class="prose-h2">Public Commitments</h2>
-          <p>BRSA makes the following commitments to every individual and organization that enters the registry:</p>
-          <ul class="prose-list">
-            <li><strong>Transparency:</strong> The standard by which you are assessed is published and public. You will always know the ruleset version used in your assessment.</li>
-            <li><strong>Non-commercial posture:</strong> Registry presence is not for sale. Readiness states cannot be purchased, leased, or influenced by payment.</li>
-            <li><strong>Data minimalism:</strong> The public record contains only what is necessary for verification. PII, internal audit data, and private evidence are never exposed.</li>
-            <li><strong>Permanence:</strong> Your Registry ID, once issued, is permanent. The record of your presence cannot be erased.</li>
-            <li><strong>Due process:</strong> Any contested assessment finding triggers a formal review process. You have the right to respond to findings before they are published.</li>
-          </ul>
+          <p>BRSA makes the following commitments to every individual and organization that enters the registry. These are not aspirations — they are structural constraints built into the platform.</p>
+
+          <div style="margin-top: 20px;">
+            <div class="commitment-row">
+              <div class="commitment-icon">⚖</div>
+              <div>
+                <div class="commitment-title">Transparency</div>
+                <div class="commitment-body">The standard by which you are assessed is published and public. You will always know the exact ruleset version used in your assessment. FRARI versions are permanently archived.</div>
+              </div>
+            </div>
+            <div class="commitment-row">
+              <div class="commitment-icon">🚫</div>
+              <div>
+                <div class="commitment-title">Non-Commercial Posture</div>
+                <div class="commitment-body">Registry presence is not for sale. Readiness states cannot be purchased, leased, or influenced by payment. The standard governs the outcome — not institutional relationships.</div>
+              </div>
+            </div>
+            <div class="commitment-row">
+              <div class="commitment-icon">🔒</div>
+              <div>
+                <div class="commitment-title">Data Minimalism</div>
+                <div class="commitment-body">The public record contains only what is necessary for verification. PII, internal audit data, raw scores, and private evidence are never exposed through the public registry interface.</div>
+              </div>
+            </div>
+            <div class="commitment-row">
+              <div class="commitment-icon">∞</div>
+              <div>
+                <div class="commitment-title">Permanence</div>
+                <div class="commitment-body">Your Registry ID, once issued, is permanent. The record of your presence in the system cannot be erased, transferred, or suppressed.</div>
+              </div>
+            </div>
+            <div class="commitment-row">
+              <div class="commitment-icon">📋</div>
+              <div>
+                <div class="commitment-title">Due Process</div>
+                <div class="commitment-body">Any contested assessment finding triggers a formal review process governed by the BRSA Standards Authority. You have the right to respond to findings before they are published to the public record.</div>
+              </div>
+            </div>
+          </div>
         </section>
 
       </article>
@@ -140,10 +326,11 @@
     <div class="cta-band-inner">
       <div class="cta-band-text">
         <div class="cta-band-title">Read the Doctrine</div>
-        <p class="cta-band-sub">The technical backbone of the BRSA standard — the FRARI ruleset, assessment lifecycle, and publication rules.</p>
+        <p class="cta-band-sub">The technical backbone of the BRSA standard — the FRARI ruleset, composite scoring model, and publication rules.</p>
       </div>
       <div class="cta-band-actions">
         <a href="doctrine.html" class="btn-gold">Readiness Doctrine →</a>
+        <a href="onboard.html" class="btn-outline">Enter Registry</a>
       </div>
     </div>
   </section>
@@ -160,6 +347,6 @@
       <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
     </div>
   </footer>
+
 </body>
-  </html>
-  
+</html>
