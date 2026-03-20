@@ -8,12 +8,190 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .nav-seal {
+      width: 38px; height: 38px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+      border: 1.5px solid rgba(201,168,76,.4);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+    }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+
+    .frari-version {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,.08);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 20px; padding: 6px 14px;
+      margin-bottom: 24px;
+    }
+    .frari-version-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .frari-version-text {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--gold); letter-spacing: .08em;
+    }
+
+    .weight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px; margin: 28px 0;
+    }
+    @media (max-width: 560px) { .weight-grid { grid-template-columns: 1fr; } }
+
+    .weight-card {
+      background: var(--navy2);
+      border: 1px solid var(--line);
+      border-radius: 14px; padding: 20px 22px;
+      position: relative; overflow: hidden;
+    }
+    .weight-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+    }
+    .weight-card-label {
+      font-size: 11px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .weight-card-name {
+      font-family: var(--serif); font-size: 18px;
+      color: var(--text); margin-bottom: 8px; line-height: 1.2;
+    }
+    .weight-card-pct {
+      font-family: var(--mono); font-size: 28px;
+      color: var(--gold); font-weight: 500;
+      margin-bottom: 10px; line-height: 1;
+    }
+    .weight-card-body {
+      font-size: 13px; color: var(--dim);
+      line-height: 1.65;
+    }
+    .weight-card-source {
+      margin-top: 10px;
+      font-family: var(--mono); font-size: 11px;
+      color: var(--faint); letter-spacing: .06em;
+    }
+
+    .indicator-row {
+      display: flex; align-items: flex-start;
+      gap: 18px; padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .indicator-row:last-child { border-bottom: none; }
+    .indicator-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(201,168,76,.1);
+      border: 1px solid rgba(201,168,76,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 12px;
+      color: var(--gold); flex-shrink: 0;
+    }
+    .indicator-name {
+      font-weight: 600; font-size: 15px;
+      color: var(--text); margin-bottom: 5px;
+    }
+    .indicator-engine {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--gold); margin-bottom: 6px;
+      letter-spacing: .06em;
+    }
+    .indicator-body {
+      font-size: 13px; color: var(--dim); line-height: 1.7;
+    }
+
+    .state-band {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin: 24px 0;
+    }
+    @media (max-width: 560px) { .state-band { grid-template-columns: 1fr; } }
+    .state-card {
+      border-radius: 14px; padding: 22px 20px;
+      border: 1px solid var(--line);
+    }
+    .state-card.green { background: rgba(45,123,82,.08); border-color: rgba(45,123,82,.25); }
+    .state-card.yellow { background: rgba(201,161,48,.08); border-color: rgba(201,161,48,.25); }
+    .state-card.red { background: rgba(192,48,63,.08); border-color: rgba(192,48,63,.25); }
+    .state-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .state-dot.green { background: #2D9B63; }
+    .state-dot.yellow { background: #C9A130; }
+    .state-dot.red { background: #C0303F; }
+    .state-label {
+      font-weight: 700; font-size: 13px; margin-bottom: 4px;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .state-label.green { color: #2D9B63; }
+    .state-label.yellow { color: #C9A130; }
+    .state-label.red { color: #C0303F; }
+    .state-name {
+      font-family: var(--serif); font-size: 20px;
+      margin-bottom: 10px; color: var(--text);
+    }
+    .state-score {
+      font-family: var(--mono); font-size: 13px;
+      color: var(--dim); margin-bottom: 10px;
+    }
+    .state-body { font-size: 13px; color: var(--dim); line-height: 1.65; }
+
+    .pub-rule {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid var(--line);
+    }
+    .pub-rule:last-child { border-bottom: none; }
+    .pub-rule-icon {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0; margin-top: 1px;
+    }
+    .pub-rule-icon.pub { background: rgba(45,123,82,.15); color: #2D9B63; }
+    .pub-rule-icon.int { background: rgba(201,168,76,.12); color: var(--gold); }
+    .pub-rule-icon.never { background: rgba(192,48,63,.12); color: #C0303F; }
+    .pub-rule-icon.lock { background: rgba(100,130,200,.12); color: #7BA3E8; }
+    .pub-rule-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .pub-rule-body { font-size: 13px; color: var(--dim); line-height: 1.65; }
+
+    .seal-hero {
+      display: flex; align-items: center; gap: 28px;
+      background: rgba(201,168,76,.04);
+      border: 1px solid rgba(201,168,76,.14);
+      border-radius: 20px; padding: 28px 32px;
+      margin-bottom: 48px; flex-wrap: wrap;
+    }
+    .seal-hero img {
+      width: 88px; height: 88px; border-radius: 50%;
+      border: 2px solid rgba(201,168,76,.3);
+      flex-shrink: 0;
+    }
+    .seal-hero-text {}
+    .seal-hero-label {
+      font-size: 11px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .seal-hero-title {
+      font-family: var(--serif); font-size: 22px;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .seal-hero-sub {
+      font-size: 13px; color: var(--dim); line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
+
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <div class="nav-mark">B</div>
+        <div class="nav-seal">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+        </div>
         <div class="nav-wordmark">BRSA <span>Registry</span></div>
       </a>
       <nav class="nav-links">
@@ -24,7 +202,9 @@
       </nav>
       <a href="onboard.html" class="nav-cta">Enter Registry</a>
       <button class="nav-mobile-btn" aria-label="Menu">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
       </button>
     </div>
   </header>
@@ -33,7 +213,7 @@
     <div class="page-hero-inner">
       <div class="page-eyebrow">Technical Canon</div>
       <h1 class="page-title">Readiness Doctrine</h1>
-      <p class="page-sub">The FRARI framework, assessment lifecycle, trajectory model, and publication rules that govern every readiness determination.</p>
+      <p class="page-sub">The FRARI framework, composite scoring model, assessment lifecycle, and publication rules that govern every readiness determination on the Legacyline platform.</p>
     </div>
   </div>
 
@@ -44,14 +224,24 @@
         <nav>
           <a href="#philosophy" class="toc-link">Philosophy</a>
           <a href="#frari" class="toc-link">FRARI Ruleset</a>
-          <a href="#trajectory" class="toc-link">Trajectory Model</a>
-          <a href="#indicators" class="toc-link">Indicators</a>
+          <a href="#scoring" class="toc-link">Composite Scoring</a>
+          <a href="#indicators" class="toc-link">Five Indicators</a>
+          <a href="#states" class="toc-link">Readiness States</a>
           <a href="#lifecycle" class="toc-link">Assessment Lifecycle</a>
           <a href="#publication" class="toc-link">Publication Rules</a>
         </nav>
       </aside>
 
       <article class="prose">
+
+        <div class="seal-hero">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+          <div class="seal-hero-text">
+            <div class="seal-hero-label">Governing Standard</div>
+            <div class="seal-hero-title">BRSA Behavioral Readiness Standards Authority</div>
+            <div class="seal-hero-sub">Established 2026 · Deterministic · Auditable · Consent-Based · Permanent Record</div>
+          </div>
+        </div>
 
         <section id="philosophy" class="prose-section">
           <div class="prose-section-num">01</div>
@@ -68,117 +258,193 @@
         <section id="frari" class="prose-section">
           <div class="prose-section-num">02</div>
           <h2 class="prose-h2">FRARI Ruleset</h2>
-          <p>FRARI — the Foundational Readiness and Accreditation Ruleset for Individuals — is the scoring engine at the core of BRSA assessments. It is versioned, published, and applied consistently across all individual assessments.</p>
-          <p>Current version: <span class="mono-inline">frariindividualv0.1.0</span></p>
 
-          <div class="score-table">
-            <div class="score-table-head">
-              <div>Event Type</div>
-              <div>Point Value</div>
-              <div>Rationale</div>
-            </div>
-            <div class="score-row">
-              <div class="mono-inline">PARTICIPANT_CREATED</div>
-              <div class="score-pos">+5</div>
-              <div>Voluntary entry into the governed system</div>
-            </div>
-            <div class="score-row">
-              <div class="mono-inline">CONSENT_GRANTED</div>
-              <div class="score-pos">+10</div>
-              <div>Active, documented consent to assessment</div>
-            </div>
-            <div class="score-row">
-              <div class="mono-inline">CONSENT_REVOKED</div>
-              <div class="score-neg">−15</div>
-              <div>Withdrawal signals disengagement from process</div>
-            </div>
-            <div class="score-row">
-              <div class="mono-inline">ASSESSMENT_REQUESTED</div>
-              <div class="score-pos">+5</div>
-              <div>Active participation in the assessment lifecycle</div>
-            </div>
+          <div class="frari-version">
+            <div class="frari-version-dot"></div>
+            <div class="frari-version-text">FRARI Individual v1.0.0 — Active</div>
           </div>
 
-          <p>The ruleset will expand as the institution matures. Each version is permanently archived. Every assessment record contains the exact ruleset version used to compute the score.</p>
+          <p>FRARI — the Foundational Readiness and Accreditation Ruleset for Individuals — is the scoring engine at the core of every BRSA assessment. It is versioned, published, and applied consistently. Every assessment record contains the exact ruleset version used to compute the score.</p>
+
+          <p>Version 1.0.0 implements a <strong style="color:var(--text)">weighted composite model</strong> — four independently scored sub-dimensions are combined into a single readiness score between 0 and 100. This replaces the point-accumulation model of v0.1.0 with a structured, domain-aligned evaluation framework governed by certified BRSA evaluators operating within the Legacyline platform.</p>
+
+          <p>Each version is permanently archived. No assessment may be recomputed under a different ruleset version than the one active at the time of evaluation.</p>
         </section>
 
         <div class="prose-divider"></div>
 
-        <section id="trajectory" class="prose-section">
+        <section id="scoring" class="prose-section">
           <div class="prose-section-num">03</div>
-          <h2 class="prose-h2">Trajectory Model</h2>
-          <p>Beyond a point-in-time score, BRSA tracks readiness trajectory — the directional movement of a score across multiple assessments over time.</p>
-          <div class="prose-cards">
-            <div class="prose-card">
-              <div class="prose-card-title" style="color:#2D9B63">Stable</div>
-              <div class="prose-card-body">Score 60 or above. Consistent pattern of engagement and documentation. Trajectory is maintained or improving.</div>
+          <h2 class="prose-h2">Composite Scoring Model</h2>
+          <p>The FRARI v1.0.0 composite score is computed from four weighted sub-scores. Each sub-score is derived from structured evidence collected by a certified BRSA evaluator and processed deterministically by the Legacyline readiness engine.</p>
+
+          <div class="weight-grid">
+            <div class="weight-card">
+              <div class="weight-card-label">Sub-Score 01</div>
+              <div class="weight-card-name">Evidence Engagement</div>
+              <div class="weight-card-pct">30%</div>
+              <div class="weight-card-body">Volume and recency of evidence events submitted across all active assessment domains. Caps at 10 events; decays with inactivity.</div>
+              <div class="weight-card-source">SOURCE: evidence_events table · all domains</div>
             </div>
-            <div class="prose-card">
-              <div class="prose-card-title" style="color:#C9A130">Developing</div>
-              <div class="prose-card-body">Score 30–59. Active engagement with the process. Evidence collection underway. Trajectory is being established.</div>
+            <div class="weight-card">
+              <div class="weight-card-label">Sub-Score 02</div>
+              <div class="weight-card-name">Lifecycle Progression</div>
+              <div class="weight-card-pct">25%</div>
+              <div class="weight-card-body">Advancement through the six-state readiness lifecycle. Velocity bonus applied for participants who progress through stages consistently and without delay.</div>
+              <div class="weight-card-source">SOURCE: state_history table · lifecycle velocity</div>
             </div>
-            <div class="prose-card">
-              <div class="prose-card-title" style="color:#C0303F">At Risk</div>
-              <div class="prose-card-body">Score below 30. Insufficient evidence, disengagement signals, or pattern inconsistency. Immediate intervention recommended.</div>
+            <div class="weight-card">
+              <div class="weight-card-label">Sub-Score 03</div>
+              <div class="weight-card-name">Consent Compliance</div>
+              <div class="weight-card-pct">20%</div>
+              <div class="weight-card-body">Active, maintained consent to the assessment process. Granted consent scores 100. Pending scores 40. Revoked or absent scores 0.</div>
+              <div class="weight-card-source">SOURCE: consents table · status field</div>
+            </div>
+            <div class="weight-card">
+              <div class="weight-card-label">Sub-Score 04</div>
+              <div class="weight-card-name">Intake Completeness</div>
+              <div class="weight-card-pct">25%</div>
+              <div class="weight-card-body">Completeness of the structured intake record including identity, housing, employment, income, and required documentation uploads.</div>
+              <div class="weight-card-source">SOURCE: intake_submissions table · 12 fields</div>
             </div>
           </div>
+
+          <p>The composite score is computed by the Legacyline readiness engine — never by the evaluator. Evaluators record evidence. The engine computes scores. This separation is a foundational design principle of the BRSA standard.</p>
         </section>
 
         <div class="prose-divider"></div>
 
         <section id="indicators" class="prose-section">
           <div class="prose-section-num">04</div>
-          <h2 class="prose-h2">Readiness Indicators</h2>
-          <p>Five canonical indicators are evaluated in every BRSA assessment. Each is rated independently and contributes to the composite readiness score.</p>
-          <ul class="prose-list">
-            <li><strong>Documentation Discipline:</strong> The consistency, completeness, and timeliness of the subject's own record-keeping and filing practices.</li>
-            <li><strong>Consent Compliance:</strong> Adherence to consent protocols — granting, maintaining, and not revoking consent without cause.</li>
-            <li><strong>Evidence Completeness:</strong> The degree to which the submitted evidence record addresses all required assessment domains.</li>
-            <li><strong>Pattern Consistency:</strong> Observable regularity in behavior across different contexts and time periods.</li>
-            <li><strong>Escalation Integrity:</strong> The appropriate and timely escalation of issues, conflicts, or anomalies to the appropriate authority.</li>
-          </ul>
+          <h2 class="prose-h2">Five Canonical Indicators</h2>
+          <p>Five indicators structure the BRSA assessment framework. Each maps directly to one or more composite sub-scores. Evaluators assess evidence within these indicator boundaries — they do not assign indicator ratings directly.</p>
+
+          <div style="margin-top: 20px;">
+            <div class="indicator-row">
+              <div class="indicator-num">01</div>
+              <div>
+                <div class="indicator-name">Documentation Discipline</div>
+                <div class="indicator-engine">→ Intake Completeness (25%)</div>
+                <div class="indicator-body">The consistency, completeness, and timeliness of the participant's own record-keeping — intake fields, identity documents, financial records, and housing documentation.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">02</div>
+              <div>
+                <div class="indicator-name">Consent Compliance</div>
+                <div class="indicator-engine">→ Consent Compliance (20%)</div>
+                <div class="indicator-body">Adherence to consent protocols — granting, maintaining, and not revoking consent without cause. Consent is the gateway to the governed assessment process.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">03</div>
+              <div>
+                <div class="indicator-name">Evidence Completeness</div>
+                <div class="indicator-engine">→ Evidence Engagement (30%)</div>
+                <div class="indicator-body">The degree to which the submitted evidence record addresses all required assessment domains. Measured by volume of evidence events and recency of last submission.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">04</div>
+              <div>
+                <div class="indicator-name">Pattern Consistency</div>
+                <div class="indicator-engine">→ Lifecycle Progression (25%)</div>
+                <div class="indicator-body">Observable regularity in behavior across time — measured through lifecycle state advancement and velocity through the six-stage readiness pipeline.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">05</div>
+              <div>
+                <div class="indicator-name">Escalation Integrity</div>
+                <div class="indicator-engine">→ Evaluator Workflow · Module 5</div>
+                <div class="indicator-body">The appropriate and timely escalation of evaluation findings to the BRSA Standards Authority for review and approval. Governs the two-tier sign-off structure — evaluator submits, Standards Authority approves.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="states" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Readiness States</h2>
+          <p>Every registry record carries one of three canonical readiness states. States are computed, not assigned. They reflect evidence, not opinion. A state may only change through a new governed assessment cycle.</p>
+
+          <div class="state-band">
+            <div class="state-card green">
+              <div class="state-dot green"></div>
+              <div class="state-label green">Green</div>
+              <div class="state-name">Verified Ready</div>
+              <div class="state-score">Score 70–100</div>
+              <div class="state-body">Sufficient evidence of behavioral discipline, documentation integrity, and consistent pattern compliance across all assessed dimensions.</div>
+            </div>
+            <div class="state-card yellow">
+              <div class="state-dot yellow"></div>
+              <div class="state-label yellow">Yellow</div>
+              <div class="state-name">Developing</div>
+              <div class="state-score">Score 40–69</div>
+              <div class="state-body">Evidence collection underway. Readiness trajectory is being established. Active engagement with the assessment process is confirmed.</div>
+            </div>
+            <div class="state-card red">
+              <div class="state-dot red"></div>
+              <div class="state-label red">Red</div>
+              <div class="state-name">Unverified</div>
+              <div class="state-score">Score 0–39</div>
+              <div class="state-body">Insufficient evidence or assessment not yet completed. Default state at registration. Does not indicate disqualification — only incomplete data.</div>
+            </div>
+          </div>
+
+          <p>Trajectory is tracked independently of state. A participant may hold a Yellow state with an improving trajectory — signaling readiness for state advancement at the next assessment cycle.</p>
         </section>
 
         <div class="prose-divider"></div>
 
         <section id="lifecycle" class="prose-section">
-          <div class="prose-section-num">05</div>
+          <div class="prose-section-num">06</div>
           <h2 class="prose-h2">Assessment Lifecycle</h2>
-          <p>Every BRSA assessment passes through a defined lifecycle. No assessment may skip a stage. Each stage is logged to the immutable ledger with a timestamp and actor.</p>
+          <p>Every BRSA assessment passes through a defined six-stage lifecycle. No stage may be skipped. Each stage is logged to the immutable ledger with a timestamp and actor identifier.</p>
+
           <div class="lifecycle-steps">
             <div class="lifecycle-step">
               <div class="step-num">1</div>
               <div class="step-content">
                 <div class="step-title">Registration</div>
-                <div class="step-body">Participant enters the registry. Consent is recorded. Registry ID is issued.</div>
+                <div class="step-body">Participant enters the registry. Consent is recorded. Registry ID is issued. State defaults to Red (Unverified).</div>
               </div>
             </div>
             <div class="lifecycle-step">
               <div class="step-num">2</div>
               <div class="step-content">
-                <div class="step-title">Assessment Requested</div>
-                <div class="step-body">Evaluator or participant requests a readiness assessment. Window and ruleset version are specified.</div>
+                <div class="step-title">Data Collection</div>
+                <div class="step-body">Intake submission completed. Evidence events recorded by certified evaluator across active assessment domains.</div>
               </div>
             </div>
             <div class="lifecycle-step">
               <div class="step-num">3</div>
               <div class="step-content">
-                <div class="step-title">Evidence Collection</div>
-                <div class="step-body">Evaluator gathers and submits structured evidence across all five indicator domains.</div>
+                <div class="step-title">Under Review</div>
+                <div class="step-body">File submitted for evaluator review. Domain scores, document verification, and narrative assessment recorded in the evaluation record.</div>
               </div>
             </div>
             <div class="lifecycle-step">
               <div class="step-num">4</div>
               <div class="step-content">
                 <div class="step-title">Score Computed</div>
-                <div class="step-body">FRARI ruleset applied to the evidence record. Score and trajectory are generated deterministically.</div>
+                <div class="step-body">FRARI v1.0.0 ruleset applied to the evidence record. Composite score and trajectory generated deterministically by the Legacyline readiness engine.</div>
               </div>
             </div>
             <div class="lifecycle-step">
               <div class="step-num">5</div>
               <div class="step-content">
-                <div class="step-title">Published to Registry</div>
-                <div class="step-body">Public readiness state is updated. Internal snapshot is sealed. Ledger entry is permanent.</div>
+                <div class="step-title">Standards Authority Approval</div>
+                <div class="step-body">Evaluation submitted to the BRSA Standards Authority for review. Two-tier sign-off required before certification is issued.</div>
+              </div>
+            </div>
+            <div class="lifecycle-step">
+              <div class="step-num">6</div>
+              <div class="step-content">
+                <div class="step-title">Certified & Published</div>
+                <div class="step-body">Public readiness state updated. Internal snapshot sealed. Ledger entry permanent. Registry ID reflects verified standing.</div>
               </div>
             </div>
           </div>
@@ -187,15 +453,40 @@
         <div class="prose-divider"></div>
 
         <section id="publication" class="prose-section">
-          <div class="prose-section-num">06</div>
+          <div class="prose-section-num">07</div>
           <h2 class="prose-h2">Publication Rules</h2>
-          <p>BRSA applies strict data minimalism to every public record. The following rules govern what is published and what remains internal:</p>
-          <ul class="prose-list">
-            <li><strong>Public fields:</strong> Registry ID, readiness state (RED/YELLOW/GREEN), status, last updated timestamp.</li>
-            <li><strong>Internal only:</strong> Raw score, trajectory label, individual indicator ratings, evidence record, ledger audit trail, subject number, participant ID.</li>
-            <li><strong>Never published:</strong> PII of any kind, contact information, financial data, legal documents, or any field not explicitly listed as public.</li>
-            <li><strong>Immutability:</strong> Once a readiness snapshot is written to the ledger, it cannot be modified or deleted. Only a new assessment can change the public state.</li>
-          </ul>
+          <p>BRSA applies strict data minimalism to every public record. What is published is fixed by doctrine — not by organizational preference or individual request.</p>
+
+          <div style="margin-top: 20px;">
+            <div class="pub-rule">
+              <div class="pub-rule-icon pub">✓</div>
+              <div>
+                <div class="pub-rule-title">Public Fields</div>
+                <div class="pub-rule-body">Registry ID, readiness state (RED / YELLOW / GREEN), certification status, last updated timestamp. These fields are always public for any verified registry record.</div>
+              </div>
+            </div>
+            <div class="pub-rule">
+              <div class="pub-rule-icon int">~</div>
+              <div>
+                <div class="pub-rule-title">Internal Only</div>
+                <div class="pub-rule-body">Raw composite score, trajectory label, individual sub-score ratings, domain scores, evidence record, ledger audit trail, subject number, participant ID, evaluator identity.</div>
+              </div>
+            </div>
+            <div class="pub-rule">
+              <div class="pub-rule-icon never">✕</div>
+              <div>
+                <div class="pub-rule-title">Never Published</div>
+                <div class="pub-rule-body">PII of any kind, contact information, financial data, legal documents, intake submissions, narrative assessments, or any field not explicitly listed as public.</div>
+              </div>
+            </div>
+            <div class="pub-rule">
+              <div class="pub-rule-icon lock">∞</div>
+              <div>
+                <div class="pub-rule-title">Immutability</div>
+                <div class="pub-rule-body">Once a readiness snapshot is written to the ledger, it cannot be modified or deleted. Only a new governed assessment cycle can change the public readiness state. The record of presence is permanent.</div>
+              </div>
+            </div>
+          </div>
         </section>
 
       </article>
@@ -210,6 +501,7 @@
       </div>
       <div class="cta-band-actions">
         <a href="registry.html" class="btn-gold">Registry Overview →</a>
+        <a href="mandate.html" class="btn-outline">Read the Mandate</a>
       </div>
     </div>
   </section>
@@ -226,6 +518,6 @@
       <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
     </div>
   </footer>
+
 </body>
-  </html>
-  
+</html>
