@@ -9,9 +9,45 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
   <style>
-    .intake-wrap { max-width: 980px; margin: 0 auto; padding: 80px var(--pad) 60px; }
+    .nav-seal {
+      width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
+      flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.08);
+    }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+
+    .intake-wrap {
+      max-width: 980px; margin: 0 auto;
+      padding: 80px var(--pad) 80px;
+    }
+
+    .intake-hero {
+      text-align: center; margin-bottom: 48px;
+    }
+    .intake-hero-seal {
+      width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
+      border: 2px solid rgba(201,168,76,.35);
+      box-shadow: 0 0 0 6px rgba(201,168,76,.06);
+      margin: 0 auto 24px;
+    }
+    .intake-hero-seal img { width: 100%; height: 100%; object-fit: cover; }
+    .intake-hero-eyebrow {
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 12px;
+    }
+    .intake-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.1; margin-bottom: 14px;
+    }
+    .intake-hero-sub {
+      color: var(--dim); font-size: 15px; max-width: 520px;
+      margin: 0 auto; line-height: 1.75; font-weight: 300;
+    }
+
     .intake-grid {
-      display: grid; grid-template-columns: 1.3fr .7fr; gap: 18px; margin-top: 16px;
+      display: grid; grid-template-columns: 1.3fr .7fr;
+      gap: 18px; margin-top: 16px;
     }
     @media(max-width:820px){ .intake-grid{ grid-template-columns:1fr; } }
 
@@ -20,27 +56,40 @@
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 20px; overflow: hidden;
     }
-    .card-inner { padding: 28px 24px; }
+    .card-inner { padding: 32px 28px; }
 
     .status-badge {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 7px 12px; border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
-      color: var(--dim); font-size: 12px; margin-bottom: 20px;
+      color: var(--dim); font-size: 12px; margin-bottom: 24px;
     }
     .status-dot {
       width: 8px; height: 8px; border-radius: 50%;
       background: #2D9B63; box-shadow: 0 0 0 4px rgba(45,155,99,.15);
     }
 
-    .intake-title {
-      font-family: var(--serif); font-size: clamp(26px,4vw,38px);
-      font-weight: 400; line-height: 1.1; margin: 0 0 12px;
+    .intake-card-title {
+      font-family: var(--serif); font-size: clamp(22px,3vw,30px);
+      font-weight: 400; line-height: 1.15; margin: 0 0 12px;
     }
     .intake-lead {
-      margin: 0 0 24px; color: var(--dim); font-size: 15px;
-      line-height: 1.7; font-weight: 300;
+      margin: 0 0 28px; color: var(--dim); font-size: 15px;
+      line-height: 1.75; font-weight: 300;
+    }
+
+    .consent-notice {
+      background: rgba(201,168,76,.05);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 24px;
+    }
+    .consent-notice-title {
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 6px;
+    }
+    .consent-notice-body {
+      font-size: 13px; color: var(--dim); line-height: 1.65;
     }
 
     .btn-primary {
@@ -68,18 +117,24 @@
     .note { margin-top: 10px; font-size: 12px; color: var(--faint); line-height: 1.55; }
 
     .result-box {
-      display: none; margin-top: 20px; border-radius: 16px;
+      display: none; margin-top: 24px; border-radius: 16px;
       border: 1px solid rgba(201,168,76,.3);
       background: linear-gradient(180deg, rgba(201,168,76,.08), rgba(255,255,255,.03));
+      overflow: hidden;
     }
-    .result-inner { padding: 22px; }
+    .result-bar { height: 3px; background: var(--gold); }
+    .result-inner { padding: 24px; }
+    .result-eyebrow {
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px; font-weight: 500;
+    }
     .result-label {
-      font-family: var(--serif); font-size: 20px; margin: 0 0 14px;
+      font-family: var(--serif); font-size: 20px; margin: 0 0 16px;
     }
     .id-display {
       font-family: var(--mono); font-size: 22px; letter-spacing: 1.5px;
       background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.12);
-      border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
       word-break: break-all;
     }
     .copy-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
@@ -95,7 +150,9 @@
       background: rgba(45,155,99,.14); border: 1px solid rgba(45,155,99,.3);
       color: #7DDCAA; font-size: 12px; font-weight: 700;
     }
-    .result-hint { margin: 14px 0 0; color: var(--dim); font-size: 13px; line-height: 1.65; }
+    .result-hint {
+      margin: 16px 0 0; color: var(--dim); font-size: 13px; line-height: 1.65;
+    }
 
     .error-box {
       display: none; margin-top: 16px; border-radius: 14px;
@@ -109,27 +166,55 @@
       color: var(--dim); white-space: pre-wrap; overflow-wrap: anywhere;
     }
 
+    .side-section { margin-bottom: 24px; }
     .side-title {
       font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
       color: var(--faint); margin: 0 0 10px; display: block;
     }
     .side-list {
-      margin: 0; padding-left: 16px; color: var(--dim);
-      font-size: 13px; line-height: 1.8; font-weight: 300;
+      margin: 0; padding: 0; list-style: none;
+      color: var(--dim); font-size: 13px; line-height: 1.8; font-weight: 300;
+    }
+    .side-list li {
+      padding-left: 16px; position: relative; margin-bottom: 4px;
+    }
+    .side-list li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--gold); opacity: .5;
     }
     .side-divider { height: 1px; background: rgba(255,255,255,.08); margin: 20px 0; }
     .side-link {
       display: block; margin-top: 20px; text-align: center;
       color: var(--gold); font-size: 13px; transition: opacity .15s;
+      padding: 12px; border: 1px solid rgba(201,168,76,.2);
+      border-radius: 10px; background: rgba(201,168,76,.04);
     }
     .side-link:hover { opacity: .8; }
+
+    .what-happens {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .what-step {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 14px; background: var(--navy2);
+      border: 1px solid var(--line); border-radius: 8px;
+    }
+    .what-step-num {
+      font-family: var(--mono); font-size: 11px; color: var(--gold);
+      flex-shrink: 0; margin-top: 2px; letter-spacing: .06em;
+    }
+    .what-step-text { font-size: 13px; color: var(--dim); line-height: 1.55; }
   </style>
 </head>
 <body>
+
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">
-        <div class="nav-mark">B</div>
+        <div class="nav-seal">
+          <img src="assets/logo-seal.png" alt="BRSA Seal" />
+        </div>
         <div class="nav-wordmark">BRSA <span>Registry</span></div>
       </a>
       <nav class="nav-links">
@@ -138,33 +223,50 @@
         <a href="registry.html" class="nav-link">Registry</a>
         <a href="contact.html" class="nav-link">Contact</a>
       </nav>
-      <a href="onboard.html" class="nav-cta active">Enter Registry</a>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
       <button class="nav-mobile-btn" aria-label="Menu">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
       </button>
     </div>
   </header>
 
   <div class="intake-wrap">
+
+    <div class="intake-hero">
+      <div class="intake-hero-seal">
+        <img src="assets/logo-seal.png" alt="BRSA Seal" />
+      </div>
+      <div class="intake-hero-eyebrow">Individual Registry Intake</div>
+      <h1 class="intake-hero-title">Enter the Behavioral<br>Readiness System</h1>
+      <p class="intake-hero-sub">Consent-based. Immediate. Permanent. Your Registry ID is issued the moment you begin. No accounts. No passwords.</p>
+    </div>
+
     <div class="intake-grid">
 
       <div class="card">
         <div class="card-inner">
           <div class="status-badge">
             <span class="status-dot"></span>
-            No login required
+            Registry accepting entries · Pilot phase active
           </div>
 
-          <h1 class="intake-title">Enter the Behavioral Readiness System</h1>
+          <h2 class="intake-card-title">Individual Onboarding</h2>
           <p class="intake-lead">
-            This consent-based intake issues a BRSA Registry ID immediately.
-            No accounts. No passwords. Your presence is recorded; your readiness is governed.
+            This consent-based intake creates your permanent presence in the BRSA Registry.
+            Your Registry ID is issued immediately and cannot be revoked.
           </p>
+
+          <div class="consent-notice">
+            <div class="consent-notice-title">Consent Notice</div>
+            <div class="consent-notice-body">By proceeding you consent to the creation of a registry record and issuance of a permanent Registry ID under the BRSA public presence standard. Your consent is recorded in the immutable ledger at the time of issuance.</div>
+          </div>
 
           <button id="beginBtn" class="btn-primary">Begin Onboarding</button>
           <p class="note">
-            By proceeding you consent to creation of a registry record and issuance of a Registry ID
-            under the BRSA public presence standard.
+            No personal information is collected at this step.
+            A BRSA evaluator will contact you to begin governed evidence collection.
           </p>
 
           <div id="errorBox" class="error-box" role="alert">
@@ -174,50 +276,79 @@
           </div>
 
           <div id="resultBox" class="result-box">
+            <div class="result-bar"></div>
             <div class="result-inner">
+              <div class="result-eyebrow">Issued · Permanent · Immutable</div>
               <div class="result-label">Your BRSA Registry ID</div>
               <div id="registryId" class="id-display" aria-live="polite"></div>
               <div class="copy-row">
                 <button id="copyBtn" class="btn-copy">Copy ID</button>
-                <span id="copyConfirm" class="copy-confirm">Copied</span>
+                <span id="copyConfirm" class="copy-confirm">✓ Copied</span>
               </div>
               <p class="result-hint">
                 Save this ID. It is your permanent presence in the BRSA Registry.
-                An evaluator will contact you to begin governed evidence collection.
+                Share it with your evaluator, employer, or institutional partner to verify your standing.
+                It cannot be reissued.
               </p>
             </div>
           </div>
 
           <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
             <button id="resetBtn" class="btn-ghost" style="display:none;">Start Over</button>
-            <a href="index.html" class="btn-ghost">Verify an ID</a>
+            <a href="index.html" class="btn-ghost">Verify an ID →</a>
           </div>
         </div>
       </div>
 
       <div class="card">
         <div class="card-inner">
-          <div class="side-title">What This Does</div>
-          <ul class="side-list">
-            <li>Creates a participant record in the BRSA Registry</li>
-            <li>Records consent as <code>registry_public_presence</code></li>
-            <li>Issues a Registry ID for future lookup and evaluation</li>
-          </ul>
+
+          <div class="side-section">
+            <span class="side-title">What Happens When You Begin</span>
+            <div class="what-happens">
+              <div class="what-step">
+                <div class="what-step-num">01</div>
+                <div class="what-step-text">A participant record is created in the BRSA Registry with default state RED (Unverified)</div>
+              </div>
+              <div class="what-step">
+                <div class="what-step-num">02</div>
+                <div class="what-step-text">Consent is recorded as <code style="font-family:var(--mono);font-size:11px">registry_public_presence</code> in the immutable ledger</div>
+              </div>
+              <div class="what-step">
+                <div class="what-step-num">03</div>
+                <div class="what-step-text">A permanent Registry ID is issued — format <code style="font-family:var(--mono);font-size:11px">BRSA-26-XXXXXXXX</code></div>
+              </div>
+              <div class="what-step">
+                <div class="what-step-num">04</div>
+                <div class="what-step-text">Your readiness state advances as a certified BRSA evaluator gathers evidence under the FRARI v1.0.0 ruleset</div>
+              </div>
+            </div>
+          </div>
+
           <div class="side-divider"></div>
-          <div class="side-title">Operational Notes</div>
-          <ul class="side-list">
-            <li>No username or password model</li>
-            <li>All writes go through the verified API</li>
-            <li>Readiness is computed only when authorized</li>
-            <li>This is a pilot-phase registry — your ID is permanent</li>
-          </ul>
+
+          <div class="side-section">
+            <span class="side-title">Is This For You?</span>
+            <ul class="side-list">
+              <li>Individuals seeking behavioral readiness certification</li>
+              <li>Professionals in the OBR pilot cohort</li>
+              <li>Anyone directed here by a BRSA evaluator</li>
+              <li>Participants in the Vizionz Sankofa pilot program</li>
+            </ul>
+          </div>
+
           <div class="side-divider"></div>
-          <div class="side-title">Is This For You?</div>
-          <ul class="side-list">
-            <li>Individuals seeking behavioral readiness certification</li>
-            <li>Professionals in the OBR pilot cohort</li>
-            <li>Anyone directed here by a BRSA evaluator</li>
-          </ul>
+
+          <div class="side-section">
+            <span class="side-title">Operational Notes</span>
+            <ul class="side-list">
+              <li>No username or password required — ever</li>
+              <li>All writes go through the verified Legacyline API</li>
+              <li>Readiness is computed only when a certified evaluator authorizes it</li>
+              <li>Your Registry ID is permanent — pilot-phase records are not deleted</li>
+            </ul>
+          </div>
+
           <a href="org-onboard.html" class="side-link">Registering an organization? →</a>
         </div>
       </div>
@@ -241,15 +372,15 @@
   <script>
   (function(){
     const API = "https://legacyline-core-production.up.railway.app";
-    const beginBtn    = document.getElementById("beginBtn");
-    const resetBtn    = document.getElementById("resetBtn");
-    const copyBtn     = document.getElementById("copyBtn");
-    const copyConfirm = document.getElementById("copyConfirm");
-    const resultBox   = document.getElementById("resultBox");
+    const beginBtn     = document.getElementById("beginBtn");
+    const resetBtn     = document.getElementById("resetBtn");
+    const copyBtn      = document.getElementById("copyBtn");
+    const copyConfirm  = document.getElementById("copyConfirm");
+    const resultBox    = document.getElementById("resultBox");
     const registryIdEl = document.getElementById("registryId");
-    const errorBox    = document.getElementById("errorBox");
-    const errorMsg    = document.getElementById("errorMsg");
-    const errorDetail = document.getElementById("errorDetail");
+    const errorBox     = document.getElementById("errorBox");
+    const errorMsg     = document.getElementById("errorMsg");
+    const errorDetail  = document.getElementById("errorDetail");
 
     function clearError(){ errorBox.style.display="none"; errorMsg.textContent=""; errorDetail.textContent=""; }
     function showError(msg,detail){ errorBox.style.display="block"; errorMsg.textContent=msg||"Unknown error."; errorDetail.textContent=detail||""; }
@@ -295,5 +426,4 @@
   })();
   </script>
 </body>
-  </html>
-  
+</html>
