@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA · SHA-256 Measurement Integrity Statement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .nav-seal { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4); box-shadow: 0 0 0 3px rgba(201,168,76,.08); }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+    .doc-meta { display: flex; flex-wrap: wrap; gap: 24px; margin: 28px 0; padding: 20px 24px; background: rgba(201,168,76,.04); border: 1px solid rgba(201,168,76,.14); border-radius: 12px; }
+    .doc-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .doc-meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--faint); }
+    .doc-meta-value { font-family: var(--mono); font-size: 13px; color: var(--gold); }
+    .hash-block { background: var(--navy2); border: 1px solid rgba(201,168,76,.2); border-radius: 14px; padding: 28px 32px; margin: 24px 0; font-family: var(--mono); }
+    .hash-field { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .hash-field:last-child { border-bottom: none; }
+    .hash-field-label { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); }
+    .hash-field-value { font-size: 13px; color: var(--gold); line-height: 1.6; }
+    .hash-field-note { font-size: 12px; color: var(--dim); margin-top: 2px; }
+    .print-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25); color: var(--gold); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .guarantee-row { display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .guarantee-row:last-child { border-bottom: none; }
+    .guarantee-icon { width: 30px; height: 30px; border-radius: 8px; background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.2); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #34D399; flex-shrink: 0; margin-top: 2px; }
+    .guarantee-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .guarantee-body { font-size: 13px; color: var(--dim); line-height: 1.7; }
+    @media print { .nav, .print-btn, .cta-band, .footer { display: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-seal"><img src="assets/logo-seal.png" alt="BRSA Seal" /></div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">BRSA Technical Standard · BRSA-TECH-001</div>
+      <h1 class="page-title">SHA-256 Measurement Integrity Statement</h1>
+      <p class="page-sub">The cryptographic integrity model governing every readiness score produced by the Legacyline platform. Every assessment is sealed, verifiable, and tamper-evident.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#purpose" class="toc-link">Purpose</a>
+          <a href="#model" class="toc-link">Integrity Model</a>
+          <a href="#input" class="toc-link">Hash Input</a>
+          <a href="#storage" class="toc-link">Storage</a>
+          <a href="#reproduction" class="toc-link">Reproduction</a>
+          <a href="#guarantees" class="toc-link">Guarantees</a>
+        </nav>
+        <div style="margin-top: 28px;">
+          <a href="#" onclick="window.print(); return false;" class="print-btn">⬇ Save as PDF</a>
+        </div>
+      </aside>
+
+      <article class="prose">
+
+        <div class="doc-meta">
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Document ID</div>
+            <div class="doc-meta-value">BRSA-TECH-001</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Algorithm</div>
+            <div class="doc-meta-value">SHA-256</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Status</div>
+            <div class="doc-meta-value">ACTIVE</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Published</div>
+            <div class="doc-meta-value">2026-04-25</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Applies To</div>
+            <div class="doc-meta-value">All FRARI assessments</div>
+          </div>
+        </div>
+
+        <section id="purpose" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">Purpose</h2>
+          <p>Every readiness score produced by the Legacyline platform is sealed with a SHA-256 cryptographic hash at the moment of computation. This hash is the integrity guarantee — it makes every assessment tamper-evident, reproducible, and independently verifiable.</p>
+          <p>This document defines the exact inputs to the hash function, the storage protocol, and the reproduction procedure. It is binding on all implementations of the BRSA readiness engine.</p>
+          <blockquote class="prose-quote">"A score without a hash is an opinion. A score with a hash is a fact."</blockquote>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="model" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">Integrity Model</h2>
+          <p>The integrity model operates on a simple principle — the hash is computed over a canonical string composed of all inputs and outputs of the scoring computation. If any value changes after the hash is computed, the hash will not match when verified. Tampering is immediately detectable.</p>
+          <p>The SHA-256 algorithm was selected for its collision resistance, widespread adoption, and suitability for audit environments. The hash is not encrypted — it is a one-way digest stored transparently alongside the score record.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="input" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">Hash Input Specification</h2>
+          <p>The canonical input string is constructed by concatenating the following fields in exactly this order, separated by pipe characters. All values are converted to strings before concatenation. Floating point scores are rounded to the nearest integer before inclusion.</p>
+
+          <div class="hash-block">
+            <div class="hash-field">
+              <div class="hash-field-label">Field 01</div>
+              <div class="hash-field-value">participant_id</div>
+              <div class="hash-field-note">Internal UUID of the participant record</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 02</div>
+              <div class="hash-field-value">ruleset_version</div>
+              <div class="hash-field-note">e.g. "frari-individual-v1.0.0"</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 03</div>
+              <div class="hash-field-value">composite_score</div>
+              <div class="hash-field-note">Integer 0–100</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 04</div>
+              <div class="hash-field-value">evidence_score</div>
+              <div class="hash-field-note">Normalized sub-score · integer 0–100</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 05</div>
+              <div class="hash-field-value">lifecycle_score</div>
+              <div class="hash-field-note">Normalized sub-score · integer 0–100</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 06</div>
+              <div class="hash-field-value">intake_score</div>
+              <div class="hash-field-note">Normalized sub-score · integer 0–100</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 07</div>
+              <div class="hash-field-value">consent_score</div>
+              <div class="hash-field-note">Discrete value · 0, 40, or 100</div>
+            </div>
+            <div class="hash-field">
+              <div class="hash-field-label">Field 08</div>
+              <div class="hash-field-value">computed_at</div>
+              <div class="hash-field-note">UTC timestamp · ISO 8601 format · e.g. "2026-04-25T14:32:00Z"</div>
+            </div>
+            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(201,168,76,.15);">
+              <div class="hash-field-label" style="margin-bottom: 8px;">Canonical String Format</div>
+              <div style="font-size: 13px; color: var(--gold); line-height: 1.8;">
+                {participant_id}|{ruleset_version}|{composite_score}|{evidence_score}|{lifecycle_score}|{intake_score}|{consent_score}|{computed_at}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="storage" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">Storage Protocol</h2>
+          <p>The SHA-256 digest is stored in the <span style="font-family:var(--mono);color:var(--gold);">readiness_snapshots.score_hash</span> column as a lowercase hexadecimal string. It is written in the same database transaction as the score record. The two are atomic — either both are written or neither is.</p>
+          <p>The hash column is write-once. No application path permits updating the hash after it is written. Any database-level modification would require direct access to the production database — which is logged, access-controlled, and audited separately.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="reproduction" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Reproduction Procedure</h2>
+          <p>Any assessment can be independently verified using the stored score record and the archived ruleset. The <span style="font-family:var(--mono);color:var(--gold);">ReproduceAssessment()</span> function in the Legacyline core engine performs this verification.</p>
+          <p>Verification procedure:</p>
+          <div style="display:flex;flex-direction:column;gap:0;margin:20px 0;">
+            {[
+              ["Retrieve", "Load the readiness_snapshots record by participant_id and computed_at timestamp"],
+              ["Reconstruct", "Rebuild the canonical input string from the stored field values in the specified order"],
+              ["Hash", "Apply SHA-256 to the reconstructed canonical string using the same encoding (UTF-8)"],
+              ["Compare", "Compare the computed hash to the stored score_hash field"],
+              ["Result", "Matching hashes confirm the record has not been altered. Any mismatch indicates tampering"]
+            ].map(([step, desc], i) => `
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--gold);flex-shrink:0;">${i+1}</div>
+              <div>
+                <div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">${step}</div>
+                <div style="font-size:13px;color:var(--dim);line-height:1.6;">${desc}</div>
+              </div>
+            </div>`).join("")}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0;margin:20px 0;">
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--gold);flex-shrink:0;">1</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">Retrieve</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">Load the readiness_snapshots record by participant_id and computed_at timestamp.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--gold);flex-shrink:0;">2</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">Reconstruct</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">Rebuild the canonical input string from stored field values in the specified order.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--gold);flex-shrink:0;">3</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">Hash</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">Apply SHA-256 to the reconstructed string using UTF-8 encoding.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--gold);flex-shrink:0;">4</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">Compare</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">Compare the computed hash to the stored score_hash field byte-for-byte.</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;padding:14px 0;">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#34D399;flex-shrink:0;">✓</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px;">Result</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">Matching hashes confirm the record is unaltered. Any mismatch indicates tampering and must be escalated to the BRSA Standards Authority immediately.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="guarantees" class="prose-section">
+          <div class="prose-section-num">06</div>
+          <h2 class="prose-h2">Integrity Guarantees</h2>
+          <div style="margin-top: 20px;">
+            <div class="guarantee-row">
+              <div class="guarantee-icon">✓</div>
+              <div>
+                <div class="guarantee-title">Tamper Evidence</div>
+                <div class="guarantee-body">Any modification to a score record after sealing produces a hash mismatch that is immediately detectable during verification.</div>
+              </div>
+            </div>
+            <div class="guarantee-row">
+              <div class="guarantee-icon">✓</div>
+              <div>
+                <div class="guarantee-title">Deterministic Reproduction</div>
+                <div class="guarantee-body">Given the same inputs in the same order, SHA-256 always produces the same output. Any party with access to the stored field values can independently verify the hash.</div>
+              </div>
+            </div>
+            <div class="guarantee-row">
+              <div class="guarantee-icon">✓</div>
+              <div>
+                <div class="guarantee-title">Version Binding</div>
+                <div class="guarantee-body">The ruleset version is included in the hash input. A score computed under FRARI v1.0.0 cannot be falsely represented as computed under any other version.</div>
+              </div>
+            </div>
+            <div class="guarantee-row">
+              <div class="guarantee-icon">✓</div>
+              <div>
+                <div class="guarantee-title">Timestamp Binding</div>
+                <div class="guarantee-body">The computed_at timestamp is included in the hash. Backdating an assessment record would produce a hash mismatch against the stored value.</div>
+              </div>
+            </div>
+            <div class="guarantee-row">
+              <div class="guarantee-icon">✓</div>
+              <div>
+                <div class="guarantee-title">No Secret Keys</div>
+                <div class="guarantee-body">SHA-256 requires no secret key. The integrity guarantee does not depend on keeping any value confidential. Any party with the field values can verify the hash.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="cta-band-title">Related Standards</div>
+        <p class="cta-band-sub">Scoring formula specification, canonical rulesets, and the full readiness doctrine.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="scoring-formula.html" class="btn-gold">Scoring Formula →</a>
+        <a href="canonical-rulesets.html" class="btn-outline">Canonical Rulesets</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+</body>
+</html>
