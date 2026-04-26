@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA · Canonical Rulesets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .nav-seal { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4); box-shadow: 0 0 0 3px rgba(201,168,76,.08); }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+    .doc-meta { display: flex; flex-wrap: wrap; gap: 24px; margin: 28px 0; padding: 20px 24px; background: rgba(201,168,76,.04); border: 1px solid rgba(201,168,76,.14); border-radius: 12px; }
+    .doc-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .doc-meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--faint); }
+    .doc-meta-value { font-family: var(--mono); font-size: 13px; color: var(--gold); }
+    .ruleset-card { background: var(--navy2); border: 1px solid rgba(201,168,76,.2); border-radius: 16px; overflow: hidden; margin-bottom: 32px; }
+    .ruleset-header { background: rgba(201,168,76,.06); border-bottom: 1px solid rgba(201,168,76,.15); padding: 24px 28px; }
+    .ruleset-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: .14em; color: var(--gold); margin-bottom: 8px; font-weight: 600; }
+    .ruleset-title { font-family: var(--serif); font-size: 24px; color: var(--text); margin-bottom: 6px; }
+    .ruleset-id { font-family: var(--mono); font-size: 12px; color: var(--gold); letter-spacing: .08em; }
+    .ruleset-body { padding: 24px 28px; }
+    .ruleset-meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .ruleset-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .ruleset-meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); }
+    .ruleset-meta-value { font-size: 13px; color: var(--text); }
+    .domain-row { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .domain-row:last-child { border-bottom: none; }
+    .domain-num { width: 32px; height: 32px; border-radius: 8px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; color: var(--gold); flex-shrink: 0; }
+    .domain-name { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .domain-weight { font-family: var(--mono); font-size: 12px; color: var(--gold); margin-bottom: 4px; }
+    .domain-body { font-size: 13px; color: var(--dim); line-height: 1.7; }
+    .domain-source { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 4px; letter-spacing: .04em; }
+    .status-active { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2); font-family: var(--mono); font-size: 11px; color: #34D399; font-weight: 700; letter-spacing: .08em; }
+    .status-pending { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); font-family: var(--mono); font-size: 11px; color: #FBBF24; font-weight: 700; letter-spacing: .08em; }
+    .print-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25); color: var(--gold); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; }
+    @media print { .nav, .print-btn, .cta-band, .footer { display: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-seal"><img src="assets/logo-seal.png" alt="BRSA Seal" /></div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">BRSA Standards Authority · Published 2026</div>
+      <h1 class="page-title">Canonical Rulesets</h1>
+      <p class="page-sub">The three foundational rulesets governing individual, organizational, and institutional readiness assessment on the Legacyline platform. Each ruleset is versioned, permanently archived, and applied deterministically.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#overview" class="toc-link">Overview</a>
+          <a href="#individual" class="toc-link">FRARI Individual</a>
+          <a href="#obr" class="toc-link">OBR Organizational</a>
+          <a href="#institutional" class="toc-link">FRARI Institutional</a>
+          <a href="#governance" class="toc-link">Governance</a>
+        </nav>
+        <div style="margin-top: 28px;">
+          <a href="#" onclick="window.print(); return false;" class="print-btn">⬇ Save as PDF</a>
+        </div>
+      </aside>
+
+      <article class="prose">
+
+        <div class="doc-meta">
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Document ID</div>
+            <div class="doc-meta-value">BRSA-RS-001</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Rulesets</div>
+            <div class="doc-meta-value">3 Canonical</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Status</div>
+            <div class="doc-meta-value">ACTIVE</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Published</div>
+            <div class="doc-meta-value">2026-04-25</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Issuing Authority</div>
+            <div class="doc-meta-value">BRSA Standards Authority</div>
+          </div>
+        </div>
+
+        <section id="overview" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">Overview</h2>
+          <p>The BRSA Standards Authority maintains three canonical rulesets — one for each assessment domain on the Legacyline platform. Each ruleset defines the scoring inputs, weights, normalization rules, and output format for its domain. Rulesets are versioned and permanently archived. A ruleset may never be modified after it is published — changes require a new version.</p>
+          <p>All three rulesets share the same foundational architecture: weighted composite scoring, deterministic computation, SHA-256 integrity sealing, and two-tier evaluator sign-off. They differ in their domains, input sources, and subject types.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="individual" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">FRARI Individual Readiness</h2>
+
+          <div class="ruleset-card">
+            <div class="ruleset-header">
+              <div class="ruleset-eyebrow">Domain I · Individual Readiness</div>
+              <div class="ruleset-title">Foundational Readiness and Accreditation Ruleset for Individuals</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;">
+                <div class="ruleset-id">frari-individual-v1.0.0</div>
+                <div class="status-active"><div style="width:6px;height:6px;border-radius:50%;background:#34D399;"></div>ACTIVE</div>
+              </div>
+            </div>
+            <div class="ruleset-body">
+              <div class="ruleset-meta-grid">
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Subject Type</div>
+                  <div class="ruleset-meta-value">Individual participant</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Score Range</div>
+                  <div class="ruleset-meta-value">0 – 100</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Green Threshold</div>
+                  <div class="ruleset-meta-value">70 and above</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Yellow Threshold</div>
+                  <div class="ruleset-meta-value">40 – 69</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Integrity</div>
+                  <div class="ruleset-meta-value">SHA-256 sealed</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Evaluator Tier</div>
+                  <div class="ruleset-meta-value">BRSA Domain I Certified</div>
+                </div>
+              </div>
+              <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;">Scoring Domains</div>
+              <div>
+                <div class="domain-row">
+                  <div class="domain-num">01</div>
+                  <div>
+                    <div class="domain-name">Evidence Engagement</div>
+                    <div class="domain-weight">Weight: 30%</div>
+                    <div class="domain-body">Volume and recency of evidence events submitted across all active assessment domains. Capped at 10 events over a 90-day window. Decays with inactivity.</div>
+                    <div class="domain-source">SOURCE: evidence_events · 90-day window · all domains</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">02</div>
+                  <div>
+                    <div class="domain-name">Lifecycle Progression</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Advancement through the six-state readiness lifecycle. Stage index normalized to 0–100. Certified = 100. Revoked returns lifecycle score of 0.</div>
+                    <div class="domain-source">SOURCE: state_history · current stage index · stages 0–5</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">03</div>
+                  <div>
+                    <div class="domain-name">Intake Completeness</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Completeness of the structured intake record across 12 required fields including identity, housing, employment, income, and document uploads.</div>
+                    <div class="domain-source">SOURCE: intake_submissions · 12 required fields</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">04</div>
+                  <div>
+                    <div class="domain-name">Consent Compliance</div>
+                    <div class="domain-weight">Weight: 20%</div>
+                    <div class="domain-body">Active, maintained consent to the assessment process. Granted = 100. Pending = 40. Revoked or absent = 0. No normalization required.</div>
+                    <div class="domain-source">SOURCE: consents · status field</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="obr" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">OBR Organizational Behavioral Readiness</h2>
+
+          <div class="ruleset-card">
+            <div class="ruleset-header">
+              <div class="ruleset-eyebrow">Domain III · Organizational Readiness</div>
+              <div class="ruleset-title">Organizational Behavioral Readiness Ruleset</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;">
+                <div class="ruleset-id">obr-organizational-v1.0.0</div>
+                <div class="status-active"><div style="width:6px;height:6px;border-radius:50%;background:#34D399;"></div>ACTIVE</div>
+              </div>
+            </div>
+            <div class="ruleset-body">
+              <div class="ruleset-meta-grid">
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Subject Type</div>
+                  <div class="ruleset-meta-value">Organization / Nonprofit / CBO</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Score Range</div>
+                  <div class="ruleset-meta-value">0 – 100</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Green Threshold</div>
+                  <div class="ruleset-meta-value">70 and above</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Yellow Threshold</div>
+                  <div class="ruleset-meta-value">40 – 69</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Integrity</div>
+                  <div class="ruleset-meta-value">SHA-256 sealed</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Evaluator Tier</div>
+                  <div class="ruleset-meta-value">BRSA Domain III Certified</div>
+                </div>
+              </div>
+              <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;">Scoring Domains</div>
+              <div>
+                <div class="domain-row">
+                  <div class="domain-num">01</div>
+                  <div>
+                    <div class="domain-name">Leadership & Governance</div>
+                    <div class="domain-weight">Weight: 30%</div>
+                    <div class="domain-body">Quality and consistency of organizational leadership, board structure, governance documentation, and decision-making accountability systems.</div>
+                    <div class="domain-source">SOURCE: obr_evaluations · leadership domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">02</div>
+                  <div>
+                    <div class="domain-name">Staff Behavioral Readiness</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Observable behavioral patterns of staff — training completion, service delivery consistency, documentation discipline, and professional conduct records.</div>
+                    <div class="domain-source">SOURCE: obr_evaluations · staff domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">03</div>
+                  <div>
+                    <div class="domain-name">Policy & Compliance</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Existence, currency, and adherence to written organizational policies. Regulatory compliance posture. Incident documentation and corrective action records.</div>
+                    <div class="domain-source">SOURCE: obr_evaluations · policy domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">04</div>
+                  <div>
+                    <div class="domain-name">Financial Health & Sustainability</div>
+                    <div class="domain-weight">Weight: 20%</div>
+                    <div class="domain-body">Financial documentation completeness, funding diversification, reserve adequacy, and demonstrated fiscal responsibility over the prior 12 months.</div>
+                    <div class="domain-source">SOURCE: obr_evaluations · financial domain score</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="institutional" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">FRARI Institutional Assessment</h2>
+
+          <div class="ruleset-card">
+            <div class="ruleset-header">
+              <div class="ruleset-eyebrow">Domain II · Institutional Readiness</div>
+              <div class="ruleset-title">Foundational Readiness Audit & Ruleset Infrastructure — Institutional</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap;">
+                <div class="ruleset-id">frari-institutional-v1.0.0</div>
+                <div class="status-active"><div style="width:6px;height:6px;border-radius:50%;background:#34D399;"></div>ACTIVE</div>
+              </div>
+            </div>
+            <div class="ruleset-body">
+              <div class="ruleset-meta-grid">
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Subject Type</div>
+                  <div class="ruleset-meta-value">Federal agency / Workforce program / Housing authority / Corrections system</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Score Range</div>
+                  <div class="ruleset-meta-value">0 – 100</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Green Threshold</div>
+                  <div class="ruleset-meta-value">70 and above</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Yellow Threshold</div>
+                  <div class="ruleset-meta-value">40 – 69</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Integrity</div>
+                  <div class="ruleset-meta-value">SHA-256 sealed</div>
+                </div>
+                <div class="ruleset-meta-item">
+                  <div class="ruleset-meta-label">Evaluator Tier</div>
+                  <div class="ruleset-meta-value">BRSA Domain II Certified</div>
+                   </div>
+              </div>
+              <div style="font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;">Scoring Domains</div>
+              <div>
+                <div class="domain-row">
+                  <div class="domain-num">01</div>
+                  <div>
+                    <div class="domain-name">Program Fidelity</div>
+                    <div class="domain-weight">Weight: 30%</div>
+                    <div class="domain-body">Degree to which the institution implements its stated program model with consistency and measurable fidelity. Evaluated against published program documentation and outcome records.</div>
+                    <div class="domain-source">SOURCE: frari_evaluations · program_fidelity domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">02</div>
+                  <div>
+                    <div class="domain-name">Compliance Posture</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Regulatory adherence, audit history, corrective action responsiveness, and documented compliance with applicable federal and state requirements.</div>
+                    <div class="domain-source">SOURCE: frari_evaluations · compliance domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">03</div>
+                  <div>
+                    <div class="domain-name">Accountability Infrastructure</div>
+                    <div class="domain-weight">Weight: 25%</div>
+                    <div class="domain-body">Existence and quality of internal accountability systems — reporting structures, outcome tracking, grievance mechanisms, and transparency documentation.</div>
+                    <div class="domain-source">SOURCE: frari_evaluations · accountability domain score</div>
+                  </div>
+                </div>
+                <div class="domain-row">
+                  <div class="domain-num">04</div>
+                  <div>
+                    <div class="domain-name">Capacity Readiness</div>
+                    <div class="domain-weight">Weight: 20%</div>
+                    <div class="domain-body">Staffing adequacy, resource availability, technology infrastructure, and demonstrated organizational capacity to deliver programs at the stated scale.</div>
+                    <div class="domain-source">SOURCE: frari_evaluations · capacity domain score</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="governance" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Ruleset Governance</h2>
+          <p>All three canonical rulesets are governed by the BRSA Standards Authority under the following principles:</p>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:0;">
+            <div class="domain-row">
+              <div class="domain-num">I</div>
+              <div>
+                <div class="domain-name">Immutability</div>
+                <div class="domain-body">A published ruleset may never be modified. Changes require a new version with a new document ID. All prior versions remain permanently accessible.</div>
+              </div>
+            </div>
+            <div class="domain-row">
+              <div class="domain-num">II</div>
+              <div>
+                <div class="domain-name">Version Locking</div>
+                <div class="domain-body">Every assessment record stores the ruleset version used at computation time. A record may only be reproduced under the same version. Cross-version comparison is not permitted.</div>
+              </div>
+            </div>
+            <div class="domain-row">
+              <div class="domain-num">III</div>
+              <div>
+                <div class="domain-name">Public Availability</div>
+                <div class="domain-body">All canonical rulesets are published publicly at brsaregistry.com. No ruleset is proprietary. Transparency is a foundational requirement of the BRSA standard.</div>
+              </div>
+            </div>
+            <div class="domain-row">
+              <div class="domain-num">IV</div>
+              <div>
+                <div class="domain-name">Authority</div>
+                <div class="domain-body">Only the BRSA Standards Authority may publish, version, or deprecate a canonical ruleset. No platform implementation, evaluator, or institutional partner has authority to modify a ruleset.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="cta-band-title">Related Standards</div>
+        <p class="cta-band-sub">Scoring formula specification, SHA-256 integrity statement, and the full readiness doctrine.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="scoring-formula.html" class="btn-gold">Scoring Formula →</a>
+        <a href="integrity-statement.html" class="btn-outline">Integrity Statement</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+</body>
+</html>
+ 
