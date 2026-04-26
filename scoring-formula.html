@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BRSA · FRARI Scoring Formula Specification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .nav-seal { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1.5px solid rgba(201,168,76,.4); box-shadow: 0 0 0 3px rgba(201,168,76,.08); }
+    .nav-seal img { width: 100%; height: 100%; object-fit: cover; }
+    .doc-meta { display: flex; flex-wrap: wrap; gap: 24px; margin: 28px 0; padding: 20px 24px; background: rgba(201,168,76,.04); border: 1px solid rgba(201,168,76,.14); border-radius: 12px; }
+    .doc-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .doc-meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--faint); }
+    .doc-meta-value { font-family: var(--mono); font-size: 13px; color: var(--gold); }
+    .formula-block { background: var(--navy2); border: 1px solid rgba(201,168,76,.2); border-radius: 14px; padding: 28px 32px; margin: 24px 0; }
+    .formula-line { font-family: var(--mono); font-size: 15px; color: var(--text); line-height: 2.2; }
+    .formula-line span { color: var(--gold); }
+    .input-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+    .input-table th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    .input-table td { padding: 14px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--dim); vertical-align: top; }
+    .input-table td:first-child { font-family: var(--mono); color: var(--gold); white-space: nowrap; }
+    .input-table tr:last-child td { border-bottom: none; }
+    .weight-badge { display: inline-block; font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--gold); background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.2); border-radius: 6px; padding: 2px 10px; }
+    .print-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.25); color: var(--gold); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .print-btn:hover { background: rgba(201,168,76,.15); }
+    @media print { .nav, .print-btn, .cta-band, .footer { display: none !important; } body { background: white; color: black; } }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-seal"><img src="assets/logo-seal.png" alt="BRSA Seal" /></div>
+        <div class="nav-wordmark">BRSA <span>Registry</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="mandate.html" class="nav-link">Mandate</a>
+        <a href="doctrine.html" class="nav-link">Doctrine</a>
+        <a href="registry.html" class="nav-link">Registry</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+      <a href="onboard.html" class="nav-cta">Enter Registry</a>
+      <button class="nav-mobile-btn" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">BRSA Technical Standard · FRARI-SPEC-001</div>
+      <h1 class="page-title">Scoring Formula Specification</h1>
+      <p class="page-sub">The authoritative definition of the FRARI v1.0.0 composite scoring formula. Every readiness score produced by the Legacyline platform is computed using exactly this method.</p>
+    </div>
+  </div>
+
+  <div class="prose-wrap">
+    <div class="prose-grid">
+      <aside class="prose-toc">
+        <div class="toc-label">On This Page</div>
+        <nav>
+          <a href="#overview" class="toc-link">Overview</a>
+          <a href="#inputs" class="toc-link">Inputs</a>
+          <a href="#formula" class="toc-link">Formula</a>
+          <a href="#normalization" class="toc-link">Normalization</a>
+          <a href="#output" class="toc-link">Output</a>
+          <a href="#versioning" class="toc-link">Versioning</a>
+        </nav>
+        <div style="margin-top: 28px;">
+          <a href="#" onclick="window.print(); return false;" class="print-btn">⬇ Save as PDF</a>
+        </div>
+      </aside>
+
+      <article class="prose">
+
+        <div class="doc-meta">
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Document ID</div>
+            <div class="doc-meta-value">FRARI-SPEC-001</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Ruleset Version</div>
+            <div class="doc-meta-value">FRARI v1.0.0</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Status</div>
+            <div class="doc-meta-value">ACTIVE</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Published</div>
+            <div class="doc-meta-value">2026-04-25</div>
+          </div>
+          <div class="doc-meta-item">
+            <div class="doc-meta-label">Issuing Authority</div>
+            <div class="doc-meta-value">BRSA Standards Authority</div>
+          </div>
+        </div>
+
+        <section id="overview" class="prose-section">
+          <div class="prose-section-num">01</div>
+          <h2 class="prose-h2">Overview</h2>
+          <p>The FRARI v1.0.0 composite score is a single integer between 0 and 100 representing a participant's overall readiness standing. It is computed deterministically from four weighted sub-scores. The same inputs, evaluated under the same ruleset version, always produce the same output.</p>
+          <p>This document specifies the exact computation. No deviation from this formula is permitted under FRARI v1.0.0. Any modification to the weighting, normalization method, or input sources requires a new versioned ruleset published by the BRSA Standards Authority.</p>
+          <blockquote class="prose-quote">"The formula is the standard. The standard is the formula. There is no informal version."</blockquote>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="inputs" class="prose-section">
+          <div class="prose-section-num">02</div>
+          <h2 class="prose-h2">Inputs</h2>
+          <p>Four inputs are required to compute the composite score. All inputs are derived from structured data in the Legacyline platform. No subjective input is permitted.</p>
+          <table class="input-table">
+            <thead>
+              <tr>
+                <th>Input</th>
+                <th>Source</th>
+                <th>Weight</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>evidence_score</td>
+                <td>evidence_events table · 90-day window</td>
+                <td><span class="weight-badge">30%</span></td>
+                <td>Count of evidence events in the last 90 days, capped at 10, normalized to 0–100.</td>
+              </tr>
+              <tr>
+                <td>lifecycle_score</td>
+                <td>state_history table · current stage index</td>
+                <td><span class="weight-badge">25%</span></td>
+                <td>Current lifecycle stage index (0–5) normalized to 0–100. Certified = 100.</td>
+              </tr>
+              <tr>
+                <td>intake_score</td>
+                <td>intake_submissions table · 12 required fields</td>
+                <td><span class="weight-badge">25%</span></td>
+                <td>Count of non-null required intake fields present, normalized to 0–100 over 12 fields.</td>
+              </tr>
+              <tr>
+                <td>consent_score</td>
+                <td>consents table · status field</td>
+                <td><span class="weight-badge">20%</span></td>
+                <td>Granted = 100. Pending = 40. Revoked or absent = 0. No normalization required.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="formula" class="prose-section">
+          <div class="prose-section-num">03</div>
+          <h2 class="prose-h2">Formula</h2>
+          <p>The composite score is computed by applying each weight to its normalized sub-score and summing the results.</p>
+          <div class="formula-block">
+            <div class="formula-line"><span>composite</span> = (evidence_score  × 0.30)</div>
+            <div class="formula-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (lifecycle_score × 0.25)</div>
+            <div class="formula-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (intake_score    × 0.25)</div>
+            <div class="formula-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (consent_score   × 0.20)</div>
+            <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(201,168,76,.15); font-family: var(--mono); font-size: 12px; color: var(--faint);">
+              Result rounded to nearest integer · Range: 0–100 · Sealed with SHA-256 at computation time
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="normalization" class="prose-section">
+          <div class="prose-section-num">04</div>
+          <h2 class="prose-h2">Normalization Rules</h2>
+          <p>All sub-scores must be normalized to a 0–100 scale before weighting. The normalization method for each input is fixed by this specification.</p>
+          <div class="indicator-row" style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div class="indicator-num">E</div>
+            <div>
+              <div class="indicator-name">Evidence Score Normalization</div>
+              <div class="indicator-body" style="font-size:13px;color:var(--dim);line-height:1.7;margin-top:4px;">min(event_count_90d, 10) ÷ 10 × 100. Maximum 10 events. Events older than 90 days are excluded. Each evidence domain counts independently.</div>
+            </div>
+          </div>
+          <div class="indicator-row" style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div class="indicator-num">L</div>
+            <div>
+              <div class="indicator-name">Lifecycle Score Normalization</div>
+              <div class="indicator-body" style="font-size:13px;color:var(--dim);line-height:1.7;margin-top:4px;">stage_index ÷ 5 × 100. Stages: registered=0, data_collecting=1, under_review=2, evaluated=3, certified=4, revoked=0. Revoked returns lifecycle score of 0.</div>
+            </div>
+          </div>
+          <div class="indicator-row" style="display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div class="indicator-num">I</div>
+            <div>
+              <div class="indicator-name">Intake Score Normalization</div>
+              <div class="indicator-body" style="font-size:13px;color:var(--dim);line-height:1.7;margin-top:4px;">filled_field_count ÷ 12 × 100. Required fields: first_name, last_name, dob, email, phone, address, housing_type, employment_status, monthly_income, monthly_housing_cost, gov_id_uploaded, bank_statement_uploaded.</div>
+            </div>
+          </div>
+          <div class="indicator-row" style="display:flex;gap:18px;padding:16px 0;align-items:flex-start;">
+            <div class="indicator-num">C</div>
+            <div>
+              <div class="indicator-name">Consent Score — No Normalization Required</div>
+              <div class="indicator-body" style="font-size:13px;color:var(--dim);line-height:1.7;margin-top:4px;">Consent is a discrete value. Granted=100, Pending=40, Revoked/Absent=0. Applied directly without normalization.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="output" class="prose-section">
+          <div class="prose-section-num">05</div>
+          <h2 class="prose-h2">Output & Sealing</h2>
+          <p>The composite score is rounded to the nearest integer and stored in the readiness_snapshots table. At the time of storage, a SHA-256 hash is computed over the canonical input string and stored alongside the score. See BRSA-TECH-001 for the full integrity specification.</p>
+          <p>The output record contains: composite_score, evidence_score, lifecycle_score, intake_score, consent_score, ruleset_version, score_hash, computed_at. These fields are immutable after writing.</p>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="versioning" class="prose-section">
+          <div class="prose-section-num">06</div>
+          <h2 class="prose-h2">Versioning</h2>
+          <p>This specification governs FRARI v1.0.0 only. Every assessment record stores the ruleset version used at computation time. Future versions of the formula will be published as separate specifications with new document IDs. Existing assessments are never recomputed under a new version.</p>
+          <p>Version history is maintained by the BRSA Standards Authority at brsaregistry.com. All prior versions remain publicly accessible in perpetuity.</p>
+        </section>
+
+      </article>
+    </div>
+  </div>
+
+  <section class="cta-band">
+    <div class="cta-band-inner">
+      <div class="cta-band-text">
+        <div class="cta-band-title">Related Standards</div>
+        <p class="cta-band-sub">SHA-256 integrity statement, canonical rulesets, and the full readiness doctrine.</p>
+      </div>
+      <div class="cta-band-actions">
+        <a href="integrity-statement.html" class="btn-gold">Integrity Statement →</a>
+        <a href="doctrine.html" class="btn-outline">Read the Doctrine</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">BRSA Registry</div>
+      <div class="footer-links">
+        <a href="mandate.html" class="footer-link">Mandate</a>
+        <a href="doctrine.html" class="footer-link">Doctrine</a>
+        <a href="registry.html" class="footer-link">Registry</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-legal">© 2026 BRSA · Sovereign Standards Authority</div>
+    </div>
+  </footer>
+
+</body>
+  </html>
