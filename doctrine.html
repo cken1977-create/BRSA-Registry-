@@ -229,6 +229,8 @@
           <a href="#states" class="toc-link">Readiness States</a>
           <a href="#lifecycle" class="toc-link">Assessment Lifecycle</a>
           <a href="#publication" class="toc-link">Publication Rules</a>
+          <a href="#integrity" class="toc-link">SHA-256 Integrity</a>
+          <a href="#formula" class="toc-link">Scoring Formula</a>
         </nav>
       </aside>
 
@@ -488,7 +490,122 @@
             </div>
           </div>
         </section>
+<div class="prose-divider"></div>
 
+        <section id="integrity" class="prose-section">
+          <div class="prose-section-num">08</div>
+          <h2 class="prose-h2">SHA-256 Measurement Integrity</h2>
+          <p>Every assessment record produced by the Legacyline readiness engine is cryptographically sealed at the time of computation. This is not an optional feature — it is a foundational requirement of the BRSA standard.</p>
+          <p>The SHA-256 hash is computed over a canonical input string composed of the participant ID, ruleset version, composite score, each sub-score value, and the UTC timestamp of computation. The resulting hash is stored alongside the assessment record and cannot be altered without detection.</p>
+          <blockquote class="prose-quote">
+            "A score without a hash is an opinion. A score with a hash is a fact."
+          </blockquote>
+          <div style="margin-top: 24px;">
+            <div class="indicator-row">
+              <div class="indicator-num">H1</div>
+              <div>
+                <div class="indicator-name">Input Canonicalization</div>
+                <div class="indicator-engine">SHA-256 INPUT FIELDS</div>
+                <div class="indicator-body">participant_id + ruleset_version + composite_score + evidence_engagement_score + lifecycle_score + consent_score + intake_score + computed_at (UTC ISO 8601)</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">H2</div>
+              <div>
+                <div class="indicator-name">Hash Storage</div>
+                <div class="indicator-engine">readiness_snapshots.score_hash</div>
+                <div class="indicator-body">The SHA-256 digest is stored in the readiness_snapshots table alongside the score record. It is written once and never updated. Any modification to the score values would produce a different hash — making tampering immediately detectable.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">H3</div>
+              <div>
+                <div class="indicator-name">Reproduction Protocol</div>
+                <div class="indicator-engine">ReproduceAssessment() — legacyline-core</div>
+                <div class="indicator-body">Any assessment can be independently reproduced using the archived ruleset version and original evidence record. The ReproduceAssessment() function in the Legacyline core engine recomputes the score and validates the hash against the stored value. Matching hashes confirm the record has not been altered.</div>
+              </div>
+            </div>
+            <div class="indicator-row">
+              <div class="indicator-num">H4</div>
+              <div>
+                <div class="indicator-name">Version Locking</div>
+                <div class="indicator-engine">frari_rulesets.ruleset_id</div>
+                <div class="indicator-body">The ruleset version used for every assessment is stored in the record. Future ruleset updates do not affect existing assessments. An assessment may only be recomputed under the same ruleset version used at the time of original evaluation.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="prose-divider"></div>
+
+        <section id="formula" class="prose-section">
+          <div class="prose-section-num">09</div>
+          <h2 class="prose-h2">Scoring Formula Specification</h2>
+          <p>The following specification defines the exact computation performed by the Legacyline readiness engine under FRARI v1.0.0. This document is the authoritative reference for all scoring decisions. No deviation from this formula is permitted without a versioned ruleset update published by the BRSA Standards Authority.</p>
+
+          <div class="weight-grid">
+            <div class="weight-card">
+              <div class="weight-card-label">Input 01</div>
+              <div class="weight-card-name">Evidence Engagement</div>
+              <div class="weight-card-pct">30%</div>
+              <div class="weight-card-body">
+                <strong style="color:var(--text)">Numerator:</strong> Count of evidence events in the last 90 days, capped at 10.<br /><br />
+                <strong style="color:var(--text)">Denominator:</strong> 10 (maximum possible events).<br /><br />
+                <strong style="color:var(--text)">Formula:</strong> min(event_count, 10) ÷ 10 × 100 × 0.30
+              </div>
+              <div class="weight-card-source">TABLE: evidence_events · WINDOW: 90 days</div>
+            </div>
+            <div class="weight-card">
+              <div class="weight-card-label">Input 02</div>
+              <div class="weight-card-name">Lifecycle Progression</div>
+              <div class="weight-card-pct">25%</div>
+              <div class="weight-card-body">
+                <strong style="color:var(--text)">Numerator:</strong> Current lifecycle stage index (0–5).<br /><br />
+                <strong style="color:var(--text)">Denominator:</strong> 5 (certified = maximum).<br /><br />
+                <strong style="color:var(--text)">Formula:</strong> stage_index ÷ 5 × 100 × 0.25
+              </div>
+              <div class="weight-card-source">TABLE: state_history · STAGES: 0–5</div>
+            </div>
+            <div class="weight-card">
+              <div class="weight-card-label">Input 03</div>
+              <div class="weight-card-name">Intake Completeness</div>
+              <div class="weight-card-pct">25%</div>
+              <div class="weight-card-body">
+                <strong style="color:var(--text)">Numerator:</strong> Count of non-null intake fields present.<br /><br />
+                <strong style="color:var(--text)">Denominator:</strong> 12 (total required fields).<br /><br />
+                <strong style="color:var(--text)">Formula:</strong> filled_fields ÷ 12 × 100 × 0.25
+              </div>
+              <div class="weight-card-source">TABLE: intake_submissions · FIELDS: 12</div>
+            </div>
+            <div class="weight-card">
+              <div class="weight-card-label">Input 04</div>
+              <div class="weight-card-name">Consent Compliance</div>
+              <div class="weight-card-pct">20%</div>
+              <div class="weight-card-body">
+                <strong style="color:var(--text)">Granted:</strong> 100 points.<br />
+                <strong style="color:var(--text)">Pending:</strong> 40 points.<br />
+                <strong style="color:var(--text)">Revoked / Absent:</strong> 0 points.<br /><br />
+                <strong style="color:var(--text)">Formula:</strong> consent_score × 0.20
+              </div>
+              <div class="weight-card-source">TABLE: consents · FIELD: status</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(201,168,76,.06); border:1px solid rgba(201,168,76,.2); border-radius:14px; padding:24px 28px; margin-top:8px;">
+            <div style="font-family:var(--mono); font-size:12px; color:var(--gold); letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px;">Composite Formula</div>
+            <div style="font-family:var(--mono); font-size:14px; color:var(--text); line-height:2;">
+              composite = (evidence_score × 0.30)<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (lifecycle_score × 0.25)<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (intake_score × 0.25)<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (consent_score × 0.20)
+            </div>
+            <div style="margin-top:16px; font-size:12px; color:var(--dim); line-height:1.7;">
+              All inputs normalized to 0–100 before weighting. Final composite rounded to nearest integer. Score sealed with SHA-256 hash at time of computation. Ruleset version locked to FRARI v1.0.0.
+            </div>
+          </div>
+        </section>
+
+      </article>
       </article>
     </div>
   </div>
